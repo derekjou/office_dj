@@ -17,10 +17,10 @@ room_page = Blueprint('room_page', __name__, static_folder='../static')
 def room_collection():
     #create new room
     #TODO: decode JWT tokens once we know what is in them.
-    
+
     input_dict = request.json
     room = Room.from_dict(input_dict)
-    db.creat_room(room)
+    db.create_room(room)
     # return validate_media(Book, db.insert_media, input_dict)
 
 @room_page.route('/room/<str:username>', methods=['GET', 'PUT'])

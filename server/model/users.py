@@ -2,7 +2,7 @@
 
 class User:
     '''a class that holds the definition of the base type user'''
-    def __init__(_id=None, user_name='', password='', department='', functional_team='', title=''):
+    def __init__(self, _id=None, user_name='', password='', department='', functional_team='', title=''):
         self._id = _id
         self.user_name = user_name
         self.password = password
@@ -30,7 +30,7 @@ class User:
 
 class DJ(User):
     '''a class that holds the deffinition of a DJ extends the base User class'''
-    def __init__(_id=None, user_name='', password='', department='', functional_team='', title='', roll='DJ'):
+    def __init__(self, _id=None, user_name='', password='', department='', functional_team='', title='', roll='DJ'):
         super().__init__(_id, user_name=user_name, password=password, department=department, functional_team=functional_team, title=title)
         self.roll = roll
 
