@@ -36,7 +36,7 @@ class Login extends Component {
             this.props.password).then(
                 (resp) => {
                     this.props.dispatch({ type: 'login', user: resp.data })
-                    <Route path="/dashboard" component={Dashboard}/>
+                    <Redirect to={{pathname:'/dashboard'}}/>
                 }
             )
     }
