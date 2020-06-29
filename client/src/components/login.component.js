@@ -33,7 +33,7 @@ class Login extends Component {
             this.props.password).then(
                 (resp) => {
                     this.props.dispatch({ type: 'login', user: resp.data })
-                    this.loadMedia();
+                    this.getLoginForm();
                 }
             )
     }
@@ -56,31 +56,29 @@ class Login extends Component {
     getLoginForm() {
         return (
             <>
-                <body>
-                    <div className='login-dark'>
-                        <form method='post'>
-                            <h2 className='sr-only'>Login Form</h2>
-                            <div className='ilustration'>
-                                <i className='icon ion-ios-locked-outline'></i>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" type="text" name="username" placeholder="Username" 
-                                    value={this.props.username} 
-                                    onChange={ this.handleInput }/>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" type="password" name="password" placeholder="Password" 
-                                    value={this.props.username} 
-                                    onChange={ this.handleInput }
-                                    onKeyDown={ (e) => this.handleKeyDown(e) }/>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-primary btn-block" type="submit" 
-                                    onClick={ this.login }>Log In</button>
-                            </div>
-                        </form>
-                    </div>
-                </body>
+                <div className='login-dark'>
+                    <form method='post'>
+                        <h2 className='sr-only'>Login Form</h2>
+                        <div className='ilustration'>
+                            <i className='icon ion-ios-locked-outline'></i>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="username" placeholder="Username"
+                                value={this.props.username}
+                                onChange={this.handleInput} />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" name="password" placeholder="Password"
+                                value={this.props.username}
+                                onChange={this.handleInput}
+                                onKeyDown={(e) => this.handleKeyDown(e)} />
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" type="submit"
+                                onClick={this.login}>Log In</button>
+                        </div>
+                    </form>
+                </div>
             </>
         )
     }
@@ -110,10 +108,11 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
-    const { user, username } = state;
+    const { user, username, password } = state;
     return {
         user: user,
-        username: username
+        username: username,
+        password: password
     }
 }
 
