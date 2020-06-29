@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
+import './login.component.css';
 import UserService from '../services/user.service'
+import Dashboard from './dashboard.component';
 import { connect } from 'react-redux';
 
 class Login extends Component {
@@ -33,7 +36,7 @@ class Login extends Component {
             this.props.password).then(
                 (resp) => {
                     this.props.dispatch({ type: 'login', user: resp.data })
-                    this.getLoginForm();
+                    <Route path="/dashboard" component={Dashboard}/>
                 }
             )
     }
