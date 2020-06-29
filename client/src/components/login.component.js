@@ -64,7 +64,7 @@ class Login extends Component {
                                 <i className='icon ion-ios-locked-outline'></i>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" type="email" name="email" placeholder="Email" 
+                                <input class="form-control" type="text" name="username" placeholder="Username" 
                                     value={this.props.username} 
                                     onChange={ this.handleInput }/>
                             </div>
