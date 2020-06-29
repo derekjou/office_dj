@@ -9,7 +9,8 @@ from pymongo import MongoClient, errors, ReturnDocument
 
 
 try:
-    _las = MongoClient(os.environ.get('MONGO_URI')).las
+    _db = MongoClient(os.environ.get('MONGO_URI')).las
 except:
     _log.exception('Could not connect to Mongo')
     raise
+
