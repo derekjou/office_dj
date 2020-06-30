@@ -9,7 +9,6 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.handleInput = this.handleInput.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
@@ -50,12 +49,6 @@ class Login extends Component {
         )
     }
 
-    handleInput(e) {
-        console.log(this.props)
-        this.props.dispatch({ type: 'handleUsername', username: e.target.value },
-            { type: 'handlePassword', password: e.target.value })
-    }
-
     getLoginForm() {
         return (
             <>
@@ -65,19 +58,19 @@ class Login extends Component {
                         <div className='ilustration'>
                             <i className='icon ion-ios-locked-outline'></i>
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" type="text" name="username" placeholder="Username"
+                        <div className="form-group">
+                            <input className="form-control" type="text" name="username" placeholder="Username"
                                 value={this.props.username}
-                                onChange={this.handleInput} />
+                                onChange={this.props.handleUserInput} />
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" type="password" name="password" placeholder="Password"
-                                value={this.props.username}
-                                onChange={this.handleInput}
+                        <div className="form-group">
+                            <input className="form-control" type="password" name="password" placeholder="Password"
+                                value={this.props.password}
+                                onChange={this.props.handlePasswordInput}
                                 onKeyDown={(e) => this.handleKeyDown(e)} />
                         </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary btn-block" type="submit"
+                        <div className="form-group">
+                            <button className="btn btn-primary btn-block" type="submit"
                                 onClick={this.login}>Log In</button>
                         </div>
                     </form>
@@ -119,4 +112,11 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Login);
+function mapDispatchToProps(dispatch) {
+    return {
+        handleUserInput: (e) => dispatch({type: 'handleUsername', username: e.target.value}),
+        handlePasswordInput: (e) => dispatch({type: 'handlePassword', password: e.target.value})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

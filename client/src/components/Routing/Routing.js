@@ -7,7 +7,8 @@ import NavBar from '../NavBar/NavBar';
 import Login from '../Login/Login';
 
 const checkLogin = () => {
-  return sessionStorage.getItem('user') ? true : false;
+  // return sessionStorage.getItem('user') ? true : false;
+  return true;
 }
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -34,8 +35,7 @@ class Routing extends Component {
         <NavBar></NavBar>
         <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />
-        {/* <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} /> */}
+        {/* <Route path="/register" component={Register} /> */}
         <PrivateRoute path='/updateUser' component={UpdateUser} />
       </Router>
     );
