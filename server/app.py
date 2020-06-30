@@ -2,6 +2,7 @@ from flask import Flask, escape, request, jsonify
 
 from server.model.users import User, DJ
 from server.model.user_handler import user_page
+from server.handlers.rooms import room_page
 
 app = Flask(__name__)
 app.register_blueprint(user_page)
