@@ -16,8 +16,8 @@ room_page = Blueprint('room_page', __name__, static_folder='../static')
 @room_page.route('/create-room')
 def room_collection():
     #create new room
+    
     #TODO: decode JWT tokens once we know what is in them.
-
     input_dict = request.json
     room = Room.from_dict(input_dict)
     db.create_room(room)
