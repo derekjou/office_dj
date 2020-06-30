@@ -35,6 +35,17 @@ class CreateRoom extends Component {
         )
     }
 
+    handleSubmit = event => {
+        event.preventDefault;
+
+        const room = {
+            name = this.state.name
+
+        }
+
+        axios.post()
+    }
+
     creationSuccess() {
         // redirect to dj room
 

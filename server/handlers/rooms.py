@@ -21,6 +21,7 @@ def room_collection():
     input_dict = request.json
     room = Room.from_dict(input_dict)
     db.create_room(room)
+    return room.to_dict()
 
 @room_page.route('/room/<str:username>', methods=['GET', 'PUT'])
 #TODO: we definitely need to be able to view a room.
