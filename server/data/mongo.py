@@ -25,3 +25,22 @@ def add_user(input_user):
     '''a method to add a new user to the database'''
     _log.info("adding user to the database")
     _db.users.insert_one(input_user.to_dict())
+
+
+def add_room(room: object):
+    '''Takes a room object and inserts it into the Rooms collection.'''
+    _log.info('Attempting to add a new room %s to the database', room.name)
+    try:
+        _db.rooms.insert_one(room.to_dict())
+        _log.info('Room %s successfully added', room.name)
+    except errors.DuplicateKeyError: #duplicate username? unless we want djs to have multiple rooms.
+        # TODO: return the error to the user
+        pass
+
+def get_room_by_id(id: int):
+    '''Takes an id of a room object and queries the Rooms collection for that object.'''
+    _log.info('Attempting to retrive room %s from the database')
+    #TODO: Try/Except for empty find
+    room = _db.rooms.find_one({'_id': id})
+    _log.info('Room %d successfully found', id)
+    return room
