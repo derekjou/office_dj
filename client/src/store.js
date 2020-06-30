@@ -6,7 +6,7 @@ const initialState = {
     password: '',
 };
 
-function DJReducer(state = initialState, action) {
+function reducer(state = initialState, action) {
     console.log(state);
     console.log(action);
     switch(action.type) {
@@ -22,6 +22,4 @@ function DJReducer(state = initialState, action) {
     }
 }
 
-let store = createStore(DJReducer);
-
-export default store;
+export default createStore(reducer);

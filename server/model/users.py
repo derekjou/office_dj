@@ -10,13 +10,6 @@ class User:
         self.functional_team = functional_team
         self.title = title
 
-    _id = 0
-    user_name = ''
-    password = ''
-    department = ''
-    functional_team = ''
-    title = ''
-
     def to_dict(self):
         '''reutrns a dictionary deffinition of itself'''
         return self.to_dict()
@@ -30,9 +23,9 @@ class User:
 
 class DJ(User):
     '''a class that holds the deffinition of a DJ extends the base User class'''
-    def __init__(self, _id=None, user_name='', password='', department='', functional_team='', title='', roll='DJ'):
+    def __init__(self, _id=None, user_name='', password='', department='', functional_team='', title='', role='DJ'):
         super().__init__(_id, user_name=user_name, password=password, department=department, functional_team=functional_team, title=title)
-        self.roll = roll
+        self.role = role
 
     def to_dict(self):
         '''reutrns a dictionary deffinition of itself'''
