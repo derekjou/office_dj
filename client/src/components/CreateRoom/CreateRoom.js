@@ -9,7 +9,14 @@ class CreateRoom extends Component {
 
     constructor(props) {
         super(props)
+        this.handleKeyDown = this.handleKeyDown.bind(this);
 
+    }
+
+    handleKeyDown(e) {
+        if (e.key === 'Enter') {
+            this.handleSubmit();
+        }
     }
 
     getCreateRoomForm() {
@@ -17,7 +24,9 @@ class CreateRoom extends Component {
             <Form>
                 <Form.Group controlId="formRoomName">
                     <Form.Label>Name Your Room</Form.Label>
-                    <Form.Control type="text" />
+                    <Form.Control type="text"
+                        onChange={this.props.handleUserInput}
+                        onKeyDown={(e) => this.handleKeyDown(e)} />/>
                 </Form.Group>
 
                 <Form.Group controlId="form">
@@ -38,12 +47,10 @@ class CreateRoom extends Component {
     handleSubmit = event => {
         event.preventDefault;
 
-        const room = {
+        let user = axios.put(`http://localhost:5000/room/${this.state.name}`, {
             name = this.state.name
 
         }
-
-        axios.post()
     }
 
     creationSuccess() {

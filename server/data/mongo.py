@@ -44,3 +44,29 @@ def get_room_by_id(id: int):
     room = _db.rooms.find_one({'_id': id})
     _log.info('Room %d successfully found', id)
     return room
+
+def _get_id():
+    '''Retrieves the next id in the database and increments it.'''
+    return _db.counter.find_one_and_update(
+        {'_id': 'UNIQUE_COUNT'},
+        {'$inc': {'count': 1}},
+        return_document=ReturnDocument.AFTER
+    )['count']
+
+if __name__ == "__main__":
+    _log.info('Running Mongo script: dropping collections from _library database')
+    _log.info(_db.list_collection_names())
+    _db.counter.drop()
+    _db.rooms.drop()
+
+    _db.counter.insert_one({'_id': 'UNIQUE_COUNT', 'count': 0})
+
+    room_list = []
+    room_list.append(Room(
+        _get_id(),
+        'Test Room',
+        'test_dj', 
+        ['test_user_1', 'test_user_2', 'test_user_3']
+    ).to_dict())
+
+    _db.rooms.insert_many(room_list)

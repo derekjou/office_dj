@@ -6,8 +6,6 @@ from server.handlers.rooms import room_page
 
 app = Flask(__name__)
 app.register_blueprint(user_page)
-
-
 app.register_blueprint(room_page)
 
 @app.route("/")
