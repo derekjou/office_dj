@@ -9,15 +9,14 @@ class NewUser extends Component {
   
     newUser() {
         let user = axios.post('http://localhost:5000/users/register', {
-            username: this.props.username, 
-            password: this.props.password, 
-            updateUsername: this.props.updateUsername, 
-            updatePassword: this.props.updatePassword, 
-            updateDpt: this.props.updateDpt, 
-            updateFuncTeam: this.props.FuncTeam, 
-            updateTitle: this.props.updateTitle
+            username: this.props.username,
+            newUsername: this.props.newUsername, 
+            newPassword: this.props.newPassword, 
+            newDpt: this.props.newDpt, 
+            newFuncTeam: this.props.newFuncTeam, 
+            newTitle: this.props.newTitle
         })
-        this.props.handleUserUpdate(user);
+        this.props.handleNewUser(user);
 
     }
 
@@ -27,33 +26,33 @@ class NewUser extends Component {
         <p>New USER INFO</p>
             <label>
                 Username
-                <input className="form-control" type="text" name="username" placeholder={this.props.user.username}
-                                    value={this.props.updateUsername}
-                                    onChange={this.props.handleUpdateUsernameInput} />
+                <input className="form-control" type="text" name="username" placeholder={this.props.Newuser.username}
+                                    value={this.props.newUsername}
+                                    onChange={this.props.handleNewUsernameInput} />
             </label>
             <label for="password">
                 Password
-                <input className="form-control" type="password" name="password" placeholder={this.props.user.password}
-                                    value={this.props.updatePassword}
-                                    onChange={this.props.handleUpdatePasswordInput} />
+                <input className="form-control" type="password" name="password" placeholder={this.props.Newuser.password}
+                                    value={this.props.newPassword}
+                                    onChange={this.props.handleNewPasswordInput} />
             </label>
             <label for="department">
                 Department
-                <input className="form-control" type="text" name="department" placeholder={this.props.user.department}
-                                    value={this.props.updateDpt}
-                                    onChange={this.props.handleUpdateDepartmentInput} />
+                <input className="form-control" type="text" name="department" placeholder={this.props.Newuser.department}
+                                    value={this.props.newDpt}
+                                    onChange={this.props.handleNewDepartmentInput} />
             </label>
             <label for="functional_team">
                 Functional Team
-                <input className="form-control" type="text" name="functional_team" placeholder={this.props.user.functional_team}
-                                    value={this.props.updateFuncTeam}
-                                    onChange={this.props.handleUpdateFuncTeamInput} />
+                <input className="form-control" type="text" name="functional_team" placeholder={this.props.Newuser.functional_team}
+                                    value={this.props.newFuncTeam}
+                                    onChange={this.props.handleNewFuncTeamInput} />
             </label>
             <label for="title">
                 Title
-                <input className="form-control" type="text" name="title" placeholder={this.props.user.title}
-                                    value={this.props.updateTitle}
-                                    onChange={this.props.handleUpdateTitleInput} />
+                <input className="form-control" type="text" name="title" placeholder={this.props.Newuser.title}
+                                    value={this.props.newTitle}
+                                    onChange={this.props.handleNewTitleInput} />
             </label>
             <Button onClick={() => this.newUser()}>Submit</Button>
         </div>;
@@ -62,27 +61,25 @@ class NewUser extends Component {
 }
 
 function mapStateToProps(state) {
-    const { user, username, password, updateUsername, updatePassword, updateDpt, updateFuncTeam, updateTitle } = state;
+    const { user, newUsername, newPassword, newDpt, newFuncTeam, newTitle } = state;
     return {
-        user: user,
-        username: username,
-        password: password,
-        updateUsername: updateUsername,
-        updatePassword: updatePassword,
-        updateDpt: updateDpt,
-        updateFuncTeam: updateFuncTeam,
-        updateTitle: updateTitle
+        Newuser: user,
+        newUsername: newUsername,
+        newPassword: newPassword,
+        newDpt: newDpt,
+        newFuncTeam: newFuncTeam,
+        newTitle: newTitle
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleUpdateUsernameInput: (e) => dispatch({type: 'handleUpdateUsername', updateUsername: e.target.value}),
-        handleUpdatePasswordInput: (e) => dispatch({type: 'handleUpdatePassword', updatePassword: e.target.value}),
-        handleUpdateDepartmentInput: (e) => dispatch({type: 'handleUpdateDepartment', updateDpt: e.target.value}),
-        handleUpdateFuncTeamInput: (e) => dispatch({type: 'handleUpdateFuncTeam', updateFuncTeam: e.target.value}),
-        handleUpdateTitleInput: (e) => dispatch({type: 'handleUpdateTitle', updateTitle: e.target.value}),
-        handleUserUpdate: (user) => dispatch({type: 'updateUser', user: user})
+        handleNewUsernameInput: (e) => dispatch({type: 'handleNewUsername', newUsername: e.target.value}),
+        handleNewPasswordInput: (e) => dispatch({type: 'handleNewPassword', newPassword: e.target.value}),
+        handleNewDepartmentInput: (e) => dispatch({type: 'handleNewDepartment', newDpt: e.target.value}),
+        handleNewFuncTeamInput: (e) => dispatch({type: 'handleNewFuncTeam', newFuncTeam: e.target.value}),
+        handleNewTitleInput: (e) => dispatch({type: 'handleNewTitle', newTitle: e.target.value}),
+        handleNewUser: (user) => dispatch({type: 'NewUser', user: user})
     }
 }
 

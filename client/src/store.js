@@ -37,7 +37,17 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { updateFuncTeam: action.updateFuncTeam});
     case "handleUpdateTitle":
       return Object.assign({}, state, { updateTitle: action.updateTitle});
-    case "updateUser":
+    case "handleNewUsername":
+      return Object.assign({}, state, { user: action.newUsername});
+    case "handleNewPassword":
+      return Object.assign({}, state, { user: action.newPassword});
+    case "handleNewDepartment":
+      return Object.assign({}, state, { user: action.newDepartment});
+    case "handleNewFuncTeam":
+      return Object.assign({}, state, { user: action.newFuncTeam});
+    case "handleNewTitle":
+      return Object.assign({}, state, { user: action.newTitle});
+    case "NewUser":
       return Object.assign({}, state, { user: action.user});
     default:
       return state;
