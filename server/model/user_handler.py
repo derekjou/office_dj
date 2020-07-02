@@ -18,9 +18,8 @@ def users():
         input_dict = request.json
         _log.debug(input_dict)
         if input_dict['newUsername']:
-            db.add_user(DJ.from_dict(input_dict))
-        else:
-            db.add_user(User.from_dict(input_dict))
+            return db.add_user(DJ.from_dict(input_dict))
+        return db.add_user(User.from_dict(input_dict))
     if request.method == 'OPTIONS':
         input_dict = request.json
         _log.debug(input_dict)

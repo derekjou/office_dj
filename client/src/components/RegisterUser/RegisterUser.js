@@ -9,7 +9,7 @@ class NewUser extends Component {
     
   
     newUser() {
-        let user = axios({
+        let NewUser = axios({
             method: 'POST',
             url: 'http://localhost:5000/users/register',
             data: {
@@ -22,7 +22,7 @@ class NewUser extends Component {
             }
         })
 
-        this.props.handleNewUser(user);
+        this.props.handleNewUser(NewUser);
 
     }
 
@@ -85,7 +85,7 @@ function mapDispatchToProps(dispatch) {
         handleNewDepartmentInput: (e) => dispatch({type: 'handleNewDepartment', newDpt: e.target.value}),
         handleNewFuncTeamInput: (e) => dispatch({type: 'handleNewFuncTeam', newFuncTeam: e.target.value}),
         handleNewTitleInput: (e) => dispatch({type: 'handleNewTitle', newTitle: e.target.value}),
-        handleNewUser: (user) => dispatch({type: 'NewUser', user: user})
+        handleNewUser: (user) => dispatch({type: 'Newuser', user: user})
     }
 }
 

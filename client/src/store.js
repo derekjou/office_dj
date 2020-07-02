@@ -15,6 +15,12 @@ const initialState = {
   updateDpt: "",
   updateFuncTeam: "",
   updateTitle: "",
+  NewUser: "",
+  newUsername: "",
+  newPassword: "",
+  newDpt: "",
+  newFuncTeam: "",
+  newTitle: "",
 };
 
 function reducer(state = initialState, action) {
@@ -38,17 +44,17 @@ function reducer(state = initialState, action) {
     case "handleUpdateTitle":
       return Object.assign({}, state, { updateTitle: action.updateTitle});
     case "handleNewUsername":
-      return Object.assign({}, state, { user: action.newUsername});
+      return Object.assign({}, state, { newUsername: action.newUsername});
     case "handleNewPassword":
-      return Object.assign({}, state, { user: action.newPassword});
+      return Object.assign({}, state, { newPassword: action.newPassword});
     case "handleNewDepartment":
-      return Object.assign({}, state, { user: action.newDepartment});
+      return Object.assign({}, state, { newDepartment: action.newDepartment});
     case "handleNewFuncTeam":
-      return Object.assign({}, state, { user: action.newFuncTeam});
+      return Object.assign({}, state, { newFuncTeam: action.newFuncTeam});
     case "handleNewTitle":
-      return Object.assign({}, state, { user: action.newTitle});
+      return Object.assign({}, state, { newTitle: action.newTitle});
     case "NewUser":
-      return Object.assign({}, state, { user: action.user});
+      return Object.assign({}, state, { NewUser: action.user});
     default:
       return state;
   }

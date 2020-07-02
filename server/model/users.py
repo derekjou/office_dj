@@ -12,7 +12,10 @@ class User:
 
     def to_dict(self):
         '''reutrns a dictionary deffinition of itself'''
-        return self.to_dict()
+        user_dict = self.__dict__
+        if user_dict['_id']:
+            del user_dict['_id']
+        return self.__dict__
 
     @classmethod
     def from_dict(cls, input_user):
