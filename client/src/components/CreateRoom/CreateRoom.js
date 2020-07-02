@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import RoomService from '../../services/room.service';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import RoomService from '../../services/room.service';
 import Room from '../Room/Room';
 // TODO: CSS
 import { connect } from 'react-redux';
@@ -15,22 +15,38 @@ const CreateRoom = (props) => {
 
     const roomService = new RoomService();
 
-    const handleKeyDown = e => {
-        if (e.key === 'Enter') {
-            this.handleSubmit();
-        }
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let loggedRoom = await roomService.createRoom(state.name, state.participants)
+        let loggedRoom = await roomService.createRoom(state.newRoomName, state.newParticipant).data;
+        console.log(loggedRoom);
+        if (loggedRoom) {
+            history.push(`/room/${loggedRoom.name}`);
+        }
         sessionStorage.setItem('loggedRoom', JSON.stringify(loggedRoom));
-        dispatch({ type: 'login' })
+        dispatch({ type: 'createroom' })
+    }
+
+    const createNewRoom = () => {
+        this.userService.updateUser(
+            state.updateUsername,
+            state.updatePassword,
+            state.updateDpt,
+            state.updateFuncTeam,
+            state.updateTitle).then(resp => {
+                dispatch({ type: 'createRoom', room: resp.data })
+            });
+    }
+
+    const handleKeyDown = e => {
+        if (e.key === 'Enter') {
+            handleSubmit();
+        }
     }
 
     useEffect(() => {
-        console.log(state); 
         let loggedRoom = sessionStorage.getItem('loggedRoom');
+        console.log(loggedRoom); 
         if (loggedRoom) {
             history.push(`/rooms/${loggedRoom.name}`);
         }
@@ -41,29 +57,23 @@ const CreateRoom = (props) => {
             <Form.Group controlId="formRoomName">
                 <Form.Label>Name Your Room</Form.Label>
                 <Form.Control type="text"
-                    onChange={this.props.handleRoomInput}
+                    onChange={e => dispatch({ type: 'handleNewRoomName', newRoomName: e.target.value })}
                     onKeyDown={(e) => handleKeyDown(e)} />
             </Form.Group>
 
             <Form.Group controlId="form">
                 <Form.Label>Add Someone</Form.Label>
                 <Form.Control type="text" placeholder="Enter usernames"
-                    onChange={this.props.handleRoomInput}
-                    onKeyDown={(e) => handleKeyDown(e)} />
-                <Form.Control type="text" placeholder="Enter usernames"
-                    onChange={this.props.handleRoomInput}
-                    onKeyDown={(e) => handleKeyDown(e)} />
-                <Form.Control type="text" placeholder="Enter usernames"
-                    onChange={this.props.handleRoomInput}
+                    onChange={e => dispatch({ type: 'handleNewParticipant', newParticipant: e.target.value })}
                     onKeyDown={(e) => handleKeyDown(e)} />
                 <Form.Text className="text-muted">
                     You can add more people later.
                     </Form.Text>
             </Form.Group>
 
-            <Button variant="primary" onClick={handleSubmit()}>
+            <Button variant="primary" onClick={handleSubmit}>
                 Create a Room
-                </Button>
+            </Button>
         </Form>
     )
 }

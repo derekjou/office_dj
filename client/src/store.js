@@ -14,6 +14,8 @@ const initialState = {
   newDpt: "",
   newFuncTeam: "",
   newTitle: "",
+  roomName: "",
+  particpiants: [],
 };
 
 function reducer(state = initialState, action) {
@@ -48,6 +50,10 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { newTitle: action.newTitle});
     case "NewUser":
       return Object.assign({}, state, { NewUser: action.user});
+    case "handleNewRoomName":
+      return Object.assign({}, state, { newRoomName: action.newRoomName });
+    case "handleNewParticipant":
+      return Object.assign({}, state, { newParticipant: action.newParticipant });
     default:
       return state;
   }

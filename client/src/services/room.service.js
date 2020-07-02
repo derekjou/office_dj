@@ -18,9 +18,9 @@ class RoomService {
         // TODO
     }
 
-    createRoom(room) {
-        let uri = `${this.URI}/${room.name}`
-        return axios.post(uri, room, { withCredentials: true })
+    createRoom(roomName, participants) {
+        let uri = `${this.URI}/${roomName}`
+        return axios.post(uri, { roomName, participants }, { withCredentials: true })
     }
 }
 
