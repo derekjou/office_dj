@@ -12,7 +12,10 @@ class User:
 
     def to_dict(self):
         '''reutrns a dictionary deffinition of itself'''
-        return self.to_dict()
+        user_dict = self.__dict__
+        if user_dict['_id']:
+            del user_dict['_id']
+        return self.__dict__
 
     @classmethod
     def from_dict(cls, input_user):
@@ -26,10 +29,6 @@ class DJ(User):
     def __init__(self, _id=None, user_name='', password='', department='', functional_team='', title='', role='DJ'):
         super().__init__(_id, user_name=user_name, password=password, department=department, functional_team=functional_team, title=title)
         self.role = role
-
-    def to_dict(self):
-        '''reutrns a dictionary deffinition of itself'''
-        return self.to_dict()
 
     @classmethod
     def from_dict(cls, input_dj):

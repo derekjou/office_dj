@@ -12,6 +12,7 @@ _log = get_logger(__name__)
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+
 app.register_blueprint(user_page)
 
 @app.route("/")
@@ -35,3 +36,4 @@ def login():
         
 if __name__ == "__main__":
     app.run()
+    
