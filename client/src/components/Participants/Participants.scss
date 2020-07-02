@@ -1,0 +1,29 @@
+
+$icon-color: rgb(134, 59, 112);
+
+
+.participant-icon {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 2rem; height: 2rem;
+    background-color: $icon-color;
+    border-radius: 50%;
+
+
+
+    &.closed {
+        overflow: hidden;
+        .participant-name {
+            
+            &::before {
+                content: attr(data-inital);
+            }
+        }
+        #ellipse-dropdown {
+            visibility: hidden;
+        }
+    }
+    & .participant-name {
+
+    }
+}

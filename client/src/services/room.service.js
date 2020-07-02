@@ -5,9 +5,23 @@ class RoomService {
         this.URI = 'http://localhost:5000/rooms';
     }
 
-    createRoom() {
-        return axios.get(this.URI, { withCredentials: true })
+    getRoom(room) {
+        uri = `${this.URI}/${room.name}?${room.id}`
+        return axios.get(uri, { withCredentials: true })
+    }
+
+    getUserRooms() {
+        // TODO
+    }
+
+    getParticipants() {
+        // TODO
+    }
+
+    createRoom(room) {
+        uri = `${this.URI}/${room.name}`
+        return axios.post(uri, room, { withCredentials: true })
     }
 }
 
-export default UserService;
+export default RoomService;
