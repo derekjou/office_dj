@@ -30,10 +30,6 @@ class DJ(User):
         super().__init__(_id, user_name=user_name, password=password, department=department, functional_team=functional_team, title=title)
         self.role = role
 
-    def to_dict(self):
-        '''reutrns a dictionary deffinition of itself'''
-        return self.to_dict()
-
     @classmethod
     def from_dict(cls, input_dj):
         '''takes an input dictionary and returns a user'''
