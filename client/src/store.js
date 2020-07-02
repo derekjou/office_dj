@@ -1,13 +1,14 @@
 import { createStore } from "redux";
 
 const initialState = {
-  user: {
-      username: 'Derek',
-      password: 'derek',
-      department: 'Cool Zone',
-      functional_team: 'Team 1',
-      title: 'Dev'
-  },
+  // user: {
+  //     username: 'Derek',
+  //     password: 'derek',
+  //     department: 'Cool Zone',
+  //     functional_team: 'Team 1',
+  //     title: 'Dev'
+  // },
+  user:{},
   username: "",
   password: "",
   updateUsername: "",
