@@ -13,11 +13,11 @@ class NewUser extends Component {
             method: 'POST',
             url: 'http://localhost:5000/users/register',
             data: {
-                newUsername: this.props.newUsername, 
-                newPassword: this.props.newPassword, 
-                newDpt: this.props.newDpt, 
-                newFuncTeam: this.props.newFuncTeam, 
-                newTitle: this.props.newTitle
+                username: this.props.newUsername, 
+                password: this.props.newPassword, 
+                department: this.props.newDpt, 
+                functional_team: this.props.newFuncTeam, 
+                title: this.props.newTitle
 
             }
         })
@@ -32,31 +32,31 @@ class NewUser extends Component {
         <p>New USER INFO</p>
             <label>
                 Username
-                <input className="form-control" type="text" name="username" placeholder={this.props.Newuser.username}
+                <input className="form-control" type="text" name="username"
                                     value={this.props.newUsername}
                                     onChange={this.props.handleNewUsernameInput} />
             </label>
             <label for="password">
                 Password
-                <input className="form-control" type="password" name="password" placeholder={this.props.Newuser.password}
+                <input className="form-control" type="password" name="password"
                                     value={this.props.newPassword}
                                     onChange={this.props.handleNewPasswordInput} />
             </label>
             <label for="department">
                 Department
-                <input className="form-control" type="text" name="department" placeholder={this.props.Newuser.department}
+                <input className="form-control" type="text" name="department"
                                     value={this.props.newDpt}
                                     onChange={this.props.handleNewDepartmentInput} />
             </label>
             <label for="functional_team">
                 Functional Team
-                <input className="form-control" type="text" name="functional_team" placeholder={this.props.Newuser.functional_team}
+                <input className="form-control" type="text" name="functional_team"
                                     value={this.props.newFuncTeam}
                                     onChange={this.props.handleNewFuncTeamInput} />
             </label>
             <label for="title">
                 Title
-                <input className="form-control" type="text" name="title" placeholder={this.props.Newuser.title}
+                <input className="form-control" type="text" name="title"
                                     value={this.props.newTitle}
                                     onChange={this.props.handleNewTitleInput} />
             </label>
