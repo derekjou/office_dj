@@ -10,7 +10,7 @@ class RoomService {
         return axios.get(uri, { withCredentials: true })
     }
 
-    getUserRooms() {
+    getUserRooms(user) {
         // TODO
     }
 

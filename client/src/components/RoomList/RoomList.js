@@ -14,7 +14,7 @@ class RoomList extends Component {
     }
 
     componentDidMount() {
-        this.roomService.getUserRooms().then(res => {
+        this.roomService.getUserRooms(this.props.user).then(res => {
             console.log(res);
             this.props.queryRooms(res.data);
         });
@@ -22,7 +22,7 @@ class RoomList extends Component {
 
     render() {
         <ListGroup variant="flush" className="rooms-list">
-            {this.props.roomlist.map(room => {
+            {this.props.roomList.map(room => {
                 return <RoomIcon key={room._id} room={room} />
             })}
         </ListGroup>

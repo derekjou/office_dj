@@ -5,6 +5,7 @@ import Home from '../Home/Home';
 import UpdateUser from '../UpdateUser/UpdateUser';
 import NavBar from '../NavBar/NavBar';
 import Login from '../Login/Login';
+import CreateRoom from '../CreateRoom/CreateRoom';
 
 const checkLogin = () => {
   // return sessionStorage.getItem('user') ? true : false;
@@ -36,6 +37,8 @@ class Routing extends Component {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         {/* <Route path="/register" component={Register} /> */}
+
+        <Route exact path="/createroom" component={CreateRoom} />
         <PrivateRoute path='/updateUser' component={UpdateUser} />
       </Router>
     );

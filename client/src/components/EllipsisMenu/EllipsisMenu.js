@@ -5,16 +5,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 // TODO: CSS
 import { connect } from 'react-redux';
 
-class EllipseMenu extends Component {
-    constructor(props) {
-        super(props)
-
-    }
-
+class EllipsisMenu extends Component {
     render() {
         return (
             <>
                 <Dropdown.Toggle key="" className="ellipse-dropdown">&#x22ee;</Dropdown.Toggle>
+                {/* TODO: change the dropdown menu out with participant acitons */}
                 <Dropdown.Menu>
                     <a href="#">temp link</a>
                 </Dropdown.Menu>
@@ -22,3 +18,5 @@ class EllipseMenu extends Component {
         )
     }
 }
+
+export default EllipsisMenu

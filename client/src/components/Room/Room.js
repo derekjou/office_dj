@@ -13,12 +13,32 @@ class Room extends Component {
         super(props)
     }
 
-    componentDidMount() {
-        
+    render() {
+        return (
+            <Container>
+                <Row>
+                    <Col id="roomlist-wrapper">
+                        <RoomList />
+                    </Col>
+                    <Col id="content-wrapper">
+                        <Row>
+                            <h3 id="roomname-wrapper">
+                                {this.state.room.name}
+                            </h3>
+                        </Row>
+                        <Row>
+                            <Col id="playlist-wrapper">
+                                <Playlists />
+                            </Col>
+                            <Col id="participants-wrapper">
+                                <Participants />
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
+        )
     }
-
-    
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room);
