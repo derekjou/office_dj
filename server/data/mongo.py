@@ -13,7 +13,7 @@ _log = get_logger(__name__)
 
 
 try:
-    _db = MongoClient(os.environ.get('MONGO_URI')).db
+    _db = MongoClient(os.environ.get('MONGO_URI')).office_dj
 except:
     _log.exception('Could not connect to Mongo')
     raise
@@ -34,12 +34,11 @@ def _get_user_class(status: str):
         _log.error('Expected a status of a user, recieved %s.', status)
     return output
 
-
 def login(username: str, password: str):
     '''A function that takes in a username and returns a user object with that
     username'''
     _log.info('Attempting to retrieve user %s from database.', username)
-    query_dict = {'user_name': username, 'password':password}
+    query_dict = {'username': username, 'password':password}
     try:
         user_dict = _db.users.find_one(query_dict)
         if user_dict:

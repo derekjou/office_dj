@@ -3,3 +3,9 @@
   height: auto;
   margin: auto;
 }
+
+.Title {
+  text-align: center;
+  text-shadow: 2px 2px #4d94ff;
+}
+
