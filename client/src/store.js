@@ -1,14 +1,6 @@
 import { createStore } from "redux";
 
 const initialState = {
-  // user: {
-  //     username: 'Derek',
-  //     password: 'derek',
-  //     department: 'Cool Zone',
-  //     functional_team: 'Team 1',
-  //     title: 'Dev'
-  // },
-  user:{},
   username: "",
   password: "",
   updateUsername: "",
@@ -23,7 +15,7 @@ function reducer(state = initialState, action) {
   console.log(action);
   switch (action.type) {
     case "login":
-      return Object.assign({}, state, { username: "", user: action.user }, { password: "" });
+      return Object.assign({}, state, { username: "", password: "" });
     case "handleUsername":
       return Object.assign({}, state, { username: action.username });
     case "handlePassword":
@@ -38,8 +30,6 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { updateFuncTeam: action.updateFuncTeam});
     case "handleUpdateTitle":
       return Object.assign({}, state, { updateTitle: action.updateTitle});
-    case "updateUser":
-      return Object.assign({}, state, { user: action.user});
     default:
       return state;
   }
