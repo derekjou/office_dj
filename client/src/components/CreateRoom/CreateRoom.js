@@ -1,71 +1,71 @@
-import React, { Component } from 'react';
-import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
-import Button, { Form } from '../EllipsisMenu/node_modules/react-bootstrap/Button';
-import UserService from '../../services/user.service'
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import RoomService from '../../services/room.service';
+import Room from '../Room/Room';
 // TODO: CSS
 import { connect } from 'react-redux';
 
-class CreateRoom extends Component {
+const CreateRoom = (props) => {
+    const state = useSelector(state => state);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
-    constructor(props) {
-        super(props)
-        this.handleKeyDown = this.handleKeyDown.bind(this);
-        
-    }
+    const roomService = new RoomService();
 
-    handleKeyDown(e) {
+    const handleKeyDown = e => {
         if (e.key === 'Enter') {
             this.handleSubmit();
         }
     }
 
-    getCreateRoomForm() {
-        return(
-            <Form>
-                <Form.Group controlId="formRoomName">
-                    <Form.Label>Name Your Room</Form.Label>
-                    <Form.Control type="text"
-                        onChange={this.props.handleUserInput}
-                        onKeyDown={(e) => this.handleKeyDown(e)} />/>
-                </Form.Group>
-
-                <Form.Group controlId="form">
-                    <Form.Label>Add Some People</Form.Label>
-                    <Form.Control type="text" placeholder="Enter usernames" />
-                    <Form.Text className="text-muted">
-                        You can add more people later.
-                    </Form.Text>
-                </Form.Group>
-
-                <Button variant="primary">
-                    Create a Room
-                </Button>
-            </Form>
-        )
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let loggedRoom = await roomService.createRoom(state.name, state.participants)
+        sessionStorage.setItem('loggedRoom', JSON.stringify(loggedRoom));
+        dispatch({ type: 'login' })
     }
 
-    handleSubmit = event => {
-        event.preventDefault;
-
-        let user = axios.put(`http://localhost:5000/room/${this.state.name}`, {
-            name = this.state.name
+    useEffect(() => {
+        console.log(state); 
+        let loggedRoom = sessionStorage.getItem('loggedRoom');
+        if (loggedRoom) {
+            history.push(`/rooms/${loggedRoom.name}`);
         }
-    }
+    })
 
-    creationSuccess() {
-        // redirect to dj room
+    return (
+        <Form>
+            <Form.Group controlId="formRoomName">
+                <Form.Label>Name Your Room</Form.Label>
+                <Form.Control type="text"
+                    onChange={this.props.handleRoomInput}
+                    onKeyDown={(e) => handleKeyDown(e)} />
+            </Form.Group>
 
-    }
+            <Form.Group controlId="form">
+                <Form.Label>Add Someone</Form.Label>
+                <Form.Control type="text" placeholder="Enter usernames"
+                    onChange={this.props.handleRoomInput}
+                    onKeyDown={(e) => handleKeyDown(e)} />
+                <Form.Control type="text" placeholder="Enter usernames"
+                    onChange={this.props.handleRoomInput}
+                    onKeyDown={(e) => handleKeyDown(e)} />
+                <Form.Control type="text" placeholder="Enter usernames"
+                    onChange={this.props.handleRoomInput}
+                    onKeyDown={(e) => handleKeyDown(e)} />
+                <Form.Text className="text-muted">
+                    You can add more people later.
+                    </Form.Text>
+            </Form.Group>
 
-    render() {
-        return this.getCreateRoomForm();
-    }
+            <Button variant="primary" onClick={handleSubmit()}>
+                Create a Room
+                </Button>
+        </Form>
+    )
 }
 
-function mapStateToProps(state) {
-    const {roomName, participants} = state;
-    return {
-        roomName: roomName,
-        participants: participants,
-    }
-}
+export default CreateRoom;

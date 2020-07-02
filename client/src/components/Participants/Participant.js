@@ -33,8 +33,4 @@ class Participant extends Component {
     }
 }
 
-Participant.PropTypes = {
-    participant: PropTypes.string
-}
-
 export default Participant

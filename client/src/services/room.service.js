@@ -6,7 +6,7 @@ class RoomService {
     }
 
     getRoom(room) {
-        uri = `${this.URI}/${room.name}?${room.id}`
+        let uri = `${this.URI}/${room.name}?${room.id}`
         return axios.get(uri, { withCredentials: true })
     }
 
@@ -19,7 +19,7 @@ class RoomService {
     }
 
     createRoom(room) {
-        uri = `${this.URI}/${room.name}`
+        let uri = `${this.URI}/${room.name}`
         return axios.post(uri, room, { withCredentials: true })
     }
 }

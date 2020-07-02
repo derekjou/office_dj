@@ -19,3 +19,5 @@ class RoomIcon extends Component {
         )
     }
 }
+
+export default RoomIcon

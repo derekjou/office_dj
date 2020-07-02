@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // TODO: CSS
 import RoomService from '../../services/room.service';
-import RoomIcon from 'RoomIcon.js';
+import RoomIcon from './RoomIcon.js';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { connect } from 'react-redux';
 
@@ -21,16 +21,14 @@ class RoomList extends Component {
     }
 
     render() {
-        <ListGroup variant="flush" className="rooms-list">
-            {this.props.roomList.map(room => {
-                return <RoomIcon key={room._id} room={room} />
-            })}
-        </ListGroup>
+        return (
+            <ListGroup variant="flush" className="rooms-list">
+                {this.props.roomList.map(room => {
+                    return <RoomIcon key={room._id} room={room} />
+                })}
+            </ListGroup>
+        )
     }
-}
-
-Participants.PropTypes = {
-    participants: PropTypes.array
 }
 
 function mapStateToProps(state) {

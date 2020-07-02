@@ -34,6 +34,8 @@ const NavBar = (props) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="/room">Create a Room</Nav.Link>
+          <Nav.Link href="/createroom">Create a Room</Nav.Link>
           {loggedIn ? (
             <>
               <Nav.Link href="/updateUser">Update User</Nav.Link>

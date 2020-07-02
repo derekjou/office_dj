@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 // TODO: CSS
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import RoomList from '../RoomList/RoomList.js';
+import Participants from '../Participants/Participants';
 import RoomService from '../../services/room.service'
-import Dashboard from './dashboard.component';
 import { connect } from 'react-redux';
 
 
@@ -11,6 +15,13 @@ class Room extends Component {
     roomService = new RoomService();
     constructor(props) {
         super(props)
+    }
+
+    componentDidMount() {
+        this.roomService.getRoom().then(res => {
+            console.log(res);
+            this.props.queryUsers(res.data);
+        });
     }
 
     render() {
@@ -28,7 +39,7 @@ class Room extends Component {
                         </Row>
                         <Row>
                             <Col id="playlist-wrapper">
-                                <Playlists />
+                               {/* TODO: Playlists Component */}
                             </Col>
                             <Col id="participants-wrapper">
                                 <Participants />
@@ -41,4 +52,4 @@ class Room extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Room);
+export default Room;

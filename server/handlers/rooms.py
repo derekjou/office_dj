@@ -17,7 +17,7 @@ _log = get_logger(__name__)
 room_page = Blueprint('room_page', __name__, static_folder='../static')
 
 
-@room_page.route('/rooms/<:name>', methods=['GET', 'POST'])
+@room_page.route('/rooms/<string:name>', methods=['GET', 'POST'])
 def room_collection(name):
     '''A GET to /rooms/<name> returns that room, a POST to /rooms/<name> creates a new room of that name.'''
     if request.method == 'POST':

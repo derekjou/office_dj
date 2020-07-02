@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Button, { Form } from 'react-bootstrap/Button';
-import UserService from '../../services/user.service';
+import ListGroup from 'react-bootstrap/ListGroup';
 // TODO: CSS
 import { connect } from 'react-redux';
 import Participant from './Participant';
@@ -10,7 +7,6 @@ import Participant from './Participant';
 class Participants extends Component {
     constructor(props) {
         super(props);
-
     }
 
     componentDidMount() {
@@ -32,10 +28,6 @@ class Participants extends Component {
             </>
         )
     }
-}
-
-Participants.PropTypes = {
-    participants: PropTypes.array
 }
 
 function mapStateToProps(state) {
