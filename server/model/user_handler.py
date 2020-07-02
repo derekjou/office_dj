@@ -20,6 +20,11 @@ def users():
         if input_dict['newUsername']:
             return db.add_user(DJ.from_dict(input_dict))
         return db.add_user(User.from_dict(input_dict))
-    if request.method == 'OPTIONS':
+
+@user_page.route("/users/login", methods=['POST'])
+def login():
+    '''a method to handle requests to login'''
+    if request.method == 'POST':
         input_dict = request.json
         _log.debug(input_dict)
+        return db.login(input_dict['username'], input_dict['password'])
