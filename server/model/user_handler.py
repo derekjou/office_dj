@@ -22,10 +22,10 @@ def users():
         else:
             db.add_user(User.from_dict(input_dict))
 
-@user_page.route("/login", methods=['POST'])
+@user_page.route("/users/login", methods=['POST'])
 def login():
     '''a method to handle requests to login'''
     if request.method == 'POST':
         input_dict = request.json
         _log.debug(input_dict)
-        db.login(DJ.from_dict(input_dict))
+        return db.login(input_dict['username'], input_dict['password'])
