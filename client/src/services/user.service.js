@@ -5,9 +5,6 @@ class UserService {
         this.URI = 'http://localhost:5000/users';
     }
 
-    checkLogin() {
-        return axios.get(this.URI, {withCredentials: true})
-    }
     login(username, password) {
         return axios({
             method: 'POST',
@@ -18,9 +15,6 @@ class UserService {
             },
             withCredentials: true
         })
-    }
-    logout() {
-        return axios.delete(this.URI, {withCredentials: true})
     }
 
     updateUser(username, password, department, team, title) {

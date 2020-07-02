@@ -50,10 +50,11 @@ def login(username: str, password: str):
     query_dict = {'username': username, 'password':password}
     try:
         user_dict = _db.users.find_one(query_dict)
+        # _log.debug(user_dict)
         if user_dict:
             class_name = _get_user_class(user_dict['role'])
-            _log.debug(str(class_name.from_dict(user_dict)))
-        return class_name.from_dict(user_dict) if user_dict else None
+            _log.debug(class_name.from_dict(user_dict))
+        return user_dict if user_dict else None
     except:
         _log.info('Did not find %s in collection users.', username)
         raise
@@ -63,4 +64,5 @@ if __name__ == "__main__":
     _db.counter.drop()
 
     _db.counter.insert_one({'_id': 'COUNT', 'count': 0})
-    
+    _db.users.insert_one({'_id': _get_id(), 'username': 'user', 'password': 'pass', 'department': 'Engineering',
+                          'functional_team': 'UI', 'title': 'Junior Developer'})

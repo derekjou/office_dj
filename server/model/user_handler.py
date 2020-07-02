@@ -26,5 +26,7 @@ def login():
     '''a method to handle requests to login'''
     if request.method == 'POST':
         input_dict = request.json
-        _log.debug(input_dict)
+        _log.debug('LOOKIE HERE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        _log.debug(db.login(input_dict['username'], input_dict['password']))
+        _log.debug('COMPLETE')
         return db.login(input_dict['username'], input_dict['password'])
