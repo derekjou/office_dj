@@ -22,3 +22,30 @@ def add_user(input_user):
     '''a method to add a new user to the database'''
     _log.info("adding user to the database")
     _db.users.insert_one(input_user.to_dict())
+
+def _get_user_class(status: str):
+    '''Takes the status of a user and returns the matching class.'''
+    output = None
+    if status == 'user':
+        output = User
+    if status == 'dj':
+        output = DJ
+    if output is None:
+        _log.error('Expected a status of a user, recieved %s.', status)
+    return output
+
+
+def login(username: str, password: str):
+    '''A function that takes in a username and returns a user object with that
+    username'''
+    _log.info('Attempting to retrieve user %s from database.', username)
+    query_dict = {'user_name': username, 'password':password}
+    try:
+        user_dict = _db.users.find_one(query_dict)
+        if user_dict:
+            class_name = _get_user_class(user_dict['role'])
+            _log.debug(str(class_name.from_dict(user_dict)))
+        return class_name.from_dict(user_dict) if user_dict else None
+    except:
+        _log.info('Did not find %s in collection users.', username)
+        raise

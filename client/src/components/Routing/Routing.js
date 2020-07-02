@@ -34,7 +34,7 @@ class Routing extends Component {
       <Router>
         <NavBar></NavBar>
         <Route exact path="/" component={Home} />
-        <Route path="/login" component={Login} />
+        <Route exact path="/login" component={Login} />
         {/* <Route path="/register" component={Register} /> */}
         <PrivateRoute path='/updateUser' component={UpdateUser} />
       </Router>
