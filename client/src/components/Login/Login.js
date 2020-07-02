@@ -36,7 +36,7 @@ const Login = (props) => {
 
     return (
         <div className="Login">
-            <h1 style={{ textAlign: 'center' }}>Log in</h1>
+            <h1 className="Title" >Log in</h1>
             <br></br>
             <Form>
                 <Form.Group controlId='username'>

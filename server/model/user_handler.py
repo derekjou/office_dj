@@ -17,10 +17,9 @@ def users():
     if request.method == 'POST':
         input_dict = request.json
         _log.debug(input_dict)
-        if input_dict['role']:
-            db.add_user(DJ.from_dict(input_dict))
-        else:
-            db.add_user(User.from_dict(input_dict))
+        if 'role' in input_dict:
+            return db.add_user(DJ.from_dict(input_dict))
+        return db.add_user(User.from_dict(input_dict))
 
 @user_page.route("/users/login", methods=['POST'])
 def login():
