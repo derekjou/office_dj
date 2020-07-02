@@ -42,13 +42,13 @@ class Admin:
         self.password = password
         self.role = 'admin'
 
-    _id = 0
-    username = ''
-    password = ''
-    role = 'admin'
+    def to_dict(self):
+        '''returns a dictionary representation of self'''
+        return self.__dict__
 
     @classmethod
     def from_dict(cls ,input_admin):
+        '''creates an admin object from a dictionary'''
         user = Admin()
         user.__dict__.update(input_admin)
         return user
