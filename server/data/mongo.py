@@ -11,9 +11,8 @@ from server.data.logger import get_logger
 
 _log = get_logger(__name__)
 
-
 try:
-    _db = MongoClient(os.environ.get('MONGO_URI')).office_dj
+    _db = MongoClient(os.environ.get('MONGO_URI')).db
 except:
     _log.exception('Could not connect to Mongo')
     raise
