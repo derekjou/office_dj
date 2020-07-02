@@ -4,7 +4,6 @@
 import os
 from datetime import datetime, timedelta
 from pymongo import MongoClient, errors, ReturnDocument
-import pymongo
 
 # Internal imports
 from server.model.users import User, DJ
@@ -21,16 +20,15 @@ except:
 
 def _get_id():
     '''Retrieves the next id in the database and increments it.'''
-    return _db.counter.find_one_and_update({'_id': 'UNIQUE_COUNT'},
+    return _db.counter.find_one_and_update({'_id': 'COUNT'},
                                             {'$inc': {'count': 1}},
-                                            return_document=pymongo.ReturnDocument.AFTER)['count']
+                                            return_document=ReturnDocument.AFTER)['count']
 
 def add_user(input_user):
     '''a method to add a new user to the database'''
     _log.info("adding user to the database")
     new_user = input_user.to_dict()
-    if not new_user['_id']:
-        new_user['_id'] = _get_id()
+    new_user['_id'] = _get_id()
     _db.users.insert_one(input_user.to_dict())
     _log.debug(input_user.to_dict())
     return input_user.to_dict()
