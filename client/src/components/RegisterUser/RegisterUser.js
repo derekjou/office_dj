@@ -6,16 +6,22 @@ import Button from 'react-bootstrap/Button';
 const axios = require('axios');
 
 class NewUser extends Component {
+    
   
     newUser() {
-        let user = axios.post('http://localhost:5000/users/register', {
-            username: this.props.username,
-            newUsername: this.props.newUsername, 
-            newPassword: this.props.newPassword, 
-            newDpt: this.props.newDpt, 
-            newFuncTeam: this.props.newFuncTeam, 
-            newTitle: this.props.newTitle
+        let user = axios({
+            method: 'POST',
+            url: 'http://localhost:5000/users/register',
+            data: {
+                newUsername: this.props.newUsername, 
+                newPassword: this.props.newPassword, 
+                newDpt: this.props.newDpt, 
+                newFuncTeam: this.props.newFuncTeam, 
+                newTitle: this.props.newTitle
+
+            }
         })
+
         this.props.handleNewUser(user);
 
     }
