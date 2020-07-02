@@ -33,3 +33,22 @@ class DJ(User):
         user = DJ()
         user.__dict__.update(input_dj)
         return user
+
+class Admin:
+    '''the class for users that manage users'''
+    def __init__(self, _id=None, username="", password="", role='admin'):
+        self._id = _id
+        self.username = username
+        self.password = password
+        self.role = 'admin'
+
+    _id = 0
+    username = ''
+    password = ''
+    role = 'admin'
+
+    @classmethod
+    def from_dict(cls ,input_admin):
+        user = Admin()
+        user.__dict__.update(input_admin)
+        return user
