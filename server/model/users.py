@@ -2,9 +2,9 @@
 
 class User:
     '''a class that holds the definition of the base type user'''
-    def __init__(self, _id=None, user_name='', password='', department='', functional_team='', title=''):
+    def __init__(self, _id=None, username='', password='', department='', functional_team='', title=''):
         self._id = _id
-        self.user_name = user_name
+        self.username = username
         self.password = password
         self.department = department
         self.functional_team = functional_team
@@ -12,9 +12,6 @@ class User:
 
     def to_dict(self):
         '''reutrns a dictionary deffinition of itself'''
-        user_dict = self.__dict__
-        if user_dict['_id']:
-            del user_dict['_id']
         return self.__dict__
 
     @classmethod
@@ -26,8 +23,8 @@ class User:
 
 class DJ(User):
     '''a class that holds the deffinition of a DJ extends the base User class'''
-    def __init__(self, _id=None, user_name='', password='', department='', functional_team='', title='', role='DJ'):
-        super().__init__(_id, user_name=user_name, password=password, department=department, functional_team=functional_team, title=title)
+    def __init__(self, _id=None, username='', password='', department='', functional_team='', title='', role='DJ'):
+        super().__init__(_id, username=username, password=password, department=department, functional_team=functional_team, title=title)
         self.role = role
 
     @classmethod
@@ -35,4 +32,23 @@ class DJ(User):
         '''takes an input dictionary and returns a user'''
         user = DJ()
         user.__dict__.update(input_dj)
+        return user
+
+class Admin:
+    '''the class for users that manage users'''
+    def __init__(self, _id=None, username="", password="", role='admin'):
+        self._id = _id
+        self.username = username
+        self.password = password
+        self.role = 'admin'
+
+    def to_dict(self):
+        '''returns a dictionary representation of self'''
+        return self.__dict__
+
+    @classmethod
+    def from_dict(cls ,input_admin):
+        '''creates an admin object from a dictionary'''
+        user = Admin()
+        user.__dict__.update(input_admin)
         return user

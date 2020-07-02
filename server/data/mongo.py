@@ -26,6 +26,8 @@ def _get_id():
 def add_user(input_user):
     '''a method to add a new user to the database'''
     _log.info("adding user to the database")
+    new_user = input_user.to_dict()
+    new_user['_id'] = _get_id()
     _db.users.insert_one(input_user.to_dict())
     _log.debug(input_user.to_dict())
     return input_user.to_dict()
