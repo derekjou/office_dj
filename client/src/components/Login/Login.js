@@ -1,122 +1,65 @@
-import React, { Component } from 'react';
-import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
-import './Login.module.css';
-import UserService from '../../services/user.service'
-// import Dashboard from './dashboard.component';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import './Login.css';
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import UserService from '../../services/user.service';
 
-class Login extends Component {
+const Login = (props) => {
+    const state = useSelector(state => state);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
-    constructor(props) {
-        super(props);
-        this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.login = this.login.bind(this);
-        this.logout = this.logout.bind(this);
-    }
-    userService = new UserService();
+    const userService = new UserService();
 
-    componentDidMount() {
-        this.userService.checkLogin().then(
-            (resp) => {
-                this.props.dispatch({ type: 'login', user: resp.data })
-            }
-        )
-    }
+    useEffect(() => {
+        console.log(state);
+        if(sessionStorage.getItem('loggedUser')){
+            history.push('/');
+        }
+    })
 
-    handleKeyDown(e) {
+    const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            this.login();
+            login();
         }
     }
 
-    login() {
-        console.log(this.props)
-        this.userService.login(this.props.username,
-            this.props.password).then(
-                (resp) => {
-                    this.props.dispatch({ type: 'login', user: resp.data });
-                    // <Redirect to={{pathname:'/dashboard'}}/>
-                }
-            )
+    const login = async (e) => {
+        e.preventDefault();
+        let loggedUser = await userService.login(state.username, state.password)
+        sessionStorage.setItem('loggedUser', JSON.stringify(loggedUser));
+        dispatch({ type: 'login' })
+        history.push('/')
     }
 
-    logout() {
-        this.userService.logout().then(
-            () => {
-                console.log('Logging out.')
-                this.props.dispatch({ type: 'login', user: null })
-            }
-        )
-    }
-
-    getLoginForm() {
-        return (
-            <>
-                <div className='login-dark'>
-                    <form method='post'>
-                        <h2 className='sr-only'>Login Form</h2>
-                        <div className='ilustration'>
-                            <i className='icon ion-ios-locked-outline'></i>
-                        </div>
-                        <div className="form-group">
-                            <input className="form-control" type="text" name="username" placeholder="Username"
-                                value={this.props.username}
-                                onChange={this.props.handleUserInput} />
-                        </div>
-                        <div className="form-group">
-                            <input className="form-control" type="password" name="password" placeholder="Password"
-                                value={this.props.password}
-                                onChange={this.props.handlePasswordInput}
-                                onKeyDown={(e) => this.handleKeyDown(e)} />
-                        </div>
-                        <div className="form-group">
-                            <button className="btn btn-primary btn-block" type="submit"
-                                onClick={this.login}>Log In</button>
-                        </div>
-                    </form>
-                </div>
-            </>
-        )
-    }
-
-    displayUser() {
-        return (
-            <>
-                <ul className='nav'>
-                    <li className='nav-item'>
-                        Welcome {this.props.user.role}: {this.props.user.username}
-                    </li>
-                    <li className='nav-item'><button className='btn btn-danger'
-                        onClick={this.logout}>Logout</button></li>
-                </ul>
-            </>
-        )
-    }
-
-    render() {
-        console.log('rendering login')
-        if (this.props.user) {
-            return this.displayUser()
-        } else {
-            return this.getLoginForm()
-        }
-    }
+    return (
+        <div className="Login">
+            <h1 style={{ textAlign: 'center' }}>Log in</h1>
+            <br></br>
+            <Form>
+                <Form.Group controlId='username'>
+                    <Form.Label>Username:</Form.Label>
+                    <Form.Control type="text" placeholder="Enter username"
+                        autoFocus
+                        value={state.username}
+                        onChange={e => dispatch({ type: 'handleUsername', username: e.target.value })}
+                        onKeyDown={(e) => handleKeyDown(e)} />
+                </Form.Group>
+                <Form.Group controlId='password'>
+                    <Form.Label>Password:</Form.Label>
+                    <Form.Control type="password" placeholder="Enter password"
+                        value={state.password}
+                        onChange={e => dispatch({ type: 'handlePassword', password: e.target.value })}
+                        onKeyDown={(e) => handleKeyDown(e)} />
+                </Form.Group>
+                <Button block type="submit" onClick={login}>
+                    Log In
+            </Button>
+            </Form>
+        </div>
+    )
 }
 
-function mapStateToProps(state) {
-    const { user, username, password } = state;
-    return {
-        user: user,
-        username: username,
-        password: password
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        handleUserInput: (e) => dispatch({type: 'handleUsername', username: e.target.value}),
-        handlePasswordInput: (e) => dispatch({type: 'handlePassword', password: e.target.value})
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

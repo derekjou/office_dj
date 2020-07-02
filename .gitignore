@@ -105,4 +105,7 @@ dist
 
 .vs/
 server/venv/
+**/bin
+**/lib
+server/pyvenv.cfg
 **/__pycache__/
