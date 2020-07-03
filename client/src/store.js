@@ -25,6 +25,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { username: "", password: "", user: action.user });
     case "logout":
       return Object.assign({}, state, {  user: {} });
+    case "updateUser":
+      return Object.assign({}, state, {  user: action.user });
     case "handleUsername":
       return Object.assign({}, state, { username: action.username });
     case "handlePassword":

@@ -12,15 +12,18 @@ const UpdateUser = (props) => {
 
     const userService = new UserService();
 
-    const updateUser = () => {
-        this.userService.updateUser(
-            state.updateUsername, 
-            state.updatePassword, 
-            state.updateDpt, 
-            state.updateFuncTeam, 
-            state.updateTitle).then(resp => {
-                dispatch({ type: 'updateUser', user: resp.data })
-            });
+    let loggedUsername = JSON.parse(sessionStorage.getItem('loggedUser')).username
+    const updateUser = async () => {
+        let updatedUser = await userService.updateUser(
+            loggedUsername,
+            state.updateUsername.trim(), 
+            state.updatePassword.trim(), 
+            state.updateDpt.trim(), 
+            state.updateFuncTeam.trim(), 
+            state.updateTitle.trim())
+        sessionStorage.setItem('loggedUser', JSON.stringify(updatedUser.data));
+        dispatch({ type: 'updateUser', user: updatedUser.data })
+        history.push('/')
     }
 
     return (
