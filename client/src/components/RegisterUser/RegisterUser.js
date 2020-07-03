@@ -32,7 +32,7 @@ class NewUser extends Component {
         return (
             <>
                 <div className="Register">
-                    <h1 className="Title" >New USER INFO</h1>
+                    <h1 className="Title">New USER INFO</h1>
                     <br></br>
                     <Form>
                         <Form.Group controlId='username'>
