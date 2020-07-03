@@ -21,9 +21,9 @@ const NavBar = (props) => {
     }
 
     // if (loggedUser && loggedUser.role === 'DJ') {
-    //   dispatch({ type: 'checkRole', role: 'DJ', isDJ: true });
+    //   isDJ = true;
     // }
-  });
+  }, []);
 
   const logout = (e) => {
     e.preventDefault();
@@ -41,13 +41,13 @@ const NavBar = (props) => {
           <Nav.Link href="/">Home</Nav.Link>
           {/* {state.isDJ ? (
             <>
-              <Nav.Link href="/room/">My Rooms</Nav.Link>
+              <Nav.Link href="/myroom/">My Rooms</Nav.Link>
               <Nav.Link href="/createroom">Create a Room</Nav.Link>
             </>
           ) : null} */}
           {loggedUser ? (
             <>
-              <Nav.Link href="/room">My Rooms</Nav.Link>
+              <Nav.Link href="/myroom">My Rooms</Nav.Link>
               <Nav.Link href="/createroom">Create a Room</Nav.Link>
               <Nav.Link href="/updateUser">Update User</Nav.Link>
             </>

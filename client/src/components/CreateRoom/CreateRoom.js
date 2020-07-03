@@ -16,6 +16,7 @@ const CreateRoom = (props) => {
     const roomService = new RoomService();
 
     const createNewRoom = async () => {
+        console.log(state.user.username);
         let room = {
             owner: state.username,
             name: state.newRoomName,
