@@ -6,11 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 
 const RoomIcon = (props) => {
-    console.log(props.room)
-
-    const goToRoom = (name) => {
-        
-    }
+    console.log(props)
 
     return(
         <>

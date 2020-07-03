@@ -16,6 +16,7 @@ const RoomList = (props) => {
     const dispatch = useDispatch();
 
     console.log(`myRooms: ${state.myRooms}`)
+    console.log(`props: ${props}`)
 
     const roomService = new RoomService();
 
@@ -25,13 +26,13 @@ const RoomList = (props) => {
             className="rooms-list"
             id="roomsList"
         >
-            {/* {state.myRooms.map(room => {
+            {state.myRooms.map(room => {
                 console.log(room.name);
                 return <RoomIcon key={room._id} room={room} />
-            })} */}
-            <RoomIcon key="1" room={{ name: 'hi' }} />
+            })}
+            {/* <RoomIcon key="1" room={{ name: 'hi' }} />
             <RoomIcon key="2" room={{ name: 'hello' }} />
-            <RoomIcon key="3" room={{ name: 'hola' }} />
+            <RoomIcon key="3" room={{ name: 'hola' }} /> */}
             <Button 
                 className="room-icon new-room-icon"
                 id="addNewRoom"

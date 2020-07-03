@@ -16,9 +16,9 @@ $ui-border: 1px solid #f0f0f0;
 }
 
 /* Reset */
-.container {
+.container, .container-fluid {
     width: 100vw !important;
-    padding: 0; margin: 0;
+    padding: 0; margin: 0 !important;
 }
 
 div.row, div.col {

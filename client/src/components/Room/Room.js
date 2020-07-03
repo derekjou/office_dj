@@ -19,59 +19,54 @@ const Room = (props) => {
 
     const roomService = new RoomService();
 
-    // let loggedUser = sessionStorage.getItem('loggedUser');
-
-    let loggedUser = {
-        username: "victoria",
-        password: "pass",
-        department: "Software Delivery",
-        functional_team: "UI/UX",
-        title: "Delevoper",
-        role: "DJ"
-    }
+    let loggedUsername = JSON.parse(sessionStorage.getItem('loggedUser')).username
 
     useEffect( () =>  
         getRoomList(), []
     ); 
 
     const getRoomList = async () => {
-        await roomService.getUserRooms(loggedUser.username).then(res => {
+        await roomService.getUserRooms(loggedUsername).then(res => {
             dispatch({ type: 'handleMyRoom', myRooms: res.data })
             return res.data
         }).then(res => {
             getCurrentRoom(res)
-        });
+        })
     }
 
     const getCurrentRoom = (rooms) => {
         dispatch({ type: 'getCurrentRoom', currentRoom: rooms[0] })
     }
     
-    return (
-        <Container>
-            <Row>
-                <Col id="roomList-wrapper">
-                    <RoomList 
-                        id="roomList"
-                        myRooms={state.myRooms} 
-                    />
-                </Col>
-                <Col id="content-wrapper">
-                    <Row id="roomname-wrapper">
-                        <h3 id="roomname">{state.currentRoom.name}</h3>
-                    </Row>
-                    <Row>
-                        <Col id="playlist-wrapper">
-                            {/* TODO: Playlists Component */}
-                        </Col>
-                        <Col id="participants-wrapper">
-                            <Participants participants={state.myRooms.participants} />
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
-        </Container>
-    )
+    const roomLayout = () => {
+        return (
+            <Container fluid>
+                <Row>
+                    <Col id="roomList-wrapper">
+                        <RoomList 
+                            id="roomList"
+                            myRooms={state.myRooms} 
+                        />
+                    </Col>
+                    <Col id="content-wrapper">
+                        <Row id="roomname-wrapper">
+                            <h3 id="roomname">{state.currentRoom.name}</h3>
+                        </Row>
+                        <Row>
+                            <Col id="playlist-wrapper">
+                                {/* TODO: Playlists Component */}
+                            </Col>
+                            <Col id="participants-wrapper">
+                                <Participants participants={state.currentRoom.participants} />
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
+        );
+    }
+
+    return roomLayout()
 }
 
 export default Room;

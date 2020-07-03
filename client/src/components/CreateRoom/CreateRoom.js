@@ -18,7 +18,7 @@ const CreateRoom = (props) => {
     const createNewRoom = async () => {
         console.log(state.user.username);
         let room = {
-            owner: state.username,
+            owner: state.user.usernam,
             name: state.newRoomName,
             participants: state.newParticipant
         }
