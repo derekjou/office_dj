@@ -26,16 +26,14 @@ const Room = (props) => {
     ); 
 
     const getRoomList = async () => {
-        await roomService.getUserRooms(loggedUsername).then(res => {
-            dispatch({ type: 'handleMyRoom', myRooms: res.data })
-            return res.data
-        }).then(res => {
-            getCurrentRoom(res)
-        })
+        let myRooms = await roomService.getUserRooms(loggedUsername);
+        sessionStorage.setItem('loggedRoomList', JSON.stringify(myRooms.data))
+        dispatch({ type: 'handleMyRoom', myRooms: myRooms.data });
+        getCurrentRoom(myRooms.data);
     }
 
     const getCurrentRoom = (rooms) => {
-        dispatch({ type: 'getCurrentRoom', currentRoom: rooms[0] })
+        dispatch({ type: 'getCurrentRoom', currentRoom: rooms[2] })
     }
     
     const roomLayout = () => {

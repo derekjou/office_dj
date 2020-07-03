@@ -15,8 +15,8 @@ const RoomList = (props) => {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
 
-    console.log(`myRooms: ${state.myRooms}`)
-    console.log(`props: ${props}`)
+    console.log(`myRooms: ${JSON.stringify(state.myRooms)}`)
+    console.log(`props: ${JSON.stringify(props.myRooms)}`)
 
     const roomService = new RoomService();
 
@@ -26,7 +26,7 @@ const RoomList = (props) => {
             className="rooms-list"
             id="roomsList"
         >
-            {state.myRooms.map(room => {
+            {props.myRooms.map(room => {
                 console.log(room.name);
                 return <RoomIcon key={room._id} room={room} />
             })}

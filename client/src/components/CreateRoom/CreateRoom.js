@@ -18,16 +18,16 @@ const CreateRoom = (props) => {
     const createNewRoom = async () => {
         console.log(state.user.username);
         let room = {
-            owner: state.user.usernam,
+            owner: state.user.username,
             name: state.newRoomName,
             participants: state.newParticipant
         }
-        let loggedRoom = await roomService.createRoom(room).then(resp => {
-                dispatch({ type: 'createRoom', room: resp.data })
-            });
+        let loggedRoom = await roomService.createRoom(room)
+        dispatch({ type: 'createRoom', room: loggedRoom.data })
         sessionStorage.setItem('loggedRoom', JSON.stringify(loggedRoom));
-        if (loggedRoom) {
-            history.push(`/myroom`);
+        console.log(loggedRoom);
+        if (loggedRoom) { 
+            history.push("/myroom"); 
         }
     }
 
