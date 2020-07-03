@@ -17,12 +17,12 @@ class UserService {
         })
     }
 
-    updateUser(username, password, department, team, title) {
+    updateUser(oldUsername, username, password, department, team, title) {
         return axios({
             method: 'PUT',
-            url: `${this.URI}/updateUser`,
+            url: `${this.URI}/updateUser/${oldUsername}`,
             data: {
-                user_name: username, 
+                username: username, 
                 password: password, 
                 department: department, 
                 functional_team: team, 

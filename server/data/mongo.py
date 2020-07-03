@@ -23,7 +23,7 @@ def _get_id():
                                             {'$inc': {'count': 1}},
                                             return_document=ReturnDocument.AFTER)['count']
 
-def add_user(input_user):
+def add_user(input_user: dict):
     '''a method to add a new user to the database'''
     _log.info("adding user to the database")
     new_user = input_user.to_dict()
@@ -50,13 +50,28 @@ def login(username: str, password: str):
     query_dict = {'username': username, 'password':password}
     try:
         user_dict = _db.users.find_one(query_dict)
-        # _log.debug(user_dict)
         if user_dict:
             class_name = _get_user_class(user_dict['role'])
             _log.debug(class_name.from_dict(user_dict))
         return user_dict if user_dict else None
     except:
         _log.info('Did not find %s in collection users.', username)
+        raise
+
+def update_user(username: str, input_dict: dict):
+    '''Updates a users current information'''
+    _log.info('Updating user...')
+    query = {'username': username}
+    _log.debug(input_dict)
+    try: 
+        user_dict = _db.users.find_one(query)
+        for key in input_dict:
+            if len(input_dict[key]) > 0:
+                user_dict[key] = input_dict[key]
+        _db.users.replace_one(query, user_dict)
+        return user_dict
+    except:
+        _log.info('Could not update %s', username)
         raise
 
 if __name__ == "__main__":
