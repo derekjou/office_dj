@@ -13,13 +13,6 @@ const Login = (props) => {
 
     const userService = new UserService();
 
-    useEffect(() => {
-        console.log(state);
-        if(sessionStorage.getItem('loggedUser')){
-            history.push('/');
-        }
-    })
-
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             login();
@@ -29,8 +22,8 @@ const Login = (props) => {
     const login = async (e) => {
         e.preventDefault();
         let loggedUser = await userService.login(state.username, state.password)
-        sessionStorage.setItem('loggedUser', JSON.stringify(loggedUser));
-        dispatch({ type: 'login' })
+        sessionStorage.setItem('loggedUser', JSON.stringify(loggedUser.data));
+        dispatch({ type: 'login', user: loggedUser.data })
         history.push('/')
     }
 

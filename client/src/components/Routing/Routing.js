@@ -10,8 +10,7 @@ import Room from '../Room/Room';
 import RegisterUser from '../RegisterUser/RegisterUser';
 
 const checkLogin = () => {
-  // return sessionStorage.getItem('user') ? true : false;
-  return true;
+  return sessionStorage.getItem('loggedUser') ? true : false;
 }
 
 const PrivateRoute = ({ component: Component, ...rest }) => (

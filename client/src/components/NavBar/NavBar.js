@@ -12,16 +12,13 @@ const NavBar = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const userService = new UserService();
-
-  const loggedIn = false;
-  const isDJ = false;
+  let loggedUser = sessionStorage.getItem('loggedUser');
+  let isDJ = false;
   useEffect(() => {
-    if(sessionStorage.getItem('loggedUser')){
-      loggedIn = true;
+    if(loggedUser){
+      dispatch({ type: 'login', user: JSON.parse(loggedUser)})
     }
 
-    let loggedUser = sessionStorage.getItem('loggedUser')
     if (loggedUser && loggedUser.role == 'DJ') {
       isDJ = true;
     }
@@ -29,8 +26,9 @@ const NavBar = (props) => {
 
   const logout = (e) => {
     e.preventDefault();
-    // this.userService.logout()
+    sessionStorage.clear()
     dispatch({ type: "logout" })
+    history.push('/');
   };
 
   return (
@@ -46,7 +44,7 @@ const NavBar = (props) => {
               <Nav.Link href="/createroom">Create a Room</Nav.Link>
             </>
           ) : null}
-          {loggedIn ? (
+          {loggedUser ? (
             <>
               <Nav.Link href="/room">My Rooms</Nav.Link>
               <Nav.Link href="/createroom">Create a Room</Nav.Link>
@@ -55,11 +53,11 @@ const NavBar = (props) => {
           ) : (
             <>
               <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/register">Register</Nav.Link>
+              <Nav.Link href="/registerUser">Register</Nav.Link>
             </>
           )}
         </Nav>
-        {loggedIn ? (
+        {loggedUser ? (
           <Form inline>
             <Button variant="danger" type="submit" onClick={e => logout(e)}>
               Logout

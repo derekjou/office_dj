@@ -9,6 +9,7 @@ class User:
         self.department = department
         self.functional_team = functional_team
         self.title = title
+        self.role = 'user'
 
     def to_dict(self):
         '''reutrns a dictionary deffinition of itself'''
