@@ -28,45 +28,46 @@ const UpdateUser = (props) => {
 
     return (
         <>
-            <div className="Update" style={{ width: '30%', height: 'auto', margin: 'auto' }}>
-                <h1 style={{ textAlign: 'center' }}>UPDATE USER INFO</h1>
+            <div className="Update">
+                <h1 className="Title">UPDATE USER INFO</h1>
                 <br></br>
-                    <label>
-                        Username
-            <input className="form-control" type="text" name="username" placeholder={state.username}
+                <Form>
+                    <Form.Group controlId='username'>
+                        <Form.Label>Username:</Form.Label>
+                        <Form.Control type="text" placeholder={state.username}
                             value={state.updateUsername}
                             onChange={e => dispatch({ type: 'handleUpdateUsername', updateUsername: e.target.value })} />
-                    </label>
-                    <label for="password">
-                        Password
-            <input className="form-control" type="password" name="password" placeholder={state.password}
+                    </Form.Group>
+                    <Form.Group controlId='password'>
+                        <Form.Label>Password:</Form.Label>
+                        <Form.Control type="password" name="password" placeholder={state.password}
                             value={state.updatePassword}
                             onChange={e => dispatch({ type: 'handleUpdatePassword', updatePassword: e.target.value })} />
-                    </label>
-                    <label for="department">
-                        Department
-            <input className="form-control" type="text" name="department" placeholder={state.department}
+                    </Form.Group>
+                    <Form.Group controlId='department'>
+                        <Form.Label>Department:</Form.Label>
+                        <Form.Control type="text" name="department" placeholder={state.department}
                             value={state.updateDpt}
                             onChange={e => dispatch({ type: 'handleUpdateDepartment', updateDpt: e.target.value })} />
-                    </label>
-                    <label for="functional_team">
-                        Functional Team
-            <input className="form-control" type="text" name="functional_team" placeholder={state.functional_team}
+                    </Form.Group>
+                    <Form.Group controlId='functional_team'>
+                        <Form.Label>Functional Team:</Form.Label>
+                        <Form.Control type="text" name="functional_team" placeholder={state.functional_team}
                             value={state.updateFuncTeam}
                             onChange={e => dispatch({ type: 'handleUpdateFuncTeam', updateFuncTeam: e.target.value })} />
-                    </label>
-                    <label for="title">
-                        Title
-            <input className="form-control" type="text" name="title" placeholder={state.title}
+                    </Form.Group>
+                    <Form.Group controlId='title'>
+                        <Form.Label>Title:</Form.Label>
+                        <Form.Control type="text" name="title" placeholder={state.title}
                             value={state.updateTitle}
                             onChange={e => dispatch({ type: 'handleUpdateTitle', updateTitle: e.target.value })} />
-                    </label>
-                    <br></br>
+                    </Form.Group>
                     <Button onClick={updateUser}>Submit</Button>
-                </div>
+                </Form>
+            </div>
         </>
     )
-    
+
 }
 
 export default UpdateUser;
