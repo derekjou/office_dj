@@ -38,7 +38,7 @@ def _get_user_class(status: str):
     output = None
     if status == 'user':
         output = User
-    if status == 'dj':
+    if status == 'DJ':
         output = DJ
     if output is None:
         _log.error('Expected a status of a user, recieved %s.', status)

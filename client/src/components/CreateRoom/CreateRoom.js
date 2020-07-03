@@ -18,8 +18,8 @@ const CreateRoom = (props) => {
     const createNewRoom = async () => {
         let room = {
             owner: state.username,
-            name: state.handleNewRoomName,
-            participants: state.handleNewParticipants
+            name: state.newRoomName,
+            participants: state.newParticipant
         }
         let loggedRoom = await roomService.createRoom(room).then(resp => {
                 dispatch({ type: 'createRoom', room: resp.data })

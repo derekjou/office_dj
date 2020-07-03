@@ -13,13 +13,16 @@ const NavBar = (props) => {
   const history = useHistory();
 
   let loggedUser = sessionStorage.getItem('loggedUser');
-  let isDJ = false;
+  // let isDJ = false;
+
   useEffect(() => {
     if(loggedUser){
       dispatch({ type: 'login', user: JSON.parse(loggedUser) })
     }
 
-    if (loggedUser && loggedUser.role === 'DJ') { isDJ = true; }
+    // if (loggedUser && loggedUser.role === 'DJ') {
+    //   dispatch({ type: 'checkRole', role: 'DJ', isDJ: true });
+    // }
   });
 
   const logout = (e) => {
@@ -36,12 +39,12 @@ const NavBar = (props) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
-          {isDJ ? (
+          {/* {state.isDJ ? (
             <>
               <Nav.Link href="/room/">My Rooms</Nav.Link>
               <Nav.Link href="/createroom">Create a Room</Nav.Link>
             </>
-          ) : null}
+          ) : null} */}
           {loggedUser ? (
             <>
               <Nav.Link href="/room">My Rooms</Nav.Link>

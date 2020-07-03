@@ -38,7 +38,7 @@ def rooms_collection(name):
 
 @room_page.route('/myrooms/<string:username>', methods=['GET'])
 def my_rooms_collection(username):
-    '''A GET to /rooms/<username> returns all rooms belonging to that username.'''
+    '''A GET to /rooms/myrooms/<username> returns all rooms belonging to that username.'''
     _log.debug('Request for rooms belonging to s')
     room_list = db.get_rooms_by_user(username)
     return jsonify(room_list), 200
