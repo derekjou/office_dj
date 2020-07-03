@@ -12,19 +12,19 @@ const NavBar = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const userService = new UserService();
+  let loggedUser = sessionStorage.getItem('loggedUser');
 
-  const loggedIn = false;
   useEffect(() => {
-    if(sessionStorage.getItem('loggedUser')){
-      loggedIn = true;
+    if(loggedUser){
+      dispatch({ type: 'login', user: JSON.parse(loggedUser)})
     }
-  });
+  }, [])
 
   const logout = (e) => {
     e.preventDefault();
-    // this.userService.logout()
+    sessionStorage.clear()
     dispatch({ type: "logout" })
+    history.push('/');
   };
 
   return (
@@ -34,18 +34,18 @@ const NavBar = (props) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
-          {loggedIn ? (
+          {loggedUser ? (
             <>
               <Nav.Link href="/updateUser">Update User</Nav.Link>
             </>
           ) : (
             <>
               <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/register">Register</Nav.Link>
+              <Nav.Link href="/registerUser">Register</Nav.Link>
             </>
           )}
         </Nav>
-        {loggedIn ? (
+        {loggedUser ? (
           <Form inline>
             <Button variant="danger" type="submit" onClick={e => logout(e)}>
               Logout
