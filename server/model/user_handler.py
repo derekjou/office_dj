@@ -26,7 +26,13 @@ def login():
     '''a method to handle requests to login'''
     if request.method == 'POST':
         input_dict = request.json
-        _log.debug('LOOKIE HERE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-        _log.debug(db.login(input_dict['username'], input_dict['password']))
-        _log.debug('COMPLETE')
+        _log.debug(input_dict)
         return db.login(input_dict['username'], input_dict['password'])
+
+@user_page.route("/users/updateUser/<string:username>", methods=['PUT'])
+def update_user(username):
+    '''a method to update user information'''
+    if request.method == 'PUT':
+        input_dict = request.json
+        _log.debug(input_dict)
+        return db.update_user(username, input_dict)
