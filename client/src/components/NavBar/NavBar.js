@@ -15,9 +15,15 @@ const NavBar = (props) => {
   const userService = new UserService();
 
   const loggedIn = false;
+  const isDJ = false;
   useEffect(() => {
     if(sessionStorage.getItem('loggedUser')){
       loggedIn = true;
+    }
+
+    let loggedUser = sessionStorage.getItem('loggedUser')
+    if (loggedUser && loggedUser.role == 'DJ') {
+      isDJ = true;
     }
   });
 
@@ -34,10 +40,16 @@ const NavBar = (props) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/room">My Rooms</Nav.Link>
-          <Nav.Link href="/createroom">Create a Room</Nav.Link>
+          {isDJ ? (
+            <>
+              <Nav.Link href="/room/">My Rooms</Nav.Link>
+              <Nav.Link href="/createroom">Create a Room</Nav.Link>
+            </>
+          ) : null}
           {loggedIn ? (
             <>
+              <Nav.Link href="/room">My Rooms</Nav.Link>
+              <Nav.Link href="/createroom">Create a Room</Nav.Link>
               <Nav.Link href="/updateUser">Update User</Nav.Link>
             </>
           ) : (

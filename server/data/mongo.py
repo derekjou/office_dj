@@ -89,6 +89,7 @@ if __name__ == "__main__":
     _log.info('Running Mongo script: dropping collections from _library database')
     _log.info(_db.list_collection_names())
     _db.counter.drop()
+    _db.users.drop()
     _db.rooms.drop()
 
     _db.counter.insert_one({'_id': 'UNIQUE_COUNT', 'count': 0})
@@ -97,15 +98,20 @@ if __name__ == "__main__":
     room_list.append(Room(
         _get_id(),
         'Test Room',
-        'test_dj', 
-        ['test_user_1', 'test_user_2', 'test_user_3']
+        'victoria', 
+        ['test1', 'test2', 'test3']
+    ).to_dict())
+
+    user_list = []
+    user_list.append(DJ(
+        _get_id(),
+        'victoria',
+        'pass',
+        'Software Delivery',
+        'UI/UX',
+        'Delevoper'
     ).to_dict())
 
     _db.rooms.insert_many(room_list)
-
-if __name__ == "__main__":
-    _db.users.drop()
-    _db.counter.drop()
-
-    _db.counter.insert_one({'_id': 'COUNT', 'count': 0})
+    _db.users.insert_many(user_list)
     

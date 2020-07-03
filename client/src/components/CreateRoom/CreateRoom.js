@@ -15,42 +15,24 @@ const CreateRoom = (props) => {
 
     const roomService = new RoomService();
 
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        let loggedRoom = await roomService.createRoom(state.newRoomName, state.newParticipant).data;
-        console.log(loggedRoom);
+    const createNewRoom = async () => {
+        let room = {
+            owner: state.username,
+            name: state.handleNewRoomName,
+            participants: state.handleNewParticipants
+        }
+        let loggedRoom = await roomService.createRoom(room).then(resp => {
+                dispatch({ type: 'createRoom', room: resp.data })
+            });
+        sessionStorage.setItem('loggedRoom', JSON.stringify(loggedRoom));
         if (loggedRoom) {
             history.push(`/room/${loggedRoom.name}`);
         }
-        sessionStorage.setItem('loggedRoom', JSON.stringify(loggedRoom));
-        dispatch({ type: 'createroom' })
-    }
-
-    const createNewRoom = () => {
-        this.userService.updateUser(
-            state.updateUsername,
-            state.updatePassword,
-            state.updateDpt,
-            state.updateFuncTeam,
-            state.updateTitle).then(resp => {
-                dispatch({ type: 'createRoom', room: resp.data })
-            });
     }
 
     const handleKeyDown = e => {
-        if (e.key === 'Enter') {
-            handleSubmit();
-        }
+        if (e.key === 'Enter') { createNewRoom(); }
     }
-
-    useEffect(() => {
-        let loggedRoom = sessionStorage.getItem('loggedRoom');
-        console.log(loggedRoom); 
-        if (loggedRoom) {
-            history.push(`/rooms/${loggedRoom.name}`);
-        }
-    })
 
     return (
         <Form>
@@ -68,10 +50,10 @@ const CreateRoom = (props) => {
                     onKeyDown={(e) => handleKeyDown(e)} />
                 <Form.Text className="text-muted">
                     You can add more people later.
-                    </Form.Text>
+                </Form.Text>
             </Form.Group>
 
-            <Button variant="primary" onClick={handleSubmit}>
+            <Button variant="primary" onClick={createNewRoom}>
                 Create a Room
             </Button>
         </Form>
