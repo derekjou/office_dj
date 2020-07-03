@@ -72,11 +72,11 @@ def add_room(room: object):
 
 def get_rooms_by_user(username: str):
     '''Takes an id of a room object and queries the Rooms collection for that object.'''
-    _log.info('Attempting to retrive all rooms belonging to  %s from the database', username)
-    query_list = _db.rooms.find({'$or': {'owner': username, 'participants': username}})
+    _log.info('Attempting to retrive all rooms belonging to %s from the database', username)
+    query_list = _db.rooms.find({'$or': [{'owner': username}, {'participants': username}]})
     room_list = []
     for room in query_list:
-        room_list.append(Room.from_dict(room))
+        room_list.append(room)
     _log.info('Successfully found %d rooms belonging to %s', len(room_list), username)
     return room_list
 
