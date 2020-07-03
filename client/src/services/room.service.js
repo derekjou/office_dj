@@ -2,16 +2,17 @@ const { default: axios } = require('axios')
 
 class RoomService {
     constructor() {
-        this.URI = 'http://localhost:5000/rooms';
+        this.URI = 'http://localhost:5000';
     }
 
     getRoom(room) {
-        let uri = `${this.URI}/${room.name}?${room.id}`
+        let uri = `${this.URI}/rooms/${room.name}?${room.id}`
         return axios.get(uri, { withCredentials: true })
     }
 
-    getUserRooms(user) {
-        // TODO
+    getUserRooms(username) {
+        let uri = `${this.URI}/rooms/myrooms/${username}`
+        return axios.get(uri, { withCredentials: true })
     }
 
     getParticipants() {
@@ -19,7 +20,7 @@ class RoomService {
     }
 
     createRoom(room) {
-        let uri = `${this.URI}/${room.name}`
+        let uri = `${this.URI}/rooms/${room.name}`
         return axios.post(uri, room, { withCredentials: true })
     }
 }

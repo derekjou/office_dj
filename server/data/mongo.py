@@ -70,12 +70,22 @@ def add_room(room: object):
         # TODO: return the error to the user
         pass
 
-def get_room_by_name(user: str, name: str):
+def get_rooms_by_user(username: str):
     '''Takes an id of a room object and queries the Rooms collection for that object.'''
-    _log.info('Attempting to retrive room %s from the database')
+    _log.info('Attempting to retrive all rooms belonging to  %s from the database', username)
+    query_list = _db.rooms.find({'$or': {'owner': username, 'participants': username}})
+    room_list = []
+    for room in query_list:
+        room_list.append(Room.from_dict(room))
+    _log.info('Successfully found %d rooms belonging to %s', len(room_list), username)
+    return room_list
+
+def get_room_by_id(username: str, r_id: int):
+    '''Takes an id of a room object and queries the Rooms collection for that object.'''
+    _log.info('Attempting to retrive room %d from the database', r_id)
     #TODO: Try/Except for empty find
-    room = _db.rooms.find_one({'username': user, 'name': name})
-    _log.info('Room %d successfully found', id)
+    room = _db.rooms.find_one({'username': username, '_id': r_id})
+    _log.info('Room %d successfully found', r_id)
     return room
 
 def _get_id():

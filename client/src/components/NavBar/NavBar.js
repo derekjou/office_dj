@@ -16,12 +16,10 @@ const NavBar = (props) => {
   let isDJ = false;
   useEffect(() => {
     if(loggedUser){
-      dispatch({ type: 'login', user: JSON.parse(loggedUser)})
+      dispatch({ type: 'login', user: JSON.parse(loggedUser) })
     }
 
-    if (loggedUser && loggedUser.role == 'DJ') {
-      isDJ = true;
-    }
+    if (loggedUser && loggedUser.role === 'DJ') { isDJ = true; }
   });
 
   const logout = (e) => {

@@ -9,13 +9,6 @@ class Participants extends Component {
         super(props);
     }
 
-    componentDidMount() {
-        this.roomService.getParticipants().then(res => {
-            console.log(res);
-            this.props.queryUsers(res.data);
-        });
-    }
-
     render() {
         return (
             <>
@@ -36,7 +29,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        queryUsers: (participants) => dispatch({ type: 'queryUsers', participants: participants })
+        participants: (participants) => dispatch({ type: 'queryUsers', participants: participants })
     }
 }
 

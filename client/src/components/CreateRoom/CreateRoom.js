@@ -5,7 +5,7 @@ import RoomService from '../../services/room.service';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Room from '../Room/Room';
-// TODO: CSS
+import './CreateRoom.scss';
 import { connect } from 'react-redux';
 
 const CreateRoom = (props) => {
@@ -26,7 +26,7 @@ const CreateRoom = (props) => {
             });
         sessionStorage.setItem('loggedRoom', JSON.stringify(loggedRoom));
         if (loggedRoom) {
-            history.push(`/room/${loggedRoom.name}`);
+            history.push(`/myroom`);
         }
     }
 
@@ -35,7 +35,9 @@ const CreateRoom = (props) => {
     }
 
     return (
-        <Form>
+        <Form className="form-container">
+            <h1 className="Title" >Create a Room</h1>
+
             <Form.Group controlId="formRoomName">
                 <Form.Label>Name Your Room</Form.Label>
                 <Form.Control type="text"

@@ -26,7 +26,7 @@ def login():
     if request.method == 'POST':
         # getting the user information from the form and getting the information from the db
         _log.debug(request.form)
-        user = db.login(request.form['login'])
+        user = db.login(request.form['login'], request.form['password'])
         if user:
             # Generate our token
             auth_token = user.encode_auth_token()

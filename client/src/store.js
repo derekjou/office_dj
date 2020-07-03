@@ -57,8 +57,10 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { newRoomName: action.newRoomName });
     case "handleNewParticipant":
       return Object.assign({}, state, { newParticipant: action.newParticipant });
-    case "createRoom":
-      return Object.assign({}, state, { NewUser: action.user });
+    case "room":
+      return Object.assign({}, state, { room: action.room });
+    case "handleMyRooms":
+      return Object.assign({}, state, { myRooms: action.myRooms });
     default:
       return state;
   }

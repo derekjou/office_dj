@@ -23,7 +23,7 @@ class RoomList extends Component {
     render() {
         return (
             <ListGroup variant="flush" className="rooms-list">
-                {this.props.roomList.map(room => {
+                {this.props.myRooms.map(room => {
                     return <RoomIcon key={room._id} room={room} />
                 })}
             </ListGroup>
