@@ -1,6 +1,22 @@
+/* Abstracts */
 
 $icon-color: rgb(134, 59, 112);
 
+@mixin ui-heading ($size: 'm') {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    color: #666;
+
+    @if $size == 'm' { font-size: 1rem; }
+    @if $size == 'sm' { font-size: .875rem; }
+}
+
+.ui-header {
+    @include ui-heading('sm');
+
+    margin: 1rem;
+}
 
 .participant-icon {
     display: flex;

@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import RoomService from '../../services/room.service';
-// TODO: CSS
+import './Room.scss';
+import '../RoomList/RoomList.scss';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -29,37 +30,42 @@ const Room = (props) => {
         role: "DJ"
     }
 
-    useEffect( () => { getRoomList() })
+    useEffect( () =>  
+        getRoomList(), []
+    ); 
 
     const getRoomList = async () => {
-        console.log(`----------------
-        ${loggedUser.username}
-        ----------------`)
         await roomService.getUserRooms(loggedUser.username).then(res => {
             dispatch({ type: 'handleMyRoom', myRooms: res.data })
+            return res.data
+        }).then(res => {
+            getCurrentRoom(res)
         });
-        console.log(`----------------
-        ${state}
-        ----------------`)
     }
 
+    const getCurrentRoom = (rooms) => {
+        dispatch({ type: 'getCurrentRoom', currentRoom: rooms[0] })
+    }
     
     return (
         <Container>
             <Row>
-                <Col id="roomlist-wrapper">
-                    {/* <RoomList room={state.myRooms} /> */}
+                <Col id="roomList-wrapper">
+                    <RoomList 
+                        id="roomList"
+                        myRooms={state.myRooms} 
+                    />
                 </Col>
                 <Col id="content-wrapper">
-                    <Row>
-                        <h3 id="roomname-wrapper">Hello</h3>
+                    <Row id="roomname-wrapper">
+                        <h3 id="roomname">{state.currentRoom.name}</h3>
                     </Row>
                     <Row>
                         <Col id="playlist-wrapper">
                             {/* TODO: Playlists Component */}
                         </Col>
                         <Col id="participants-wrapper">
-                            {/* <Participants participants={state.myRooms.participants} /> */}
+                            <Participants participants={state.myRooms.participants} />
                         </Col>
                     </Row>
                 </Col>

@@ -1,0 +1,76 @@
+
+/* Abstracts */
+
+$titlebarheight: 3rem;
+$pageheight: calc(100vh - 3.5rem);
+
+$ui-border: 1px solid #f0f0f0;
+
+@mixin ui-heading ($size: 'm') {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+
+    @if $size == 'm' { font-size: 1rem; }
+    @if $size == 'ms' { font-size: .875rem; }
+}
+
+/* Reset */
+.container {
+    width: 100vw !important;
+    padding: 0; margin: 0;
+}
+
+div.row, div.col {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/* UI */
+
+#roomList-wrapper {
+    flex: 0 0 4.5rem;
+    padding: 0; margin: 0;
+
+    &, & * {
+        box-sizing: border-box;
+    }
+
+    @media only screen and (max-width: 640px) {
+        flex-flow: row nowrap;
+    }
+}
+
+#roomname-wrapper.row {
+    display: flexbox;
+    flex-flow: row nowrap;
+    align-content: baseline;
+    justify-content: flex-start;
+
+    flex: 0 0 auto;
+    height: $titlebarheight;
+    margin: 0; padding: 0 1rem;
+
+    background: #fbfbfb;
+    border-bottom: $ui-border;
+}
+
+#roomname {
+    display: block;
+    flex: 0 0 auto;
+    height: $titlebarheight;
+    margin: 0; padding: 0;
+    line-height: $titlebarheight;
+
+    @include ui-heading('m');
+}
+
+#participants-wrapper {
+    flex: 0 0 auto;
+    width: 12rem;
+    height: $pageheight;
+    background-color: #fbfbfb;
+    border-left: $ui-border;
+}

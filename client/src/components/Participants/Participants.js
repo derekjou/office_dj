@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-// TODO: CSS
+import './Participants.scss'
 import { connect } from 'react-redux';
 import Participant from './Participant';
 
@@ -14,9 +14,9 @@ class Participants extends Component {
             <>
                 <h4 className="ui-header">Listeners</h4>
                 <ListGroup variant="flush">
-                    {this.props.participants.map(participant => {
+                    {this.props.participants.map = participant => {
                         return <Participant key={participant._id} participant={participant}></Participant>
-                    })}
+                    }}
                 </ListGroup>
             </>
         )

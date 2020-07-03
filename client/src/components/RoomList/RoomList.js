@@ -1,44 +1,53 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 // TODO: CSS
 import RoomService from '../../services/room.service';
 import RoomIcon from './RoomIcon.js';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
+import Axios from 'axios';
 
 
 
-class RoomList extends Component {
-    roomService = new RoomService();
-    constructor(props) {
-        super(props)
-    }
+const RoomList = (props) => {
+    const state = useSelector(state => state);
+    const dispatch = useDispatch();
 
-    componentDidMount() {
-        this.roomService.getUserRooms(this.props.user).then(res => {
-            console.log(res);
-            this.props.queryRooms(res.data);
-        });
-    }
+    console.log(`myRooms: ${state.myRooms}`)
 
-    render() {
-        return (
-            <ListGroup variant="flush" className="rooms-list">
-                {this.props.myRooms.map(room => {
-                    return <RoomIcon key={room._id} room={room} />
-                })}
-            </ListGroup>
-        )
-    }
+    const roomService = new RoomService();
+
+    return (
+        <ListGroup 
+            variant="flush" 
+            className="rooms-list"
+            id="roomsList"
+        >
+            {/* {state.myRooms.map(room => {
+                console.log(room.name);
+                return <RoomIcon key={room._id} room={room} />
+            })} */}
+            <RoomIcon key="1" room={{ name: 'hi' }} />
+            <RoomIcon key="2" room={{ name: 'hello' }} />
+            <RoomIcon key="3" room={{ name: 'hola' }} />
+            <Button 
+                className="room-icon new-room-icon"
+                id="addNewRoom"
+            ><span>&#10010;</span></Button>
+        </ListGroup>
+    )
 }
 
-function mapStateToProps(state) {
-    const { displayRoomList } = state;
-    return { roomList: displayRoomList }
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        queryRooms: (roomList) => dispatch({ type: 'queryRooms', roomList: roomList })
-    }
-}
+// function mapStateToProps(state) {
+//     const { displayRoomList } = state;
+//     return { roomList: displayRoomList }
+// }
+// function mapDispatchToProps(dispatch) {
+//     return {
+//         queryRooms: (roomList) => dispatch({ type: 'queryRooms', roomList: roomList })
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomList);
+export default RoomList;

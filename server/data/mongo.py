@@ -64,6 +64,8 @@ def add_room(room: object):
     '''Takes a room object and inserts it into the Rooms collection.'''
     _log.info('Attempting to add a new room %s to the database', room.name)
     try:
+        r_id = _get_id()
+        room.set_id(r_id)
         _db.rooms.insert_one(room.to_dict())
         _log.info('Room %s successfully added', room.name)
     except errors.DuplicateKeyError: #duplicate username? unless we want djs to have multiple rooms.
