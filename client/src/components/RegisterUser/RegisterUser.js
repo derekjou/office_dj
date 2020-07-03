@@ -37,35 +37,35 @@ class NewUser extends Component {
                     <Form>
                         <Form.Group controlId='username'>
                             <Form.Label>Username:</Form.Label>
-                            <Form.Control type="text" name="username"
+                            <Form.Control type="text" name="username" placeholder="Enter username"
                                 value={this.props.newUsername}
                                 onChange={this.props.handleNewUsernameInput} />
                         </Form.Group>
                         <Form.Group controlId='password'>
                             <Form.Label>Password:</Form.Label>
-                            <Form.Control type="password" name="password"
+                            <Form.Control type="password" name="password" placeholder="Enter password"
                                 value={this.props.newPassword}
                                 onChange={this.props.handleNewPasswordInput} />
                         </Form.Group>
                         <Form.Group controlId='department'>
                             <Form.Label>Department:</Form.Label>
-                            <Form.Control type="text" name="department"
+                            <Form.Control type="text" name="department" placeholder="Enter department"
                                 value={this.props.newDpt}
                                 onChange={this.props.handleNewDepartmentInput} />
                         </Form.Group>
                         <Form.Group controlId='functional_team'>
                             <Form.Label>Functional Team:</Form.Label>
-                            <Form.Control type="text" name="functional_team"
+                            <Form.Control type="text" name="functional_team" placeholder="Enter functional team"
                                 value={this.props.newFuncTeam}
                                 onChange={this.props.handleNewFuncTeamInput} />
                         </Form.Group>
                         <Form.Group controlId='title'>
                             <Form.Label>Title:</Form.Label>
-                            <Form.Control type="text" name="title"
+                            <Form.Control type="text" name="title" placeholder="Enter title"
                                 value={this.props.newTitle}
                                 onChange={this.props.handleNewTitleInput} />
                         </Form.Group>
-                        <Button onClick={() => this.newUser()}>Submit</Button>
+                        <Button block onClick={() => this.newUser()}>Register</Button>
                     </Form>
                 </div>
             </>

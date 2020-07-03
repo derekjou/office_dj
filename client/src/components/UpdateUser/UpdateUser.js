@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import './UpdateUser.css';
 import UserService from '../../services/user.service'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -34,31 +35,31 @@ const UpdateUser = (props) => {
                 <Form>
                     <Form.Group controlId='username'>
                         <Form.Label>Username:</Form.Label>
-                        <Form.Control type="text" placeholder={state.username}
+                        <Form.Control type="text" placeholder="Enter username"
                             value={state.updateUsername}
                             onChange={e => dispatch({ type: 'handleUpdateUsername', updateUsername: e.target.value })} />
                     </Form.Group>
                     <Form.Group controlId='password'>
                         <Form.Label>Password:</Form.Label>
-                        <Form.Control type="password" name="password" placeholder={state.password}
+                        <Form.Control type="password" name="password" placeholder="Enter password"
                             value={state.updatePassword}
                             onChange={e => dispatch({ type: 'handleUpdatePassword', updatePassword: e.target.value })} />
                     </Form.Group>
                     <Form.Group controlId='department'>
                         <Form.Label>Department:</Form.Label>
-                        <Form.Control type="text" name="department" placeholder={state.department}
+                        <Form.Control type="text" name="department" placeholder="Enter department"
                             value={state.updateDpt}
                             onChange={e => dispatch({ type: 'handleUpdateDepartment', updateDpt: e.target.value })} />
                     </Form.Group>
                     <Form.Group controlId='functional_team'>
                         <Form.Label>Functional Team:</Form.Label>
-                        <Form.Control type="text" name="functional_team" placeholder={state.functional_team}
+                        <Form.Control type="text" name="functional_team" placeholder="Enter functional team"
                             value={state.updateFuncTeam}
                             onChange={e => dispatch({ type: 'handleUpdateFuncTeam', updateFuncTeam: e.target.value })} />
                     </Form.Group>
                     <Form.Group controlId='title'>
                         <Form.Label>Title:</Form.Label>
-                        <Form.Control type="text" name="title" placeholder={state.title}
+                        <Form.Control type="text" name="title" placeholder="Enter title"
                             value={state.updateTitle}
                             onChange={e => dispatch({ type: 'handleUpdateTitle', updateTitle: e.target.value })} />
                     </Form.Group>
