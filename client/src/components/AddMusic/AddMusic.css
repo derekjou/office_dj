@@ -1,4 +1,4 @@
-.update {
+.register {
   width: 50%;
   height: auto;
   margin: auto;
@@ -6,5 +6,5 @@
 
 .title {
   text-align: center;
-  text-shadow: 2px 2px #4d94ff;
+  text-shadow: 2px 2px red;
 }

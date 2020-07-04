@@ -10,23 +10,37 @@ class UserService {
             method: 'POST',
             url: `${this.URI}/login`,
             data: {
-                username: username, 
-                password: password, 
+                username, 
+                password
             },
             withCredentials: true
         })
     }
 
-    updateUser(oldUsername, username, password, department, team, title) {
+    newUser(username, password, department, functional_team, title) {
+        return axios({
+            method: 'POST',
+            url: `${this.URI}/register`,
+            data: {
+                username,
+                password,
+                department,
+                functional_team,
+                title
+            }
+        })
+    }
+
+    updateUser(oldUsername, username, password, department, functional_team, title) {
         return axios({
             method: 'PUT',
             url: `${this.URI}/updateUser/${oldUsername}`,
             data: {
-                username: username, 
-                password: password, 
-                department: department, 
-                functional_team: team, 
-                title: title
+                username, 
+                password, 
+                department, 
+                functional_team, 
+                title
             },
             withCredentials: true
         })

@@ -28,8 +28,8 @@ const Login = (props) => {
     }
 
     return (
-        <div className="Login">
-            <h1 className="Title" >Log in</h1>
+        <div className="login">
+            <h1 className="title" >Log in</h1>
             <br></br>
             <Form>
                 <Form.Group controlId='username'>
