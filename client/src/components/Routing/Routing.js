@@ -8,6 +8,7 @@ import Login from '../Login/Login';
 import RegisterUser from '../RegisterUser/RegisterUser';
 import Admin from '../Admin/Admin';
 import AddMusic from '../AddMusic/AddMusic';
+import Player from '../Player/Player';
 
 const checkLogin = () => {
   return sessionStorage.getItem('loggedUser') ? true : false;
@@ -41,6 +42,7 @@ class Routing extends Component {
         <PrivateRoute path='/updateUser' component={UpdateUser} />
         <Route path="/admin" component={Admin} />
         <Route path="/addMusic" component={AddMusic} />
+        <Route path="/player" component={Player} />
       </Router>
     );
   }

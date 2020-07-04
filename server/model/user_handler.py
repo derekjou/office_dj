@@ -5,6 +5,7 @@ import html
 import server.data.mongo as db
 from server.data.logger import get_logger
 from server.model.users import User, DJ
+from server.songs.model import Song
 
 
 _log = get_logger(__name__)
@@ -44,3 +45,10 @@ def add_song():
         input_dict = request.json
         _log.debug(input_dict)
         return db.add_song(input_dict)
+
+@admin_page.route("/admin/player", methods=['GET'])
+def request_song():
+    if request.method == 'GET':
+        input_dict = request.json
+        _log.debug(input_dict)
+        return db.request_song(input_dict)

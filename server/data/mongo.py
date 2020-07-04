@@ -7,8 +7,10 @@ from datetime import datetime, timedelta
 from pymongo import MongoClient, errors, ReturnDocument
 
 # Internal imports
-from server.model.users import User, DJ
-from server.data.logger import get_logger
+# from server.model.users import User, DJ
+# from server.data.logger import get_logger
+from model.users import User, DJ
+from data.logger import get_logger
 
 _log = get_logger(__name__)
 
@@ -89,6 +91,13 @@ def add_song(song_dict: dict):
     _log.debug(song_dict)
     return song_dict
 
+def request_song(song_dict: dict):
+    '''A method that retrieve all the songs'''
+    _log.info("retrieving songs from the database")
+    song_dict = _db.songs.find()
+    _log.debug(song_dict)
+    return song_dict
+
 if __name__ == "__main__":
     _db.users.drop()
     _db.counter.drop()
@@ -100,5 +109,13 @@ if __name__ == "__main__":
     _db.users.insert_one({'_id': _get_id(), 'username': 'user', 'password': 'pass', 'department': 'Engineering',
                           'functional_team': 'UI', 'title': 'Junior Developer'})
     
-    _db.songs.insert_one({'_id': _get_song_number(), 'title': 'Y Hubo Alguien', 'album': 'Contra La Corriente', 
-                          'artist': ['Marc Anthony'], 'genre': 'Salsa', 'url': 'someurl.mp3'})
+    _db.songs.insert_one({'_id': _get_song_number(), "title":"La Mujer de Antonio",
+                          "album":"SONGO 21 - Studio sessions 2003","artist":["SONGO 21"],
+                          "genre":"Salsa",
+                          "url":"https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/SONGO_21/SONGO_21_-_Studio_sessions_2003/SONGO_21_-_02_-_La_Mujer_de_Antonio.mp3"})
+
+    _db.songs.insert_one({'_id': _get_song_number(), "title":"Despacito", "album":"Vida",
+                        "artist":["Luis Fonsi", "Daddy Yankee"],
+                        "genre":"Pop",
+                        "url":"http://res.cloudinary.com/alick/video/upload/v1502689683/Luis_Fonsi_-_Despacito_ft._Daddy_Yankee_uyvqw9.mp3"})
+                          
