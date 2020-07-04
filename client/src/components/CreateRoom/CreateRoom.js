@@ -24,7 +24,7 @@ const CreateRoom = (props) => {
         }
         let loggedRoom = await roomService.createRoom(room)
         dispatch({ type: 'createRoom', room: loggedRoom.data })
-        sessionStorage.setItem('loggedRoom', JSON.stringify(loggedRoom));
+        sessionStorage.setItem('loggedRoom', JSON.stringify(loggedRoom.data));
         console.log(loggedRoom);
         if (loggedRoom) { 
             history.push("/myroom"); 

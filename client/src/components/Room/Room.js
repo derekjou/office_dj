@@ -33,7 +33,7 @@ const Room = (props) => {
     }
 
     const getCurrentRoom = (rooms) => {
-        dispatch({ type: 'getCurrentRoom', currentRoom: rooms[2] })
+        dispatch({ type: 'getCurrentRoom', currentRoom: rooms[0] })
     }
     
     const roomLayout = () => {
@@ -45,6 +45,7 @@ const Room = (props) => {
                             id="roomList"
                             myRooms={state.myRooms} 
                         />
+                        {state.myRooms}
                     </Col>
                     <Col id="content-wrapper">
                         <Row id="roomname-wrapper">
@@ -56,6 +57,7 @@ const Room = (props) => {
                             </Col>
                             <Col id="participants-wrapper">
                                 <Participants participants={state.currentRoom.participants} />
+                                {state.currentRoom.participants}
                             </Col>
                         </Row>
                     </Col>
