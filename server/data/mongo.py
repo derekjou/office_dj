@@ -6,8 +6,8 @@ from datetime import datetime, timedelta
 from pymongo import MongoClient, errors, ReturnDocument
 
 # Internal imports
-from server.model.users import User, DJ
-from server.data.logger import get_logger
+from model.users import User, DJ
+from data.logger import get_logger
 
 _log = get_logger(__name__)
 
@@ -21,6 +21,12 @@ def _get_id():
     '''Retrieves the next id in the database and increments it.'''
     return _db.counter.find_one_and_update({'_id': 'COUNT'},
                                             {'$inc': {'count': 1}},
+                                            return_document=ReturnDocument.AFTER)['count']
+
+def get_song_number():
+    '''Queries the database for an song number and returns it, also increments the value'''
+    return _db.song_numbers.find_one_and_update({"_id": "UNIQUE_SONG_NUMBER"},
+                                                                 {"$inc": {"count": 1}},
                                             return_document=ReturnDocument.AFTER)['count']
 
 def add_user(input_user: dict):
@@ -74,10 +80,25 @@ def update_user(username: str, input_dict: dict):
         _log.info('Could not update %s', username)
         raise
 
+def add_song(input_user: dict):
+    '''a method to add a new song to the database'''
+    _log.info("adding song to the database")
+    new_song = input_user.to_dict()
+    new_song['_id'] = _get_id()
+    _db.songs.insert_one(input_user.to_dict())
+    _log.debug(input_user.to_dict())
+    return input_user.to_dict()
+
 if __name__ == "__main__":
     _db.users.drop()
     _db.counter.drop()
+    _db.song_numbers.drop()
+    _db.songs.drop()
 
     _db.counter.insert_one({'_id': 'COUNT', 'count': 0})
     _db.users.insert_one({'_id': _get_id(), 'username': 'user', 'password': 'pass', 'department': 'Engineering',
                           'functional_team': 'UI', 'title': 'Junior Developer'})
+    
+    _db.song_numbers.insert_one({'_id': 'UNIQUE_SONG_NUMBER', 'count': 0})
+    _db.songs.insert_one({'_id': get_song_number(), 'title': 'Y Hubo Alguien', 'album': 'Contra La Corriente', 
+                          'artist': ['Marc Anthony'], 'genre': 'Salsa'})

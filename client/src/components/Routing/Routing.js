@@ -6,6 +6,8 @@ import UpdateUser from '../UpdateUser/UpdateUser';
 import NavBar from '../NavBar/NavBar';
 import Login from '../Login/Login';
 import RegisterUser from '../RegisterUser/RegisterUser';
+import Admin from '../Admin/Admin';
+import AddMusic from '../AddMusic/AddMusic';
 
 const checkLogin = () => {
   return sessionStorage.getItem('loggedUser') ? true : false;
@@ -37,6 +39,8 @@ class Routing extends Component {
         <Route path="/login" component={Login} />
         <Route path="/RegisterUser" component={RegisterUser} />
         <PrivateRoute path='/updateUser' component={UpdateUser} />
+        <Route path="/Admin" component={Admin} />
+        <Route path="/AddMusic" component={AddMusic} />
       </Router>
     );
   }

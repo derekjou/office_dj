@@ -15,6 +15,10 @@ const initialState = {
   newDpt: "",
   newFuncTeam: "",
   newTitle: "",
+  title: "",
+  artists: "",
+  album: "",
+  genre: "",
 };
 
 function reducer(state = initialState, action) {
