@@ -2,12 +2,13 @@
 
 # External imports
 import os
+
 from datetime import datetime, timedelta
 from pymongo import MongoClient, errors, ReturnDocument
 
 # Internal imports
-from model.users import User, DJ
-from data.logger import get_logger
+from server.model.users import User, DJ
+from server.data.logger import get_logger
 
 _log = get_logger(__name__)
 
@@ -23,9 +24,9 @@ def _get_id():
                                             {'$inc': {'count': 1}},
                                             return_document=ReturnDocument.AFTER)['count']
 
-def get_song_number():
+def _get_song_number():
     '''Queries the database for an song number and returns it, also increments the value'''
-    return _db.song_numbers.find_one_and_update({"_id": "UNIQUE_SONG_NUMBER"},
+    return _db.counter.find_one_and_update({"_id": "UNIQUE_SONG_NUMBER"},
                                                                  {"$inc": {"count": 1}},
                                             return_document=ReturnDocument.AFTER)['count']
 
@@ -80,14 +81,13 @@ def update_user(username: str, input_dict: dict):
         _log.info('Could not update %s', username)
         raise
 
-def add_song(input_user: dict):
+def add_song(song_dict: dict):
     '''a method to add a new song to the database'''
     _log.info("adding song to the database")
-    new_song = input_user.to_dict()
-    new_song['_id'] = _get_id()
-    _db.songs.insert_one(input_user.to_dict())
-    _log.debug(input_user.to_dict())
-    return input_user.to_dict()
+    song_dict['_id'] = _get_song_number()
+    _db.songs.insert_one(song_dict)
+    _log.debug(song_dict)
+    return song_dict
 
 if __name__ == "__main__":
     _db.users.drop()
@@ -96,9 +96,9 @@ if __name__ == "__main__":
     _db.songs.drop()
 
     _db.counter.insert_one({'_id': 'COUNT', 'count': 0})
+    _db.counter.insert_one({'_id': 'UNIQUE_SONG_NUMBER', 'count': 0})
     _db.users.insert_one({'_id': _get_id(), 'username': 'user', 'password': 'pass', 'department': 'Engineering',
                           'functional_team': 'UI', 'title': 'Junior Developer'})
     
-    _db.song_numbers.insert_one({'_id': 'UNIQUE_SONG_NUMBER', 'count': 0})
-    _db.songs.insert_one({'_id': get_song_number(), 'title': 'Y Hubo Alguien', 'album': 'Contra La Corriente', 
-                          'artist': ['Marc Anthony'], 'genre': 'Salsa'})
+    _db.songs.insert_one({'_id': _get_song_number(), 'title': 'Y Hubo Alguien', 'album': 'Contra La Corriente', 
+                          'artist': ['Marc Anthony'], 'genre': 'Salsa', 'url': 'someurl.mp3'})

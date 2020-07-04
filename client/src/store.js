@@ -9,16 +9,16 @@ const initialState = {
   updateDpt: "",
   updateFuncTeam: "",
   updateTitle: "",
-  NewUser: "",
   newUsername: "",
   newPassword: "",
   newDpt: "",
   newFuncTeam: "",
   newTitle: "",
   title: "",
-  artists: "",
+  artists: [],
   album: "",
   genre: "",
+  url: ""
 };
 
 function reducer(state = initialState, action) {
@@ -55,8 +55,16 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { newFuncTeam: action.newFuncTeam});
     case "handleNewTitle":
       return Object.assign({}, state, { newTitle: action.newTitle});
-    case "NewUser":
-      return Object.assign({}, state, { NewUser: action.user});
+    case "handleTitleInput":
+      return Object.assign({}, state, { title: action.title});
+    case "handleArtistsInput":
+      return Object.assign({}, state, { artists: action.artists.split(", ")});
+    case "handleAlbumInput":
+      return Object.assign({}, state, { album: action.album});
+    case "handleGenreInput":
+      return Object.assign({}, state, { genre: action.genre});
+    case "handleURLInput":
+      return Object.assign({}, state, { url: action.url});
     default:
       return state;
   }

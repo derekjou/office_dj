@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './UpdateUser.css';
-import UserService from '../../services/user.service'
+import UserService from '../../services/user.service';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
@@ -29,8 +29,8 @@ const UpdateUser = (props) => {
 
     return (
         <>
-            <div className="Update">
-                <h1 className="Title">UPDATE USER INFO</h1>
+            <div className="update">
+                <h1 className="title">UPDATE USER INFO</h1>
                 <br></br>
                 <Form>
                     <Form.Group controlId='username'>

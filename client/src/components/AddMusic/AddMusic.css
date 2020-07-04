@@ -1,10 +1,10 @@
-.Register {
+.register {
   width: 50%;
   height: auto;
   margin: auto;
 }
 
-.Title {
+.title {
   text-align: center;
   text-shadow: 2px 2px red;
 }

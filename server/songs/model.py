@@ -6,12 +6,13 @@ import json
 
 class Song():
     '''A class that defines information about the state of a room object.'''
-    def __init__(self, db_id=-1, title='', album='', artists=[], genre=''):
+    def __init__(self, db_id=-1, title='', album='', artists=[], genre='', url=''):
         self._id = db_id
         self.title = title
         self.album = album
         self.artists = artists if artists is not None else []
         self.genre = genre
+        self.url = url
 
     def to_dict(self):
         '''reutrns a dictionary deffinition of itself'''
