@@ -2,8 +2,12 @@ from flask import Flask, escape, request, jsonify, make_response, render_templat
 from flask_cors import CORS
 
 from server.model.users import User, DJ
+<<<<<<< HEAD
 from server.model.user_handler import user_page
 from server.handlers.rooms import room_page
+=======
+from server.model.user_handler import user_page, admin_page
+>>>>>>> 9298cce2cc106437ed7d0743af1e614860a79dfd
 from server.data.logger import get_logger
 import werkzeug
 
@@ -15,7 +19,11 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 app.register_blueprint(user_page)
+<<<<<<< HEAD
 app.register_blueprint(room_page)
+=======
+app.register_blueprint(admin_page)
+>>>>>>> 9298cce2cc106437ed7d0743af1e614860a79dfd
 
 @app.route("/")
 def home():

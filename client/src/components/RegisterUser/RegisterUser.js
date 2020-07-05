@@ -1,99 +1,67 @@
-import React, { Component } from "react";
-import { connect } from 'react-redux';
-import { Route, BrowserRouter as Router, Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import UserService from '../../services/user.service';
 import './RegisterUser.css';
 import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
 const axios = require('axios');
 
-class NewUser extends Component {
+const RegisterUser = (props) => {
+    const state = useSelector(state => state);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
+    const userService = new UserService();
 
-    newUser() {
-        let NewUser = axios({
-            method: 'POST',
-            url: 'http://localhost:5000/users/register',
-            data: {
-                username: this.props.newUsername,
-                password: this.props.newPassword,
-                department: this.props.newDpt,
-                functional_team: this.props.newFuncTeam,
-                title: this.props.newTitle
-
-            }
-        })
-
-        this.props.handleNewUser(NewUser);
-
+    const newUser = async () => {
+        await userService.newUser(state.newUsername, state.newPassword, state.newDpt, state.newFuncTeam, state.newTitle)
+        history.push('/')
     }
 
 
-    render() {
-        return (
-            <>
-                <div className="Register">
-                    <h1 className="Title">New USER INFO</h1>
-                    <br></br>
-                    <Form>
-                        <Form.Group controlId='username'>
-                            <Form.Label>Username:</Form.Label>
-                            <Form.Control type="text" name="username" placeholder="Enter username"
-                                value={this.props.newUsername}
-                                onChange={this.props.handleNewUsernameInput} />
-                        </Form.Group>
-                        <Form.Group controlId='password'>
-                            <Form.Label>Password:</Form.Label>
-                            <Form.Control type="password" name="password" placeholder="Enter password"
-                                value={this.props.newPassword}
-                                onChange={this.props.handleNewPasswordInput} />
-                        </Form.Group>
-                        <Form.Group controlId='department'>
-                            <Form.Label>Department:</Form.Label>
-                            <Form.Control type="text" name="department" placeholder="Enter department"
-                                value={this.props.newDpt}
-                                onChange={this.props.handleNewDepartmentInput} />
-                        </Form.Group>
-                        <Form.Group controlId='functional_team'>
-                            <Form.Label>Functional Team:</Form.Label>
-                            <Form.Control type="text" name="functional_team" placeholder="Enter functional team"
-                                value={this.props.newFuncTeam}
-                                onChange={this.props.handleNewFuncTeamInput} />
-                        </Form.Group>
-                        <Form.Group controlId='title'>
-                            <Form.Label>Title:</Form.Label>
-                            <Form.Control type="text" name="title" placeholder="Enter title"
-                                value={this.props.newTitle}
-                                onChange={this.props.handleNewTitleInput} />
-                        </Form.Group>
-                        <Button block onClick={() => this.newUser()}>Register</Button>
-                    </Form>
-                </div>
-            </>
-        )
-    }
+    return (
+        <>
+            <div className="register">
+                <h1 className="title">New USER INFO</h1>
+                <br></br>
+                <Form>
+                    <Form.Group controlId='username'>
+                        <Form.Label>Username:</Form.Label>
+                        <Form.Control type="text" name="username" placeholder="Enter username"
+                            value={state.newUsername}
+                            onChange={e => dispatch({type: "handleNewUsername", newUsername: e.target.value})} />
+                    </Form.Group>
+                    <Form.Group controlId='password'>
+                        <Form.Label>Password:</Form.Label>
+                        <Form.Control type="password" name="password" placeholder="Enter password"
+                            value={state.newPassword}
+                            onChange={e => dispatch({type: "handleNewPassword", newPassword: e.target.value})} />
+                    </Form.Group>
+                    <Form.Group controlId='department'>
+                        <Form.Label>Department:</Form.Label>
+                        <Form.Control type="text" name="department" placeholder="Enter department"
+                            value={state.newDpt}
+                            onChange={e => dispatch({type: "handleNewDepartment", newDpt: e.target.value})} />
+                    </Form.Group>
+                    <Form.Group controlId='functional_team'>
+                        <Form.Label>Functional Team:</Form.Label>
+                        <Form.Control type="text" name="functional_team" placeholder="Enter functional team"
+                            value={state.newFuncTeam}
+                            onChange={e => dispatch({type: "handleNewFuncTeam", newFuncTeam: e.target.value})} />
+                    </Form.Group>
+                    <Form.Group controlId='title'>
+                        <Form.Label>Title:</Form.Label>
+                        <Form.Control type="text" name="title" placeholder="Enter title"
+                            value={state.newTitle}
+                            onChange={e => dispatch({type: "handleNewTitle", newTitle: e.target.value})} />
+                    </Form.Group>
+                    <Button block onClick={newUser}>Register</Button>
+                </Form>
+            </div>
+        </>
+    )
+    
 }
 
-function mapStateToProps(state) {
-    const { user, newUsername, newPassword, newDpt, newFuncTeam, newTitle } = state;
-    return {
-        Newuser: user,
-        newUsername: newUsername,
-        newPassword: newPassword,
-        newDpt: newDpt,
-        newFuncTeam: newFuncTeam,
-        newTitle: newTitle
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        handleNewUsernameInput: (e) => dispatch({ type: 'handleNewUsername', newUsername: e.target.value }),
-        handleNewPasswordInput: (e) => dispatch({ type: 'handleNewPassword', newPassword: e.target.value }),
-        handleNewDepartmentInput: (e) => dispatch({ type: 'handleNewDepartment', newDpt: e.target.value }),
-        handleNewFuncTeamInput: (e) => dispatch({ type: 'handleNewFuncTeam', newFuncTeam: e.target.value }),
-        handleNewTitleInput: (e) => dispatch({ type: 'handleNewTitle', newTitle: e.target.value }),
-        handleNewUser: (user) => dispatch({ type: 'Newuser', user: user })
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewUser);
+export default RegisterUser;

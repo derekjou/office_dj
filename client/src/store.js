@@ -9,12 +9,12 @@ const initialState = {
   updateDpt: "",
   updateFuncTeam: "",
   updateTitle: "",
-  NewUser: "",
   newUsername: "",
   newPassword: "",
   newDpt: "",
   newFuncTeam: "",
   newTitle: "",
+<<<<<<< HEAD
   room: { name: "", owner: "", participants: "", playlists: "", date_created: "" },
   myRooms: [],
   currentRoom: { name: "", owner: "", participants: "", playlists: "", date_created: "" },
@@ -22,6 +22,13 @@ const initialState = {
   newParticipant: "",
   roomName: "",
   participants: [],
+=======
+  title: "",
+  artists: [],
+  album: "",
+  genre: "",
+  url: ""
+>>>>>>> 9298cce2cc106437ed7d0743af1e614860a79dfd
 };
 
 function reducer(state = initialState, action) {
@@ -58,6 +65,7 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { newFuncTeam: action.newFuncTeam});
     case "handleNewTitle":
       return Object.assign({}, state, { newTitle: action.newTitle});
+<<<<<<< HEAD
     case "NewUser":
       return Object.assign({}, state, { NewUser: action.user});
     case "handleNewRoomName":
@@ -70,6 +78,18 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { myRooms: action.myRooms });
     case "handleCurrentRoom":
       return Object.assign({}, state, { currentRoom: action.currentRoom });
+=======
+    case "handleTitleInput":
+      return Object.assign({}, state, { title: action.title});
+    case "handleArtistsInput":
+      return Object.assign({}, state, { artists: action.artists.split(", ")});
+    case "handleAlbumInput":
+      return Object.assign({}, state, { album: action.album});
+    case "handleGenreInput":
+      return Object.assign({}, state, { genre: action.genre});
+    case "handleURLInput":
+      return Object.assign({}, state, { url: action.url});
+>>>>>>> 9298cce2cc106437ed7d0743af1e614860a79dfd
     default:
       return state;
   }

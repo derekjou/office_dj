@@ -10,6 +10,7 @@ from server.model.users import User, DJ
 _log = get_logger(__name__)
 
 user_page = Blueprint('user_page', __name__, static_folder='../static')
+admin_page = Blueprint('admin_page', __name__, static_folder='../static')
 
 @user_page.route("/users/register", methods=['POST'])
 def users():
@@ -36,3 +37,10 @@ def update_user(username):
         input_dict = request.json
         _log.debug(input_dict)
         return db.update_user(username, input_dict)
+
+@admin_page.route("/admin/addSong", methods=['POST'])
+def add_song():
+    if request.method == 'POST':
+        input_dict = request.json
+        _log.debug(input_dict)
+        return db.add_song(input_dict)
