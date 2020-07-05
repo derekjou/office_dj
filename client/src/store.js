@@ -65,7 +65,6 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { newFuncTeam: action.newFuncTeam});
     case "handleNewTitle":
       return Object.assign({}, state, { newTitle: action.newTitle});
-<<<<<<< HEAD
     case "NewUser":
       return Object.assign({}, state, { NewUser: action.user});
     case "handleNewRoomName":
@@ -78,7 +77,6 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { myRooms: action.myRooms });
     case "handleCurrentRoom":
       return Object.assign({}, state, { currentRoom: action.currentRoom });
-=======
     case "handleTitleInput":
       return Object.assign({}, state, { title: action.title});
     case "handleArtistsInput":
@@ -89,7 +87,6 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { genre: action.genre});
     case "handleURLInput":
       return Object.assign({}, state, { url: action.url});
->>>>>>> 9298cce2cc106437ed7d0743af1e614860a79dfd
     default:
       return state;
   }
