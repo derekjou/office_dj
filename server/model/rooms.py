@@ -12,7 +12,7 @@ class Room():
         self.name = name
         self.owner = owner
         self.participants = participants if participants is not None else []
-        self.playlists = playlists if playlists is not None else []
+        self.playlists = playlists if playlists is not None else {}
         self.date_created = date_created if date_created is not None else datetime.now()
     def to_dict(self):
         '''Returns the dictionary representation of itself.'''

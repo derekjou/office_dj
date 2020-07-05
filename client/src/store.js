@@ -20,7 +20,7 @@ const initialState = {
   newRoomName: "",
   newParticipant: "",
   roomName: "",
-  participants: [],
+  participants: {},
   title: "",
   artists: [],
   album: "",

@@ -11,9 +11,9 @@ const Participants = (props) => {
         <>
             <h4 className="ui-header">Listeners</h4>
             <ListGroup variant="flush">
-                {props.participants === [] ? props.participants.map(participant => {
-                    return <Participant key={participant._id} participant={participant} />
-                }) : <Participant key={props.participants._id} participant={props.participants} />}
+                {typeof props.participants === 'object' ? Object.keys(props.participants).map(participant => {
+                    return <Participant key={participant} participant={participant} />
+                }) : <Participant key={props.participants} participant={props.participants} />}
             </ListGroup>
         </>
     )

@@ -100,6 +100,17 @@ def get_room_by_id(username: str, r_id: int):
     _log.info('Room %d successfully found', r_id)
     return room
 
+def find_user(username: str):
+    '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''
+    _log.info('Attempting to retrive user %s from the database', username)
+    user = _db.users.find_one({'username': username}, {'password': 0})
+    if user:
+        _log.info('User %s successfully found', username)
+        return user
+    else: 
+        _log.info('User %s not found', username)
+        return 'user not found'
+
 def update_user(username: str, input_dict: dict):
     '''Updates a users current information'''
     _log.info('Updating user...')
@@ -136,14 +147,6 @@ if __name__ == "__main__":
     _db.counter.insert_one({'_id': 'COUNT', 'count': 0})
     _db.counter.insert_one({'_id': 'UNIQUE_SONG_NUMBER', 'count': 0})
 
-    room_list = []
-    room_list.append(Room(
-        _get_id(),
-        'Test Room',
-        'victoria', 
-        ['test1', 'test2', 'test3']
-    ).to_dict())
-
     user_list = []
     user_list.append(DJ(
         _get_id(),
@@ -152,6 +155,14 @@ if __name__ == "__main__":
         'Software Delivery',
         'UI/UX',
         'Delevoper'
+    ).to_dict())
+
+    room_list = []
+    room_list.append(Room(
+        _get_id(),
+        'Test Room',
+        'victoria',
+        {'victoria': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
     ).to_dict())
 
     _log.debug(user_list)

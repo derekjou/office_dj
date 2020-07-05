@@ -32,7 +32,7 @@ const Room = (props) => {
     }, []);
 
     const getCurrentRoom = (rooms) => {
-        dispatch({ type: 'handleCurrentRoom', currentRoom: rooms[2] })
+        dispatch({ type: 'handleCurrentRoom', currentRoom: rooms[0] })
     }
     
     const roomLayout = () => {

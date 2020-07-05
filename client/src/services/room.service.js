@@ -20,8 +20,13 @@ class RoomService {
     }
 
     createRoom(room) {
-        let uri = `${this.URI}/rooms/${room.name}`
-        return axios.post(uri, room, { withCredentials: true })
+        let uri = `${this.URI}/rooms/${room.name}`;
+        let resp = axios.post(uri, room, {
+            withCredentials: true, validateStatus: function (status) {
+                return status < 500; // Resolve only if the status code is less than 500
+            } 
+        })
+        return resp
     }
 }
 
