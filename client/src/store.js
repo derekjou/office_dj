@@ -14,7 +14,6 @@ const initialState = {
   newDpt: "",
   newFuncTeam: "",
   newTitle: "",
-<<<<<<< HEAD
   room: { name: "", owner: "", participants: "", playlists: "", date_created: "" },
   myRooms: [],
   currentRoom: { name: "", owner: "", participants: "", playlists: "", date_created: "" },
@@ -22,13 +21,11 @@ const initialState = {
   newParticipant: "",
   roomName: "",
   participants: [],
-=======
   title: "",
   artists: [],
   album: "",
   genre: "",
   url: ""
->>>>>>> 9298cce2cc106437ed7d0743af1e614860a79dfd
 };
 
 function reducer(state = initialState, action) {
