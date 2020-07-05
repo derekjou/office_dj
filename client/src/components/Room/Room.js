@@ -21,19 +21,18 @@ const Room = (props) => {
 
     let loggedUsername = JSON.parse(sessionStorage.getItem('loggedUser')).username
 
-    useEffect( () =>  
-        getRoomList(), []
-    ); 
-
-    const getRoomList = async () => {
-        let myRooms = await roomService.getUserRooms(loggedUsername);
-        sessionStorage.setItem('loggedRoomList', JSON.stringify(myRooms.data))
-        dispatch({ type: 'handleMyRoom', myRooms: myRooms.data });
-        getCurrentRoom(myRooms.data);
-    }
+    useEffect( () => {
+        async function getRoomList() {
+            let myRooms = await roomService.getUserRooms(loggedUsername);
+            sessionStorage.setItem('loggedRoomList', JSON.stringify(myRooms.data))
+            dispatch({ type: 'handleMyRooms', myRooms: myRooms.data });
+            getCurrentRoom(myRooms.data);
+        }
+        getRoomList();
+    }, []);
 
     const getCurrentRoom = (rooms) => {
-        dispatch({ type: 'getCurrentRoom', currentRoom: rooms[0] })
+        dispatch({ type: 'handleCurrentRoom', currentRoom: rooms[2] })
     }
     
     const roomLayout = () => {
@@ -45,7 +44,6 @@ const Room = (props) => {
                             id="roomList"
                             myRooms={state.myRooms} 
                         />
-                        {state.myRooms}
                     </Col>
                     <Col id="content-wrapper">
                         <Row id="roomname-wrapper">
@@ -57,7 +55,6 @@ const Room = (props) => {
                             </Col>
                             <Col id="participants-wrapper">
                                 <Participants participants={state.currentRoom.participants} />
-                                {state.currentRoom.participants}
                             </Col>
                         </Row>
                     </Col>

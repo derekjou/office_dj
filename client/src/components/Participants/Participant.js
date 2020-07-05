@@ -1,36 +1,17 @@
-import React, { Component } from 'react';
-import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import EllipseMenu from '../EllipsisMenu/EllipsisMenu.js'
 // TODO: CSS
 import { connect } from 'react-redux';
 
-class Participant extends Component {
-    constructor(props) {
-        super(props)
-
-        this.handleHover = this.handleHover.bind(this);
-    }
-
-    handleHover() {
-        this.setState(state => ({
-            isToggleOn: !state.isToggleOn
-        }));
-    }
-
-    render() {
-        return (
-            <>
-                <ListGroup.Item
-                    onMouseOver={this.handleHover}
-                    className={`participant-icon ${this.state.isToggleOn ? "open" : "closed"}`}
-                >
-                    <span>{this.props.participant.username}</span>
-                </ListGroup.Item>
-            </>
-        )
-    }
+const Participant = (props) => {
+    return (
+        <>
+            <ListGroup.Item className={'participant-icon'}>
+                <span>{props.participant}</span>
+            </ListGroup.Item>
+        </>
+    )
 }
 
 export default Participant

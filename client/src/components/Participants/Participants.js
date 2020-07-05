@@ -1,36 +1,22 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import './Participants.scss'
 import { connect } from 'react-redux';
 import Participant from './Participant';
 
-class Participants extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <>
-                <h4 className="ui-header">Listeners</h4>
-                <ListGroup variant="flush">
-                    {this.props.participants.map = participant => {
-                        return <Participant key={participant._id} participant={participant}></Participant>
-                    }}
-                </ListGroup>
-            </>
-        )
-    }
+const Participants = (props) => {
+    return (
+        <>
+            <h4 className="ui-header">Listeners</h4>
+            <ListGroup variant="flush">
+                {props.participants === [] ? props.participants.map(participant => {
+                    return <Participant key={participant._id} participant={participant} />
+                }) : <Participant key={props.participants._id} participant={props.participants} />}
+            </ListGroup>
+        </>
+    )
 }
 
-function mapStateToProps(state) {
-    const { displayParticipants } = state;
-    return { participants: displayParticipants }
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        participants: (participants) => dispatch({ type: 'queryUsers', participants: participants })
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Participants);
+export default Participants;

@@ -18,11 +18,15 @@ except:
     _log.exception('Could not connect to Mongo')
     raise
 
+
 def _get_id():
     '''Retrieves the next id in the database and increments it.'''
-    return _db.counter.find_one_and_update({'_id': 'COUNT'},
-                                            {'$inc': {'count': 1}},
-                                            return_document=ReturnDocument.AFTER)['count']
+    return _db.counter.find_one_and_update(
+        {'_id': 'UNIQUE_COUNT'},
+        {'$inc': {'count': 1}},
+        return_document=ReturnDocument.AFTER
+    )['count']
+
 
 def add_user(input_user: dict):
     '''a method to add a new user to the database'''
@@ -88,14 +92,6 @@ def get_room_by_id(username: str, r_id: int):
     room = _db.rooms.find_one({'username': username, '_id': r_id})
     _log.info('Room %d successfully found', r_id)
     return room
-
-def _get_id():
-    '''Retrieves the next id in the database and increments it.'''
-    return _db.counter.find_one_and_update(
-        {'_id': 'UNIQUE_COUNT'},
-        {'$inc': {'count': 1}},
-        return_document=ReturnDocument.AFTER
-    )['count']
 
 def update_user(username: str, input_dict: dict):
     '''Updates a users current information'''

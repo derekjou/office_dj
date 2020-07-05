@@ -15,13 +15,13 @@ const initialState = {
   newDpt: "",
   newFuncTeam: "",
   newTitle: "",
-  room: { name: "", owner: "", particpiants: "", playlists: "", date_created: "" },
+  room: { name: "", owner: "", participants: "", playlists: "", date_created: "" },
   myRooms: [],
-  currentRoom: { name: "", owner: "", particpiants: "", playlists: "", date_created: "" },
+  currentRoom: { name: "", owner: "", participants: "", playlists: "", date_created: "" },
   newRoomName: "",
-  newParticpiant: "",
+  newParticipant: "",
   roomName: "",
-  particpiants: [],
+  participants: [],
 };
 
 function reducer(state = initialState, action) {
@@ -68,7 +68,7 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { room: action.room });
     case "handleMyRooms":
       return Object.assign({}, state, { myRooms: action.myRooms });
-    case "getCurrentRoom":
+    case "handleCurrentRoom":
       return Object.assign({}, state, { currentRoom: action.currentRoom });
     default:
       return state;

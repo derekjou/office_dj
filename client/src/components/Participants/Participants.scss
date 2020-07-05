@@ -1,7 +1,5 @@
 /* Abstracts */
 
-$icon-color: rgb(134, 59, 112);
-
 @mixin ui-heading ($size: 'm') {
     font-weight: 700;
     text-transform: uppercase;
@@ -18,11 +16,13 @@ $icon-color: rgb(134, 59, 112);
     margin: 1rem;
 }
 
-.participant-icon {
+.participant-icon, .participant-icon span {
     display: flex;
     flex-flow: row nowrap;
     height: 2rem;
-    background-color: $icon-color;
     border-radius: 50%;
+
+    font-size: 1rem;
+    font-weight: 500;
     line-height: 2rem;
 }

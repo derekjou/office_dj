@@ -13,10 +13,6 @@ import Axios from 'axios';
 
 const RoomList = (props) => {
     const state = useSelector(state => state);
-    const dispatch = useDispatch();
-
-    console.log(`myRooms: ${JSON.stringify(state.myRooms)}`)
-    console.log(`props: ${JSON.stringify(props.myRooms)}`)
 
     const roomService = new RoomService();
 
@@ -27,12 +23,8 @@ const RoomList = (props) => {
             id="roomsList"
         >
             {props.myRooms.map(room => {
-                console.log(room.name);
                 return <RoomIcon key={room._id} room={room} />
             })}
-            {/* <RoomIcon key="1" room={{ name: 'hi' }} />
-            <RoomIcon key="2" room={{ name: 'hello' }} />
-            <RoomIcon key="3" room={{ name: 'hola' }} /> */}
             <Button 
                 className="room-icon new-room-icon"
                 id="addNewRoom"
@@ -40,15 +32,5 @@ const RoomList = (props) => {
         </ListGroup>
     )
 }
-
-// function mapStateToProps(state) {
-//     const { displayRoomList } = state;
-//     return { roomList: displayRoomList }
-// }
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         queryRooms: (roomList) => dispatch({ type: 'queryRooms', roomList: roomList })
-//     }
-// }
 
 export default RoomList;
