@@ -1,0 +1,28 @@
+/* Abstracts */
+
+@mixin ui-heading ($size: 'm') {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    color: #666;
+
+    @if $size == 'm' { font-size: 1rem; }
+    @if $size == 'sm' { font-size: .875rem; }
+}
+
+.ui-header {
+    @include ui-heading('sm');
+
+    margin: 1rem;
+}
+
+.participant-icon, .participant-icon span {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 0 .5rem; margin: 0;
+    height: 2.5rem;
+
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 2.5rem;
+}
