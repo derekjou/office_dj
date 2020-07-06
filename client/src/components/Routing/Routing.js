@@ -10,7 +10,6 @@ import Room from '../Room/Room';
 import RegisterUser from '../RegisterUser/RegisterUser';
 import Admin from '../Admin/Admin';
 import AddMusic from '../AddMusic/AddMusic';
-import Player from '../Player/Player';
 
 const checkLogin = () => {
   return sessionStorage.getItem('loggedUser') ? true : false;
@@ -46,7 +45,6 @@ class Routing extends Component {
         <Route exact path="/myroom" component={Room} />
         <Route path="/admin" component={Admin} />
         <Route path="/addMusic" component={AddMusic} />
-        <Route path="/player" component={Player} />
       </Router>
     );
   }
