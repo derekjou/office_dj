@@ -1,0 +1,68 @@
+
+
+/* Abstracts */
+$pageheight: calc(100vh - 3.5rem);
+
+
+/* UI */
+
+
+#roomsList {
+    display: flexbox;
+    flex-flow: column nowrap;
+    width: 4.5rem; 
+    height: $pageheight;
+    margin: 0;
+
+    padding: 1rem;
+    
+    background-color: #e0e0e0; //TODO: pick some nice colors
+
+    @media only screen and (max-width: 480px) {
+        width: 100vw; 
+        height: 4.5rem; 
+        flex-flow: row nowrap;
+
+        & .room-icon-wrapper {
+            margin: 0 .25rem;
+        }
+    }
+}
+
+.room-icon-wrapper {
+    width: 2.5rem; height: 2.5rem;
+    padding: 0; margin: .25rem 0;
+    background: transparent;
+    border: none;
+}
+
+.room-icon {
+    display: flexbox;
+    flex-flow: row nowrap;
+    align-content: center; justify-content: center;
+    width: 2.5rem; height: 2.5rem;
+    padding: 0; margin: 0;
+    border-radius: 1rem;
+    border: 0;
+    outline: none;
+
+    font-size: x-large;
+    text-transform: capitalize;
+    line-height: 2.5rem;
+    font-weight: 800;
+
+    & > * {
+        padding: 0; margin: 0;
+    }
+
+    &.new-room-icon {
+        padding: 0;
+        display: flexbox;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0,0,0,.05);
+        border: 0;
+        &:hover { background-color: rgba(0,0,0,.2); }
+    }
+}
+

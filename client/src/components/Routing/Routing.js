@@ -5,6 +5,8 @@ import Home from '../Home/Home';
 import UpdateUser from '../UpdateUser/UpdateUser';
 import NavBar from '../NavBar/NavBar';
 import Login from '../Login/Login';
+import CreateRoom from '../CreateRoom/CreateRoom';
+import Room from '../Room/Room';
 import RegisterUser from '../RegisterUser/RegisterUser';
 import Admin from '../Admin/Admin';
 import AddMusic from '../AddMusic/AddMusic';
@@ -40,6 +42,8 @@ class Routing extends Component {
         <Route path="/login" component={Login} />
         <Route path="/registerUser" component={RegisterUser} />
         <PrivateRoute path='/updateUser' component={UpdateUser} />
+        <Route exact path="/createroom" component={CreateRoom} />
+        <Route exact path="/myroom" component={Room} />
         <Route path="/admin" component={Admin} />
         <Route path="/addMusic" component={AddMusic} />
         <Route path="/player" component={Player} />
