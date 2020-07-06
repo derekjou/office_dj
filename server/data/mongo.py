@@ -126,6 +126,26 @@ def update_user(username: str, input_dict: dict):
         _log.info('Could not update %s', username)
         raise
 
+def update_user_role(username: str):
+    '''Updates a users current information'''
+    _log.info('Updating user...')
+    query = {'username': username}
+    try: 
+        user_dict = _db.users.find_one(query)
+        for key in user_dict:
+            _log.info('Key:')
+            _log.info(key)
+            if key=='role':
+                if user_dict[key]=='User':
+                    role = 'DJ'
+                else:
+                    role = 'User'
+        newvalue = { "$set": { "role": role } }
+        _db.users.update_one(query, newvalue)
+    except:
+        _log.info('Could not update %s', username)
+        raise
+
 def add_song(song_dict: dict):
     '''a method to add a new song to the database'''
     _log.info("adding song to the database")
