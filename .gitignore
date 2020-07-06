@@ -109,3 +109,4 @@ server/venv/
 **/lib
 server/pyvenv.cfg
 **/__pycache__/
+**/package-lock.json
