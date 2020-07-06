@@ -49,6 +49,4 @@ def add_song():
 @admin_page.route("/admin/player", methods=['GET'])
 def request_song():
     if request.method == 'GET':
-        input_dict = request.json
-        _log.debug(input_dict)
         return db.request_song()
