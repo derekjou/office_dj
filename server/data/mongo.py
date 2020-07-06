@@ -134,7 +134,7 @@ def add_song(song_dict: dict):
     _log.debug(song_dict)
     return song_dict
 
-def request_song(song_dict: dict):
+def request_song():
     '''A method that retrieve all the songs'''
     _log.info("retrieving songs from the database")
     song_dict = _db.songs.find()
