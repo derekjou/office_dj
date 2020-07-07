@@ -21,12 +21,19 @@ class RoomService {
 
     createRoom(room) {
         let uri = `${this.URI}/rooms/${room.name}`;
-        let resp = axios.post(uri, room, {
+        return axios.post(uri, room, {
             withCredentials: true, validateStatus: function (status) {
                 return status < 500; // Resolve only if the status code is less than 500
             } 
         })
-        return resp
+    }
+    findRooms(query) {
+        let uri = `${this.URI}/rooms/search?query=${query}`;
+        return axios.get(uri, {
+            withCredentials: true, validateStatus: function (status) {
+                return status < 500; // Resolve only if the status code is less than 500
+            }
+        })
     }
 }
 

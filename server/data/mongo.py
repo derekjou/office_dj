@@ -92,13 +92,24 @@ def get_rooms_by_user(username: str):
     _log.info('Successfully found %d rooms belonging to %s', len(room_list), username)
     return room_list
 
-def get_room_by_id(username: str, r_id: int):
+def get_room_by_name(username: str, name: str):
     '''Takes an id of a room object and queries the Rooms collection for that object.'''
-    _log.info('Attempting to retrive room %d from the database', r_id)
+    _log.info('Attempting to retrive room %d from the database', name)
     #TODO: Try/Except for empty find
-    room = _db.rooms.find_one({'username': username, '_id': r_id})
-    _log.info('Room %d successfully found', r_id)
+    room = _db.rooms.find_one({'username': username, '_id': name})
+    _log.info('Room %d successfully found', name)
     return room
+
+def find_room_partial_string(query: str):
+    '''Takes a string and queries the Room collection for that name with matches to the string, 
+       returns 5 room names & owners, sorted alphabetically'''
+    _log.info('Attempting to retrive rooms with name matching %s from the database', query)
+    pipeline = [
+        {'name': f'$regex":"^{query}*"'},
+        {'name': 1, 'owner': 1},
+    ]
+    room_list = list(_db.rooms.aggregate(pipeline).sort(''))
+
 
 def find_user(username: str):
     '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''
