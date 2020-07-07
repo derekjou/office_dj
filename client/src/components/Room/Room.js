@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import RoomService from '../../services/room.service';
@@ -10,12 +10,14 @@ import Col from 'react-bootstrap/Col';
 import RoomList from '../RoomList/RoomList.js';
 import Participants from '../Participants/Participants';
 import { connect } from 'react-redux';
+import JoinRoom from '../JoinRoom/JoinRoom';
 
 
 
 const Room = (props) => {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
+    const [hasRooms, setHasRooms] = useState(false)
 
     const roomService = new RoomService();
 
@@ -33,6 +35,7 @@ const Room = (props) => {
 
     const getCurrentRoom = (rooms) => {
         dispatch({ type: 'handleCurrentRoom', currentRoom: rooms[0] })
+        setHasRooms(true)
     }
     
     const roomLayout = () => {
@@ -40,24 +43,31 @@ const Room = (props) => {
             <Container fluid>
                 <Row>
                     <Col id="roomList-wrapper">
-                        <RoomList 
+                        <RoomList
                             id="roomList"
-                            myRooms={state.myRooms} 
+                            myRooms={state.myRooms}
                         />
                     </Col>
-                    <Col id="content-wrapper">
-                        <Row id="roomname-wrapper">
-                            <h3 id="roomname">{state.currentRoom.name}</h3>
-                        </Row>
-                        <Row>
-                            <Col id="playlist-wrapper">
-                                {/* TODO: Playlists Component */}
-                            </Col>
-                            <Col id="participants-wrapper">
-                                <Participants participants={state.currentRoom.participants} />
-                            </Col>
-                        </Row>
-                    </Col>
+                    {state.hasRooms ? 
+                        <Col id="content-wrapper">
+                            <Row id="roomname-wrapper">
+                                <h3 id="roomname">{state.currentRoom.name}</h3>
+                            </Row>
+                            <Row>
+                                <Col id="playlist-wrapper">
+                                        {/* TODO: Playlists Component */}
+                                    
+                                </Col>
+                                <Col id="participants-wrapper">
+                                    <Participants participants={state.currentRoom.participants} />
+                                </Col>
+                            </Row>
+                        </Col>
+                    :
+                        <Col>
+                            <JoinRoom />
+                        </Col>
+                    }
                 </Row>
             </Container>
         );

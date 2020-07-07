@@ -15,10 +15,6 @@ class RoomService {
         return axios.get(uri, { withCredentials: true })
     }
 
-    getParticipants() {
-        // TODO
-    }
-
     createRoom(room) {
         let uri = `${this.URI}/rooms/${room.name}`;
         return axios.post(uri, room, {
@@ -27,6 +23,7 @@ class RoomService {
             } 
         })
     }
+    
     findRooms(query) {
         let uri = `${this.URI}/rooms/search?query=${query}`;
         return axios.get(uri, {
