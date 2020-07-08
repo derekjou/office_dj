@@ -1,4 +1,4 @@
-''''''
+'''a method to handle requests to songs'''
 
 from flask import Flask, jsonify, Blueprint, request
 import html
@@ -28,4 +28,5 @@ def request_new_song():
             return jsonify("request processed"), 201
         else:
             return jsonify("request could not be completed"), 400
+        
         
