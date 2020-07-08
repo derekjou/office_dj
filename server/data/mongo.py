@@ -130,8 +130,10 @@ def update_user_role(username: str):
     '''Updates a users current information'''
     _log.info('Updating user...')
     query = {'username': username}
+    _log.info(query)
     try: 
         user_dict = _db.users.find_one(query)
+        _log.debug(user_dict)
         for key in user_dict:
             _log.info('Key:')
             _log.info(key)
