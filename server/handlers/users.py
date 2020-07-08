@@ -50,12 +50,3 @@ def add_song():
 def request_song():
     if request.method == 'GET':
         return db.request_song()
-
-@user_page.route("/admin//changerole", methods=['PUT'])
-def update_user_role():
-    '''a method to update user information'''
-    if request.method == 'PUT':
-        username = request.json['username']
-        # _log.debug(input_dict)
-        db.update_user_role(username)
-        return '', 204

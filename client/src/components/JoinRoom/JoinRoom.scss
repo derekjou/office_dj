@@ -1,0 +1,29 @@
+div.search-res-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+
+  .search-res {
+    display: block;
+  }
+  .name {
+    font-weight: 600;
+  }
+  .owner {
+    margin: 0 1rem;
+    align-self: right !important;
+    justify-self: right;
+    &::before {
+      content: 'owned by ';
+    }
+  }
+}
+
+
+.toast.request-sent.success {
+  min-width: 300px;
+  &, & .close, & > * {
+    background-color: #007bff;
+    color: white;
+  }
+}
+

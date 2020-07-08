@@ -90,32 +90,32 @@ if __name__ == "__main__":
     room_list.append(Room(
         _get_id(),
         'Test Room',
-        'victoria',
-        {'victoria': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
+        'discjockey',
+        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
     ).to_dict())
     room_list.append(Room(
         _get_id(),
         'AaaaaBBb',
-        'victoria',
-        {'victoria': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
+        'discjockey',
+        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
     ).to_dict())
     room_list.append(Room(
         _get_id(),
         'Alacazam',
-        'victoria',
-        {'victoria': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
+        'discjockey',
+        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
     ).to_dict())
     room_list.append(Room(
         _get_id(),
         'Zampowbop',
-        'victoria',
-        {'victoria': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
+        'discjockey',
+        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
     ).to_dict())
     room_list.append(Room(
         _get_id(),
         'razzamatazz',
-        'victoria',
-        {'victoria': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
+        'discjockey',
+        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
     ).to_dict())
 
     _log.debug(user_list)
