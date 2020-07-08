@@ -48,22 +48,23 @@ const WorkRequest = (props) => {
       </tr>
     )
   }
-}
-return (
-  <>
-    <div>
-      <Table responsive="lg" hover>
-        <thead>
-          <tr>{renderHeader()}</tr>
-        </thead>
-        <tbody id="data">
-          {renderBody()}
-        </tbody>
-      </Table>
-    </div>
 
-  </>
-)
+  return (
+    <>
+      <div>
+        <Table responsive="lg" hover>
+          <thead>
+            <tr>{renderHeader()}</tr>
+          </thead>
+          <tbody id="data">
+            {renderBody()}
+          </tbody>
+        </Table>
+      </div>
+
+    </>
+  )
 }
+
 
 export default WorkRequest;
