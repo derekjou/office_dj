@@ -23,6 +23,7 @@ const initialState = {
   participants: {},
   roomSearchQuery: '',
   roomSearchList: [],
+  requestRoom: { name: "", owner: "" },
   title: "",
   artists: [],
   album: "",
@@ -80,6 +81,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { roomSearchQuery: action.roomSearchQuery });
     case "handleRoomSearch":
       return Object.assign({}, state, { roomSearchList: action.roomSearchList });
+    case "handleRoomRequestSuccess":
+      return Object.assign({}, state, { requestRoom: action.requestRoom })
     case "handleTitleInput":
       return Object.assign({}, state, { title: action.title});
     case "handleArtistsInput":

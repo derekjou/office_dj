@@ -79,15 +79,30 @@ def add_room(room: object):
     _db.rooms.insert_one(room.to_dict())
     _log.info('Room %s successfully added', room.name)
 
+def update_room(room: object):
+    '''Takes a room object and updates it in the Rooms collection.'''
+    _log.info('Attempting to update %s in the database', room.name)
+    _db.rooms.update({'_id': room._id}, room.to_dict())
+    _log.info('Room %s successfully added', room.name)
+
 def get_rooms_by_user(username: str):
     '''Takes an id of a room object and queries the Rooms collection for that object.'''
     _log.info('Attempting to retrive all rooms belonging to %s from the database', username)
     query_list = _db.rooms.find({'$or': [{'owner': username}, {'participants': username}]})
     room_list = []
     for room in query_list:
-        room_list.append(room)
+        room_list.append(Room.from_dict(room))
     _log.info('Successfully found %d rooms belonging to %s', len(room_list), username)
     return room_list
+
+def get_room_by_name(name: str, owner: str):
+    '''Takes a name of a room object and queries the Rooms collection for that object.'''
+    _log.info('Attempting to retrive room %s from the database', name)
+    #TODO: Try/Except for empty find
+    results = _db.rooms.find_one({'owner': owner, 'name': name})
+    room = Room.from_dict(results)
+    _log.info('Room %s successfully found', name)
+    return room
 
 def get_room_by_id(username: str, r_id: int):
     '''Takes an id of a room object and queries the Rooms collection for that object.'''
@@ -109,11 +124,10 @@ def find_room_partial_string(query: str):
     #TODO error handling
     return room_list
 
-
 def find_user(username: str):
     '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''
     _log.info('Attempting to retrive user %s from the database', username)
-    user = _db.users.find_one({'username': username}, {'password': 0})
+    user = User.from_dict(_db.users.find_one({'username': username}, {'password': 0}))
     if user:
         _log.info('User %s successfully found', username)
         return user

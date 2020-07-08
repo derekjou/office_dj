@@ -23,7 +23,7 @@ class RoomService {
             } 
         })
     }
-    
+
     findRooms(query) {
         let uri = `${this.URI}/rooms/search?query=${query}`;
         return axios.get(uri, {
@@ -31,6 +31,17 @@ class RoomService {
                 return status < 500; // Resolve only if the status code is less than 500
             }
         })
+    }
+
+    sendJoinRequest(name, owner, username){
+        let body = {
+            'name': name,
+            'owner': owner,
+            'username': username
+        }
+        console.log(body)
+        let uri = `${this.URI}/rooms/${name}/join`;
+        return axios.post(uri, body, {withCredentials: true})
     }
 }
 

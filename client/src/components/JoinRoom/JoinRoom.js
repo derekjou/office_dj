@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RoomService from '../../services/room.service';
+import RoomRequestSuccess from './RoomRequestSuccess.js';
 
 // React Bootstrap
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -19,6 +20,10 @@ const JoinRoom = (props) => {
   const roomService = new RoomService();
 
   const [searchResults, setSearchResults] = useState(false)
+  const [roomRequestSent, setRoomRequestSent] = useState(false)
+
+
+  let loggedUsername = JSON.parse(sessionStorage.getItem('loggedUser')).username
 
   const handleKeyDown = e => {
     if (e.key === 'Enter') { 
@@ -36,8 +41,17 @@ const JoinRoom = (props) => {
     }
   }
 
-  const doSomething = () => {
+  const requestJoin = async (name, owner) => {
+    console.log(`${name} ${owner} ${loggedUsername}`)
     /* placeholder for action to join a room */
+    let response = await roomService.sendJoinRequest(name, owner, loggedUsername);
+    if (response.status === 204) {
+      dispatch({ type: 'handleRoomRequestSuccess', requestRoom: {'name': name, 'owner': owner} });
+      setRoomRequestSent(true)
+      setTimeout(() => {
+        setRoomRequestSent(false)
+      }, 10000)
+    }
   }
 
   return (
@@ -61,7 +75,7 @@ const JoinRoom = (props) => {
               />
               <InputGroup.Append>
                 <Button 
-                  variant="secondary"
+                  variant="primary"
                 >Search</Button>
               </InputGroup.Append>
             </InputGroup>
@@ -71,11 +85,11 @@ const JoinRoom = (props) => {
                   return (<>
                     <ListGroup.Item
                       key={room.name}
-                      onClick={doSomething()}
+                      onClick={()=>{requestJoin(room.name, room.owner)}}
                       className="search-res-wrapper"
                     >
                       <span className="search-res name">{room.name}</span>
-                      <span className="search-res owner">{room.owner}</span>
+                      <span className="search-res owner text-muted">{room.owner}</span>
                     </ListGroup.Item>
                   </>)
                 })
@@ -85,6 +99,13 @@ const JoinRoom = (props) => {
           </Form.Group>
         </Card.Body>
       </Card>
+      {roomRequestSent ?
+        <RoomRequestSuccess
+          room={state.requestRoom}
+          roomRequestSent={state.roomRequestSent}
+          setRoomRequestSent={state.setRoomRequestSent}
+        />
+      : null}
     </>
   )
 }

@@ -48,6 +48,19 @@ def rooms_collection(name):
         # NOTE: all requests should send id as a query string
         return jsonify(db.get_room_by_id(name, room_id))
 
+@room_page.route('/rooms/<string:name>/join', methods=['POST'])
+def request_join_rooms_collection(name):
+    '''A POST to /rooms/<name>/join searches for rooms that match a partial string.'''
+    body = request.json
+    owner = body['owner']
+    _log.debug(f'{name} {owner}')
+    room = db.get_room_by_name(name, owner)
+    _log.debug(body['username'])
+    user = db.find_user(body['username'])
+    room.add_participant_request(user)
+    db.update_room(room)
+    #TODO: error handling
+    return '', 204
 
 @room_page.route('/rooms/myrooms/<string:username>', methods=['GET'])
 def my_rooms_collection(username):
