@@ -10,7 +10,6 @@ from server.songs.model import Song
 _log = get_logger(__name__)
 
 song_page = Blueprint('song_page', __name__, static_folder='../static')
-request_page = Blueprint('request_page', __name__, static_folder='../static')
 
 @song_page.route('/songs', methods=['GET'])
 def see_aproved_songs():
@@ -18,7 +17,7 @@ def see_aproved_songs():
     if request.method == "GET":
         return jsonify(db.get_songs())
 
-@request_page.route('/songs/requestNew', methods=['POST'])
+@song_page.route('/songs/requestNew', methods=['POST'])
 def request_new_song():
     _log.debug("request_new_song called")
     '''a method to request new songs be added to the list of aproved songs'''

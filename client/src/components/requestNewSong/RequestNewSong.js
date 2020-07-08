@@ -20,7 +20,7 @@ const RequestNewSong = (props) => {
 
     return (
         <>
-            <div className="register">
+            <div className="request new song">
                 <h1 className="title">New Song Request</h1>
                 <br/>
                 <Form>
