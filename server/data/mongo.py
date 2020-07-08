@@ -9,7 +9,7 @@ from bson import SON
 
 # Interal imports
 from server.model.rooms import Room
-from server.model.users import User, DJ
+from server.model.users import User, DJ, Admin
 from server.data.logger import get_logger
 
 _log = get_logger(__name__)
@@ -52,6 +52,8 @@ def _get_user_class(status: str):
         output = User
     if status == 'DJ':
         output = DJ
+    if status == 'admin':
+        output = Admin
     if output is None:
         _log.error('Expected a status of a user, recieved %s.', status)
     return output
@@ -163,10 +165,10 @@ def update_user_role(username: str):
             _log.info('Key:')
             _log.info(key)
             if key=='role':
-                if user_dict[key]=='User':
+                if user_dict[key]=='user':
                     role = 'DJ'
                 else:
-                    role = 'User'
+                    role = 'user'
         newvalue = { "$set": { "role": role } }
         _db.users.update_one(query, newvalue)
     except:
