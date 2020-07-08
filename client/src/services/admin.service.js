@@ -17,6 +17,17 @@ class AdminService {
         })
     }
 
+    changeRole(username) {
+        return axios({
+            method: 'PUT',
+            url: `${this.URI}/changerole`,
+            data: {
+                username: username
+            },
+            withCredentials: true
+        })
+    }
+
     newSong(title, artists, album, genre, url) {
         return axios({
             method: 'POST',
