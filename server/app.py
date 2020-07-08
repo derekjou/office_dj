@@ -4,6 +4,7 @@ from flask_cors import CORS
 from server.model.users import User, DJ
 from server.model.user_handler import user_page
 from server.handlers.rooms import room_page
+from server.songs.songhandler import song_page, request_page
 from server.model.user_handler import user_page, admin_page
 from server.data.logger import get_logger
 import werkzeug
@@ -18,6 +19,8 @@ CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 app.register_blueprint(user_page)
 app.register_blueprint(room_page)
 app.register_blueprint(admin_page)
+app.register_blueprint(song_page)
+app.register_blueprint(request_page)
 
 @app.route("/")
 def home():

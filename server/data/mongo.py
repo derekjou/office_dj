@@ -193,7 +193,7 @@ def new_song_request(song):
     '''a method to input a request for a song to be added to the approved list to the database'''
     _log.info("db new_song_request called")
     _log.debug(song)
-    _db.songRequest(song)
+    _db.songRequest.insert_one(song)
     return True
 def request_song():
     '''A method that retrieve all the songs'''

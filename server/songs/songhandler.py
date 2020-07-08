@@ -18,12 +18,13 @@ def see_aproved_songs():
     if request.method == "GET":
         return jsonify(db.get_songs())
 
-@request_page.route('/requests', methods=['POST'])
+@request_page.route('/songs/requestNew', methods=['POST'])
 def request_new_song():
+    _log.debug("request_new_song called")
     '''a method to request new songs be added to the list of aproved songs'''
     if request.method == "POST":
         if db.new_song_request(request.json):
-            return 200
+            return jsonify("request processed"), 201
         else:
             return jsonify("request could not be completed"), 400
         

@@ -14,7 +14,7 @@ const RequestNewSong = (props) => {
     const songService = new SongService();
 
     const requestNewSong = async () => {
-        await SongService.requestNewSong(state.songName, state.genre, state.artist, state.url, state.album)
+        await songService.requestNewSong(state.title, state.genre, state.artists, state.url, state.album)
         history.push('/')
     }
 

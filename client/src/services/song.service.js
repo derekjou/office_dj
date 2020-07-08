@@ -15,7 +15,8 @@ class SongService {
                 artist,
                 url,
                 album
-            }
+            },
+            withCredentials: true
         })
     }
 }
