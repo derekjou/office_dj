@@ -5,14 +5,14 @@ class SongService {
         this.URI = 'http://localhost:5000/songs';
     }
 
-    requestNewSong(songName, genre, artist, url, album) {
+    requestNewSong(title, genre, artists, url, album) {
         return axios({
             method: 'POST',
             url: `${this.URI}/requestNew`,
             data: {
-                songName,
+                title,
                 genre,
-                artist,
+                artists,
                 url,
                 album
             },

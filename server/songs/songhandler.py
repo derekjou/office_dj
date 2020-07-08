@@ -22,7 +22,9 @@ def request_new_song():
     _log.debug("request_new_song called")
     '''a method to request new songs be added to the list of aproved songs'''
     if request.method == "POST":
-        if db.new_song_request(request.json):
+        if request.json:
+            song = Song().from_dict(request.json)
+        if db.new_song_request(song.to_dict()):
             return jsonify("request processed"), 201
         else:
             return jsonify("request could not be completed"), 400
