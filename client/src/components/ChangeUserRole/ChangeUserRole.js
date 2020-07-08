@@ -13,10 +13,11 @@ const ChangeUserRole = (props) => {
 
     const adminService = new AdminService();
 
-    const updateUser = async () => {
-        let updatedUser = await adminService.changeRole(
-            state.updateUsername.trim())
-        dispatch({ type: 'updateUser', user: ChangeUserRole.data })
+    const updateUser = async (e) => {
+        e.preventDefault();
+        let updatedUser = await adminService.changeRole(state.username)
+        console.log(updatedUser)
+        dispatch({ type: 'updateUser', user: updatedUser.data })
         history.push('/')
     }
 
@@ -32,7 +33,7 @@ const ChangeUserRole = (props) => {
                             value={state.updateUsername}
                             onChange={e => dispatch({ type: 'handleUpdateUsername', updateUsername: e.target.value })} />
                     </Form.Group>
-                    <Button onClick={ChangeUserRole}>Change Role</Button>
+                    <Button onClick={updateUser}>Change Role</Button>
                 </Form>
             </div>
         </>
