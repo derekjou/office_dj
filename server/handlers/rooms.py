@@ -83,11 +83,24 @@ def search_rooms_collection():
     else:
         return 204
 
-@room_page.route('/rooms/myrooms/playlist/<int:room_id>', methods=['GET'])
+@room_page.route('/rooms/myrooms/playlist/<int:room_id>', methods=['GET', 'PUT', 'DELETE'])
 def room_playlist(room_id):
     '''A GET to /rooms/myrooms/playlist/<room_name> returns playlist of a room
-    TODO make return an object that includes playlist array and the last timestamp'''
-    _log.debug(room_id)
-    _log.debug('Request for playlist of room %s', room_id)
-    playlist = db.get_room_playlist(room_id)
-    return jsonify(playlist), 200
+       A PUT updates the last known timestamp
+       A DELETE returns the updated playlist'''
+    if request.method == 'GET':
+        _log.debug(room_id)
+        _log.debug('Request for playlist of room %s', room_id)
+        playlist = db.get_room_playlist(room_id)
+        return jsonify(playlist), 200
+    elif request.method == 'PUT':
+        _log.debug(room_id)
+        body = request.json
+        _log.debug('Updating playlist of room %s', room_id)
+        playlist = db.update_timestamp(room_id, int(body['timeStamp']))
+        return jsonify(playlist), 200
+    elif request.method == 'DELETE':
+        _log.debug(room_id)
+        _log.debug('Updating playlist of room %s', room_id)
+        playlist = db.remove_playlist_song(room_id)
+        return jsonify(playlist), 200

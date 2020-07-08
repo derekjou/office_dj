@@ -191,11 +191,30 @@ def request_song():
     return song_dict
 
 def get_room_playlist(room_id: int):
-    '''A method that returns a playlist
-    TODO implement timestamp into the return as well'''
+    '''A method that returns a playlist'''
     _log.info("Retrieving playlist for room %s", room_id)
     room = _db.rooms.find_one({'_id': room_id})
-
     playlist = room['playlist']
     _log.debug(playlist)
     return playlist
+
+def remove_playlist_song(room_id: int):
+    '''Updates playlist to remove top song'''
+    _log.info("Updating playlist for room %s", room_id)
+    room = _db.rooms.find_one_and_update({'_id': room_id}, 
+                                         { '$pop': { 'playlist.playlist': -1 }}, 
+                                         return_document=ReturnDocument.AFTER)
+    playlist = room['playlist']
+    _log.debug(playlist)
+    return playlist
+
+def update_timestamp(room_id: int, timestamp: int):
+    '''Updates last left off timestamp'''
+    _log.info("Updating playlist for room %s", room_id)
+    room = _db.rooms.find_one_and_update({'_id': room_id}, 
+                                         { '$set': { 'playlist.currentTime': timestamp }}, 
+                                         return_document=ReturnDocument.AFTER)
+    playlist = room['playlist']
+    _log.debug(playlist)
+    return playlist
+                                        

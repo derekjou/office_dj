@@ -21,7 +21,7 @@ const Room = (props) => {
     const roomService = new RoomService();
 
     let loggedUsername = JSON.parse(sessionStorage.getItem('loggedUser')).username
-
+    
     useEffect(() => {
         async function getRoomList() {
             let myRooms = await roomService.getUserRooms(loggedUsername);
