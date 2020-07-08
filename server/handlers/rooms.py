@@ -68,6 +68,7 @@ def my_rooms_collection(username):
     _log.debug(username)
     _log.info('Request for rooms belonging to %s', username)
     room_list = db.get_rooms_by_user(username)
+    _log.debug(room_list)
     return jsonify(room_list), 200
 
 @room_page.route('/rooms/search', methods=['GET'])
@@ -81,3 +82,12 @@ def search_rooms_collection():
         return jsonify(room_list), 200
     else:
         return 204
+
+@room_page.route('/rooms/myrooms/playlist/<int:room_id>', methods=['GET'])
+def room_playlist(room_id):
+    '''A GET to /rooms/myrooms/playlist/<room_name> returns playlist of a room
+    TODO make return an object that includes playlist array and the last timestamp'''
+    _log.debug(room_id)
+    _log.debug('Request for playlist of room %s', room_id)
+    playlist = db.get_room_playlist(room_id)
+    return jsonify(playlist), 200

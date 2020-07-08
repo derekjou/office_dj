@@ -93,7 +93,7 @@ def get_rooms_by_user(username: str):
     query_list = _db.rooms.find({'$or': [{'owner': username}, {'participants': username}]})
     room_list = []
     for room in query_list:
-        room_list.append(Room.from_dict(room))
+        room_list.append(room)
     _log.info('Successfully found %d rooms belonging to %s', len(room_list), username)
     return room_list
 
@@ -189,3 +189,13 @@ def request_song():
     song_dict = _db.songs.find()
     _log.debug(song_dict)
     return song_dict
+
+def get_room_playlist(room_id: int):
+    '''A method that returns a playlist
+    TODO implement timestamp into the return as well'''
+    _log.info("Retrieving playlist for room %s", room_id)
+    room = _db.rooms.find_one({'_id': room_id})
+
+    playlist = room['playlist']
+    _log.debug(playlist)
+    return playlist

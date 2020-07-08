@@ -10,12 +10,12 @@ _log = get_logger(__name__)
 
 class Room():
     '''A class that defines information about the state of a room object.'''
-    def __init__(self, db_id=-1, name='', owner='', participants=None, playlists=None, date_created=None):
+    def __init__(self, db_id=-1, name='', owner='', participants=None, playlist=None, date_created=None):
         self._id = db_id 
         self.name = name
         self.owner = owner
         self.participants = participants if participants is not None else []
-        self.playlists = playlists if playlists is not None else {}
+        self.playlist = playlist if playlist is not None else { 'playlist': [], 'currentTime': 0 }
         self.date_created = date_created if date_created is not None else datetime.now()
         self.participant_requests = {}
     def to_dict(self):

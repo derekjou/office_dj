@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import './Participants.scss'
-import { connect } from 'react-redux';
 import Participant from './Participant';
 
 const Participants = (props) => {

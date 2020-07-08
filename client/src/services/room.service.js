@@ -15,6 +15,11 @@ class RoomService {
         return axios.get(uri, { withCredentials: true })
     }
 
+    getPlaylist(id) {
+        let uri = `${this.URI}/rooms/myrooms/playlist/${id}`;
+        return axios.get(uri, { withCredentials: true });
+    }
+
     createRoom(room) {
         let uri = `${this.URI}/rooms/${room.name}`;
         return axios.post(uri, room, {
