@@ -50,6 +50,7 @@ const NavBar = (props) => {
               <Nav.Link href="/myroom">My Rooms</Nav.Link>
               <Nav.Link href="/createroom">Create a Room</Nav.Link>
               <Nav.Link href="/updateUser">Update User</Nav.Link>
+              <Nav.Link href="/requestSong">Request New Song</Nav.Link>
             </>
           ) : (
             <>
