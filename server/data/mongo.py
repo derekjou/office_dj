@@ -5,7 +5,9 @@ import os
 
 from datetime import datetime, timedelta
 from pymongo import MongoClient, errors, ReturnDocument
+from bson import SON
 
+# Interal imports
 from server.model.rooms import Room
 from server.model.users import User, DJ
 from server.data.logger import get_logger
@@ -72,14 +74,16 @@ def login(username: str, password: str):
 def add_room(room: object):
     '''Takes a room object and inserts it into the Rooms collection.'''
     _log.info('Attempting to add a new room %s to the database', room.name)
-    try:
-        r_id = _get_id()
-        room.set_id(r_id)
-        _db.rooms.insert_one(room.to_dict())
-        _log.info('Room %s successfully added', room.name)
-    except errors.DuplicateKeyError: #duplicate username? unless we want djs to have multiple rooms.
-        # TODO: return the error to the user
-        pass
+    r_id = _get_id()
+    room.set_id(r_id)
+    _db.rooms.insert_one(room.to_dict())
+    _log.info('Room %s successfully added', room.name)
+
+def update_room(room: object):
+    '''Takes a room object and updates it in the Rooms collection.'''
+    _log.info('Attempting to update %s in the database', room.name)
+    _db.rooms.update({'_id': room._id}, room.to_dict())
+    _log.info('Room %s successfully added', room.name)
 
 def get_rooms_by_user(username: str):
     '''Takes an id of a room object and queries the Rooms collection for that object.'''
@@ -87,9 +91,18 @@ def get_rooms_by_user(username: str):
     query_list = _db.rooms.find({'$or': [{'owner': username}, {'participants': username}]})
     room_list = []
     for room in query_list:
-        room_list.append(room)
+        room_list.append(Room.from_dict(room))
     _log.info('Successfully found %d rooms belonging to %s', len(room_list), username)
     return room_list
+
+def get_room_by_name(name: str, owner: str):
+    '''Takes a name of a room object and queries the Rooms collection for that object.'''
+    _log.info('Attempting to retrive room %s from the database', name)
+    #TODO: Try/Except for empty find
+    results = _db.rooms.find_one({'owner': owner, 'name': name})
+    room = Room.from_dict(results)
+    _log.info('Room %s successfully found', name)
+    return room
 
 def get_room_by_id(username: str, r_id: int):
     '''Takes an id of a room object and queries the Rooms collection for that object.'''
@@ -99,10 +112,22 @@ def get_room_by_id(username: str, r_id: int):
     _log.info('Room %d successfully found', r_id)
     return room
 
+def find_room_partial_string(query: str):
+    '''Takes a string and queries the Room collection for that name with matches to the string, 
+       returns 5 room names & owners, sorted alphabetically'''
+    _log.info('Attempting to retrive rooms with name matching %s from the database', query)
+    
+    room_list = list(_db.rooms.find(
+        {'name': {'$regex': query, '$options': 'i'}},
+        {'name': 1, 'owner': 1}
+    ).sort('name', 1).limit(5))
+    #TODO error handling
+    return room_list
+
 def find_user(username: str):
     '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''
     _log.info('Attempting to retrive user %s from the database', username)
-    user = _db.users.find_one({'username': username}, {'password': 0})
+    user = User.from_dict(_db.users.find_one({'username': username}, {'password': 0}))
     if user:
         _log.info('User %s successfully found', username)
         return user
