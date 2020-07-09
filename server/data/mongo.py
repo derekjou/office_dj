@@ -197,6 +197,11 @@ def new_song_request(song_dict):
     _db.songRequests.insert_one(song_dict)
     return True
 
+def remove_song_request(song_dict):
+    _log.info("db remove_song_request called")
+    _db.songRequests.remove_one({song_dict})
+    return True
+
 def request_song():
     '''A method that retrieve all the songs'''
     _log.info("retrieving songs from the database")

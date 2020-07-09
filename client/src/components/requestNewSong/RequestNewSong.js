@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import SongService from '../../services/song.service';
+import AdminService from '../../services/admin.service';
 import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
 const axios = require('axios');
@@ -12,6 +13,7 @@ const RequestNewSong = (props) => {
     const history = useHistory();
 
     const songService = new SongService();
+    const adminService = new AdminService();
 
     const requestNewSong = async () => {
         await songService.requestNewSong(state.title, state.genre, state.artists, state.url, state.album)
