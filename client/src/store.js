@@ -91,7 +91,15 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { album: action.album});
     case "handleGenreInput":
       return Object.assign({}, state, { genre: action.genre});
-    case "handleURLInput":
+    case "handleNewSongName":
+      return Object.assign({}, state, { title: action.title});
+    case "handleNewGenre":
+      return Object.assign({}, state, { genre: action.genre});
+    case "handleNewArtist":
+      return Object.assign({}, state, { artists: action.artists.split(', ')});
+    case "handleNewAlbum":
+      return Object.assign({}, state, { album: action.album});
+    case "handleNewUrl":
       return Object.assign({}, state, { url: action.url});
     default:
       return state;
