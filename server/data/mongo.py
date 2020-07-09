@@ -187,6 +187,20 @@ def add_song(song_dict: dict):
     _log.debug(song_dict)
     return song_dict
 
+def get_songs():
+    '''a method to see all songs in the list of aproved songs'''
+    _log.info("db get songs called")
+    song_list = _db.songs.find()
+    return song_list
+
+def new_song_request(song_dict):
+    '''a method to input a request for a song to be added to the approved list to the database'''
+    _log.info("db new_song_request called")
+    _log.debug(song_dict)
+    song_dict['_id'] = _get_id()
+    _db.songRequests.insert_one(song_dict)
+    return True
+
 def request_song():
     '''A method that retrieve all the songs'''
     _log.info("retrieving songs from the database")

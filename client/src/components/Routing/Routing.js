@@ -12,6 +12,7 @@ import RegisterUser from '../RegisterUser/RegisterUser';
 import Admin from '../Admin/Admin';
 import AddMusic from '../AddMusic/AddMusic';
 import ChangeUserRole from '../ChangeUserRole/ChangeUserRole';
+import RequestNewSong from "../requestNewSong/RequestNewSong";
 
 const checkLogin = () => {
   return sessionStorage.getItem('loggedUser') ? true : false;
@@ -72,6 +73,7 @@ class Routing extends Component {
         <Route path="/admin" component={Admin} />
         <Route path="/addMusic" component={AddMusic} />
         <Route path="/changeRole" component={ChangeUserRole} />
+        <Route path="/requestSong" component={RequestNewSong} />
       </Router>
     );
   }
