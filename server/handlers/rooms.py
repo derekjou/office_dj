@@ -21,7 +21,6 @@ room_page = Blueprint('room_page', __name__, static_folder='../static')
 @room_page.route('/rooms/<string:name>', methods=['GET', 'POST'])
 def rooms_collection(name):
     '''A GET to /rooms/<name> returns that room, a POST to /rooms/<name> creates a new room of that name.'''
-    _log.debug('Are you even reaching here? Why not?')
     if request.method == 'POST':
         _log.info('Request for new room')
         #create new room
@@ -48,19 +47,38 @@ def rooms_collection(name):
         # NOTE: all requests should send id as a query string
         return jsonify(db.get_room_by_id(name, room_id))
 
-@room_page.route('/rooms/<string:name>/join', methods=['POST'])
+@room_page.route('/rooms/<string:name>/join', methods=['GET', 'POST'])
 def request_join_rooms_collection(name):
-    '''A POST to /rooms/<name>/join searches for rooms that match a partial string.'''
+    '''A GET to /rooms/<name>/join returns a dict of all join requests for a room, a POST searches for rooms 
+       that match a partial string.'''
+    if request.method == 'POST':
+        body = request.json
+        owner = body['owner']
+        _log.debug(f'{name} {owner}')
+        room = db.get_room_by_name(name, owner)
+        _log.debug(body['username'])
+        user = db.find_user(body['username'])
+        room.add_participant_request(user)
+        db.update_room(room)
+        #TODO: error handling
+        return '', 204
+    else:
+        return db.get_participant_requests(name)
+
+@room_page.route('/rooms/<string:name>/join/<string:username>', methods=['POST', 'DELETE'])
+def request_join_rooms_user(name, username):
+    '''A POST to rooms/<name>/join/<username> approves a request to join, a DELETE denies a request.'''
     body = request.json
-    owner = body['owner']
-    _log.debug(f'{name} {owner}')
-    room = db.get_room_by_name(name, owner)
-    _log.debug(body['username'])
-    user = db.find_user(body['username'])
-    room.add_participant_request(user)
+    room = db.get_room_by_name(name, body['owner'])
+    if request.method == 'POST':
+        _log.info('Approving the user %s to join room %s', body['username'], name)
+        user = db.find_user(body['username'])
+        room.approve_participant(user)
+    else: 
+        room.reject_participant(body['username'])
     db.update_room(room)
-    #TODO: error handling
     return '', 204
+
 
 @room_page.route('/rooms/myrooms/<string:username>', methods=['GET'])
 def my_rooms_collection(username):

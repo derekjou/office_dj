@@ -21,7 +21,7 @@ const Room = (props) => {
 
     const roomService = new RoomService();
 
-    let loggedUsername = JSON.parse(sessionStorage.getItem('loggedUser')).username
+    let loggedUsername = JSON.parse(sessionStorage.getItem('loggedUser')).loggedUsername
 
     useEffect( () => {
         async function getRoomList() {
@@ -37,43 +37,54 @@ const Room = (props) => {
         dispatch({ type: 'handleCurrentRoom', currentRoom: rooms[0] })
         setHasRooms(true)
     }
-    
-    const roomLayout = () => {
-        return (
-            <Container fluid>
-                <Row>
-                    <Col id="roomList-wrapper">
-                        <RoomList
-                            id="roomList"
-                            myRooms={state.myRooms}
-                        />
-                    </Col>
-                    {state.hasRooms ? 
-                        <Col id="content-wrapper">
-                            <Row id="roomname-wrapper">
-                                <h3 id="roomname">{state.currentRoom.name}</h3>
-                            </Row>
-                            <Row>
-                                <Col id="playlist-wrapper">
-                                        {/* TODO: Playlists Component */}
-                                    
-                                </Col>
-                                <Col id="participants-wrapper">
-                                    <Participants participants={state.currentRoom.participants} />
-                                </Col>
-                            </Row>
-                        </Col>
-                    :
-                        <Col>
-                            <JoinRoom />
-                        </Col>
-                    }
-                </Row>
-            </Container>
-        );
-    }
 
-    return roomLayout()
+    const isOwner = () => {
+        return state.currentRoom.owner == loggedUsername
+    }
+    
+    return (
+        <Container fluid>
+            <Row>
+                <Col id="roomList-wrapper">
+                    <RoomList
+                        id="roomList"
+                        myRooms={state.myRooms}
+                    />
+                </Col>
+                {state.hasRooms ? 
+                    <Col id="content-wrapper">
+                        <Row id="roomname-wrapper">
+                            <h3 id="roomname">{state.currentRoom.name}</h3>
+                        </Row>
+                        <Row>
+                            <Col id="playlist-wrapper">
+                                    {/* TODO: Playlists Component */}
+                                
+                            </Col>
+                            <Col id="participants-wrapper">
+                                <Participants participants={state.currentRoom.participants} />
+                                {isOwner ?
+                                    <Button 
+                                        className='check-requests-button'
+                                        to={{
+                                            pathname: `/joinrequests/${state.currentRoom.id}`,
+                                            state: { room: state.currentRoom }
+                                        }}
+                                    >
+                                        Check Requests
+                                    </Button>
+                                : null}
+                            </Col>
+                        </Row>
+                    </Col>
+                :
+                    <Col>
+                        <JoinRoom />
+                    </Col>
+                }
+            </Row>
+        </Container>
+    );
 }
 
 export default Room;

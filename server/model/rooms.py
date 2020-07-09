@@ -46,10 +46,10 @@ class Room():
         self.participants.append(user.to_dict())
         self.participant_requests.pop(user.username)
 
-    def reject_participant(self, user: object):
+    def reject_participant(self, username: str):
         '''Takes a user object, removes them from the participant_requests dict.'''
-        _log.info('Rejecting %s, removing from the request dict', user.username)
-        self.participant_requests.pop(user.username)
+        _log.info('Rejecting %s, removing from the request dict', username)
+        self.participant_requests.pop(username)
 
     @classmethod
     def from_dict(cls, input_user):

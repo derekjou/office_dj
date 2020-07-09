@@ -118,13 +118,17 @@ def find_room_partial_string(query: str):
     '''Takes a string and queries the Room collection for that name with matches to the string, 
        returns 5 room names & owners, sorted alphabetically'''
     _log.info('Attempting to retrive rooms with name matching %s from the database', query)
-    
     room_list = list(_db.rooms.find(
         {'name': {'$regex': query, '$options': 'i'}},
         {'name': 1, 'owner': 1}
     ).sort('name', 1).limit(5))
     #TODO error handling
     return room_list
+
+def get_participant_requests(name: str):
+    '''Takes the name of room and returns the participant request dict.'''
+    _log.info('Attempting to find the participant requests for room %s', name)
+    return _db.rooms.find({'name': name}, {'participant_requests': 1, '_id': 0})
 
 def find_user(username: str):
     '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''

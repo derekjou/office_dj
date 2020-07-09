@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
 import UserService from '../../services/user.service'
@@ -13,6 +13,16 @@ const WorkRequest = (props) => {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    console.log(props.room.name)
+    async function getJoinRequests() {
+      let joinRequests = await roomService.getJoinRequests(props.room.name);
+      dispatch({ type: 'handleRoomJoinRequestList', roomJoinRequestList: joinRequests[0] })
+    }
+    getRoomList();
+  }, []);
+  const getRequests = async
 
   const acceptRequest = async () => {
 
