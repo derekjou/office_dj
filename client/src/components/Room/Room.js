@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import RoomService from '../../services/room.service';
@@ -11,8 +11,6 @@ import RoomList from '../RoomList/RoomList.js';
 import Participants from '../Participants/Participants';
 import Player from '../Player/Player';
 import JoinRoom from '../JoinRoom/JoinRoom';
-
-
 
 const Room = (props) => {
     const state = useSelector(state => state);
@@ -27,7 +25,7 @@ const Room = (props) => {
             let myRooms = await roomService.getUserRooms(loggedUsername);
             sessionStorage.setItem('loggedRoomList', JSON.stringify(myRooms.data))
             dispatch({ type: 'handleMyRooms', myRooms: myRooms.data });
-            dispatch({ type: 'handleCurrentRoom', currentRoom: myRooms.data[0] ? myRooms.data[0] : { name: "", owner: "", participants: "", playlists: "", date_created: "" } })
+            dispatch({ type: 'handleCurrentRoom', currentRoom: myRooms.data[0] ? myRooms.data[0] : { name: "", owner: "", participants: "", playlist: {}, date_created: "" } })
         }
         getRoomList();
     }, []);
@@ -41,15 +39,14 @@ const Room = (props) => {
                         myRooms={state.myRooms}
                     />
                 </Col>
-                {state.currentRoom.name ? 
+                {state.currentRoom.playlist.playlist && state.currentRoom.playlist.playlist.length > 0 ? 
                     <Col id="content-wrapper">
                         <Row id="roomname-wrapper">
                             <h3 id="roomname">{state.currentRoom.name}</h3>
                         </Row>
                         <Row>
                             <Col id="playlist-wrapper">
-                            {state.currentRoom.name ?  <Player currentRoom={state.currentRoom}/> : null}
-                                
+                                <Player currentRoom={state.currentRoom}/>   
                             </Col>
                             <Col id="participants-wrapper">
                                 <Participants participants={state.currentRoom.participants} />

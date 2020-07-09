@@ -202,7 +202,8 @@ def remove_playlist_song(room_id: int):
     '''Updates playlist to remove top song'''
     _log.info("Updating playlist for room %s", room_id)
     room = _db.rooms.find_one_and_update({'_id': room_id}, 
-                                         { '$pop': { 'playlist.playlist': -1 }}, 
+                                         { '$pop': { 'playlist.playlist': -1 }, 
+                                           '$set': { 'currentTime': 0 }},
                                          return_document=ReturnDocument.AFTER)
     playlist = room['playlist']
     _log.debug(playlist)

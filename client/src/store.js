@@ -16,7 +16,7 @@ const initialState = {
   newTitle: "",
   room: { name: "", owner: "", participants: "", playlists: "", date_created: "" },
   myRooms: [],
-  currentRoom: { name: "", owner: "", participants: "", playlists: "", date_created: "" },
+  currentRoom: { name: "", owner: "", participants: "", playlist: {}, date_created: "" },
   newRoomName: "",
   newParticipant: "",
   roomName: "",
@@ -28,7 +28,8 @@ const initialState = {
   artists: [],
   album: "",
   genre: "",
-  url: ""
+  url: "",
+  currentSong: { _id: "", title: "", album: "", artists: [], genre: "", url: "", album_url: "" }
 };
 
 function reducer(state = initialState, action) {
@@ -93,6 +94,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { genre: action.genre});
     case "handleURLInput":
       return Object.assign({}, state, { url: action.url});
+    case "setCurrentSong":
+      return Object.assign({}, state, { currentSong: action.song })
     default:
       return state;
   }

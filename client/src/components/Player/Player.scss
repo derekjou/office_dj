@@ -1,0 +1,78 @@
+.player {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  background-color: #0E153A;
+  display: flex;
+  padding: 16px;
+  img {
+    width: 50px;
+    height: 50px;
+  }
+  .info {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    width: calc(50% - 80px);
+    padding: 0 16px;
+    color: #3D5AF1;
+    .name {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .singer {
+      font-size: 12px;
+    }
+  }
+  .btns {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    div:nth-child(1) {
+      font-size: 50px;
+    }
+    div:nth-child(2),
+    div:nth-child(3) {
+      font-size: 30px;
+    }
+  }
+  .progress {
+    position: absolute;
+    height: 2px;
+    left: 0;
+    top: 0;
+    background-color: #22D1EE;
+  }
+}
+
+@font-face {
+  font-family: iconfont;
+  src: url("//static0.qianqian.com/web/st/font/iconfont-4e6.woff")
+    format("woff");
+}
+
+.iconfont {
+  font-family: iconfont !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-next:before {
+  content: "\e60a";
+  color: #3D5AF1
+}
+
+.icon-play:before {
+  content: "\e616";
+  color: #3D5AF1
+}
+
+.icon-stop:before {
+  content: "\e617";
+  color: #3D5AF1
+}
+
