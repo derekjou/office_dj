@@ -5,7 +5,9 @@ import os
 
 from datetime import datetime, timedelta
 from pymongo import MongoClient, errors, ReturnDocument
+import json
 from bson import SON
+from bson.json_util import dumps
 
 # Interal imports
 from server.model.rooms import Room
@@ -93,7 +95,7 @@ def get_rooms_by_user(username: str):
     query_list = _db.rooms.find({'$or': [{'owner': username}, {'participants': username}]})
     room_list = []
     for room in query_list:
-        room_list.append(Room.from_dict(room))
+        room_list.append(room)
     _log.info('Successfully found %d rooms belonging to %s', len(room_list), username)
     return room_list
 
@@ -128,7 +130,11 @@ def find_room_partial_string(query: str):
 def get_participant_requests(name: str):
     '''Takes the name of room and returns the participant request dict.'''
     _log.info('Attempting to find the participant requests for room %s', name)
-    return _db.rooms.find({'name': name}, {'participant_requests': 1, '_id': 0})
+    response = list(_db.rooms.find(
+        {'name': name}, 
+        {'participant_requests': 1, '_id': 0}))
+    _log.debug(response)
+    return response
 
 def find_user(username: str):
     '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''

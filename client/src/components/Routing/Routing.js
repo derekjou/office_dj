@@ -18,10 +18,13 @@ const checkLogin = () => {
   return sessionStorage.getItem('loggedUser') ? true : false;
 }
 
-const loggedRole = sessionStorage.getItem('loggedUser').role
+const getLoggedRole = () => {
+  return sessionStorage.getItem('loggedUser').role
+}
 
 const checkDJ = () => {
-  return loggedRole == 'DJ';
+  const loggedRole = sessionStorage.getItem('loggedUser').role
+  return loggedRole && loggedRole == 'DJ';
 }
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -69,7 +72,7 @@ class Routing extends Component {
         <PrivateRoute path='/updateUser' component={UpdateUser} />
         <Route exact path="/createroom" component={CreateRoom} />
         <Route exact path="/myroom" component={Room} />
-        <DJRoute path="/joinrequests/:roomid" component={WorkRequest} />
+        <Route path="/joinrequests/:roomid" component={WorkRequest} />
         <Route path="/admin" component={Admin} />
         <Route path="/addMusic" component={AddMusic} />
         <Route path="/changeRole" component={ChangeUserRole} />

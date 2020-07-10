@@ -59,14 +59,17 @@ class RoomService {
         return axios.post(uri, body, { withCredentials: true })
     }
 
-    denyJoinRequest(name, owner, username) {
-        let body = {
-            'name': name,
-            'owner': owner,
-            'username': username
-        }
+    rejectJoinRequest(name, owner, username) {
         let uri = `${this.URI}/rooms/${name}/join/${username}`;
-        return axios.delete(uri, body, { withCredentials: true })
+        axios({
+            method: 'delete',
+            url: uri,
+            data: {
+                'name': name,
+                'owner': owner,
+                'username': username
+            }
+        });
     }
 }
 

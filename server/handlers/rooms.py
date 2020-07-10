@@ -63,19 +63,22 @@ def request_join_rooms_collection(name):
         #TODO: error handling
         return '', 204
     else:
-        return db.get_participant_requests(name)
+        name = name.replace('%20', ' ')
+        return jsonify(db.get_participant_requests(name))
 
 @room_page.route('/rooms/<string:name>/join/<string:username>', methods=['POST', 'DELETE'])
 def request_join_rooms_user(name, username):
     '''A POST to rooms/<name>/join/<username> approves a request to join, a DELETE denies a request.'''
     body = request.json
+    _log.debug(body)
     room = db.get_room_by_name(name, body['owner'])
     if request.method == 'POST':
         _log.info('Approving the user %s to join room %s', body['username'], name)
-        user = db.find_user(body['username'])
+        user = db.find_user(username)
         room.approve_participant(user)
     else: 
-        room.reject_participant(body['username'])
+        _log.debug(body['owner'])
+        room.reject_participant(username)
     db.update_room(room)
     return '', 204
 
@@ -98,4 +101,4 @@ def search_rooms_collection():
         _log.info('Request for \'%s\' successfully handled', query)
         return jsonify(room_list), 200
     else:
-        return 204
+        return '', 204

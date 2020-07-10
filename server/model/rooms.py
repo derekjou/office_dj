@@ -14,10 +14,10 @@ class Room():
         self._id = db_id 
         self.name = name
         self.owner = owner
-        self.participants = participants if participants is not None else []
+        self.participants = participants if participants is not None else {}
         self.playlists = playlists if playlists is not None else {}
         self.date_created = date_created if date_created is not None else datetime.now()
-        self.participant_requests = {}
+        self.participant_requests = []
 
     def to_dict(self):
         '''Returns the dictionary representation of itself.'''
@@ -35,21 +35,30 @@ class Room():
         '''Takes a user object, adds them to the participant_requests dict.'''
         _log.info('Adding %s to the participant request dict', user.username)
         today = {'date_requested': datetime.today()}
-        request = {user.username: user.to_dict()}
-        request.update(today)
-        self.participant_requests.update(request)
+        u = user.to_dict()
+        u.update(today)
+        self.participant_requests.append(u)
 
     def approve_participant(self, user: object):
         '''Takes a user object, adds them to the participants dict and removes them 
            from the participant_requests dict.'''
         _log.info('Approving %s to the participants list', user.username)
-        self.participants.append(user.to_dict())
-        self.participant_requests.pop(user.username)
+        u = {user.username: user.to_dict()}
+        self.participants.update(u)
+        pop_this = None
+        for i, request in enumerate(self.participant_requests):
+            if request['username'] == user.username:
+                pop_this = i
+        self.participant_requests.pop(pop_this)
 
     def reject_participant(self, username: str):
         '''Takes a user object, removes them from the participant_requests dict.'''
         _log.info('Rejecting %s, removing from the request dict', username)
-        self.participant_requests.pop(username)
+        pop_this = None
+        for i, request in enumerate(self.participant_requests):
+            if request['username'] == username: 
+                pop_this = i
+        self.participant_requests.pop(pop_this)
 
     @classmethod
     def from_dict(cls, input_user):

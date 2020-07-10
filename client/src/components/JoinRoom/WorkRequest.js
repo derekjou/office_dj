@@ -5,9 +5,12 @@ import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
 import UserService from '../../services/user.service'
 import Table from 'react-bootstrap/Table'
+import RoomService from '../../services/room.service';
+import JoinRequest from './JoinRequest';
 const axios = require('axios');
 
 const userService = new UserService();
+const roomService = new RoomService();
 
 const WorkRequest = (props) => {
   const state = useSelector(state => state);
@@ -15,22 +18,18 @@ const WorkRequest = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    console.log(props.room.name)
+    console.log(props.location.state.roomName)
+    console.log(props.location.state.roomOwner)
     async function getJoinRequests() {
-      let joinRequests = await roomService.getJoinRequests(props.room.name);
-      dispatch({ type: 'handleRoomJoinRequestList', roomJoinRequestList: joinRequests[0] })
+      let joinRequests = await roomService.getJoinRequests(props.location.state.roomName);
+      let joinData = joinRequests.data[0].participant_requests
+      console.log(joinData)
+      dispatch({ type: 'handleRoomJoinRequestList', roomJoinRequestList: joinData })
     }
-    getRoomList();
+    getJoinRequests();
   }, []);
-  const getRequests = async
 
-  const acceptRequest = async () => {
 
-  }
-
-  const rejectRequest = async () => {
-
-  }
 
   const renderHeader = () => {
     let headerElement = ['username', 'department', 'team', 'date of request', 'actions']
@@ -41,22 +40,7 @@ const WorkRequest = (props) => {
   }
 
   const renderBody = () => {
-    return (
-      <tr key={username}>
-        <td>{username}</td>
-        <td>{department}</td>
-        <td>{team}</td>
-        <td>{date}</td>
-        <td className='actions'>
-          <Button block onClick={acceptRequest}>
-            Accept
-            </Button>
-          <Button block onClick={rejectRequest}>
-            Reject
-            </Button>
-        </td>
-      </tr>
-    )
+    
   }
 
   return (
@@ -67,7 +51,16 @@ const WorkRequest = (props) => {
             <tr>{renderHeader()}</tr>
           </thead>
           <tbody id="data">
-            {renderBody()}
+            {/* {console.log(state.roomJoinRequestList.isArray())} */}
+            {Array.isArray(state.roomJoinRequestList) ? state.roomJoinRequestList.map(
+              (request) => {
+                console.log(request);
+              return <JoinRequest 
+                      request={request} 
+                      roomName={props.location.state.roomName}
+                      roomOwner={props.location.state.roomOwner}
+                    />
+            }) : null}
           </tbody>
         </Table>
       </div>

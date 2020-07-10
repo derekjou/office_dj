@@ -7,6 +7,7 @@ import '../RoomList/RoomList.scss';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import RoomList from '../RoomList/RoomList.js';
 import Participants from '../Participants/Participants';
 import { connect } from 'react-redux';
@@ -17,25 +18,30 @@ import JoinRoom from '../JoinRoom/JoinRoom';
 const Room = (props) => {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
+    const history = useHistory();
     const [hasRooms, setHasRooms] = useState(false)
 
     const roomService = new RoomService();
 
-    let loggedUsername = JSON.parse(sessionStorage.getItem('loggedUser')).loggedUsername
+    let loggedUsername = JSON.parse(sessionStorage.getItem('loggedUser')).username
 
-    useEffect( () => {
+    useEffect(() => {
         async function getRoomList() {
             let myRooms = await roomService.getUserRooms(loggedUsername);
+            console.log(loggedUsername)
+            console.log(JSON.parse(sessionStorage.getItem('loggedUser')));
             sessionStorage.setItem('loggedRoomList', JSON.stringify(myRooms.data))
+            console.log(myRooms.data);
             dispatch({ type: 'handleMyRooms', myRooms: myRooms.data });
-            getCurrentRoom(myRooms.data);
+            dispatch({ type: 'handleCurrentRoom', currentRoom: myRooms.data[0] ? myRooms.data[0] : { id: -1, name: "", owner: "", participants: "", playlist: {}, date_created: "" } })
+            console.log(state.currentRoom)
         }
         getRoomList();
     }, []);
 
     const getCurrentRoom = (rooms) => {
         dispatch({ type: 'handleCurrentRoom', currentRoom: rooms[0] })
-        setHasRooms(true)
+        console.log(state.currentRoom['name'])
     }
 
     const isOwner = () => {
@@ -51,7 +57,7 @@ const Room = (props) => {
                         myRooms={state.myRooms}
                     />
                 </Col>
-                {state.hasRooms ? 
+                {state.currentRoom.name ? 
                     <Col id="content-wrapper">
                         <Row id="roomname-wrapper">
                             <h3 id="roomname">{state.currentRoom.name}</h3>
@@ -63,12 +69,18 @@ const Room = (props) => {
                             </Col>
                             <Col id="participants-wrapper">
                                 <Participants participants={state.currentRoom.participants} />
+                                {console.log(state.currentRoom.owner)}
                                 {isOwner ?
                                     <Button 
                                         className='check-requests-button'
-                                        to={{
-                                            pathname: `/joinrequests/${state.currentRoom.id}`,
-                                            state: { room: state.currentRoom }
+                                        onClick={() => {
+                                            history.push({
+                                                pathname: `/joinrequests/${state.currentRoom._id}`,
+                                                state: { 
+                                                    roomName: state.currentRoom.name,
+                                                    roomOwner: state.currentRoom.owner
+                                                }
+                                            })
                                         }}
                                     >
                                         Check Requests
