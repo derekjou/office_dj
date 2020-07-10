@@ -14,16 +14,24 @@ const AdminApproveNewSong = (props) => {
     useEffect( () => {
         console.log("useEffect")
         async function getNewSongRequests() {
-            let resp = songService.getNewSongRequests()
-            dispatch({ type: 'setSongRequests', requests: resp })
+            let resp = await songService.getNewSongRequests()
+            console.log(resp)
+            dispatch({ type: 'setSongRequests', requests: resp.data })
         }
         getNewSongRequests();
     }, []);
 
+    async function approve(request) {
+        await songService.approveNewSong(request)
+        }
+
     return (
         <div>
             {state.songRequests.map(request => (
-                <p key={request._id}>{request.title}</p>
+                <p key={request._id}>
+                    {request.title}
+                    <Button block type="button" onClick={() => {approve(request)}}>Aprove</Button>
+                </p>
             ))}
         </div>
     )

@@ -11,6 +11,7 @@ from bson import SON
 from server.model.rooms import Room
 from server.model.users import User, DJ, Admin
 from server.data.logger import get_logger
+from server.songs.model import Song
 
 _log = get_logger(__name__)
 
@@ -197,10 +198,18 @@ def new_song_request(song_dict):
     _db.songRequests.insert_one(song_dict)
     return True
 
-def remove_song_request(song_dict):
+def remove_song_request(requestId):
     _log.info("db remove_song_request called")
-    _db.songRequests.remove_one({song_dict})
+    _log.debug(requestId)
+    _db.songRequests.delete_one({"_id": requestId})
     return True
+
+def get_new_song_requests():
+    request_list = _db.songRequests.find()
+    requests = []
+    for request in request_list:
+        requests.append(request)
+    return requests
 
 def request_song():
     '''A method that retrieve all the songs'''
