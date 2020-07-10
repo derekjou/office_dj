@@ -17,7 +17,6 @@ const Room = (props) => {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
     const history = useHistory();
-    const [hasRooms, setHasRooms] = useState(false)
 
     const roomService = new RoomService();
 
