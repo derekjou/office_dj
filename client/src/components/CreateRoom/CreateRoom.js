@@ -5,9 +5,7 @@ import RoomService from '../../services/room.service';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import Room from '../Room/Room';
 import './CreateRoom.scss';
-import { connect } from 'react-redux';
 
 const CreateRoom = (props) => {
     const state = useSelector(state => state);

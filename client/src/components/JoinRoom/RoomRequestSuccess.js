@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 // TODO: CSS
-import { connect } from 'react-redux';
 
 import Toast from 'react-bootstrap/Toast';
 import './JoinRoom.scss'
