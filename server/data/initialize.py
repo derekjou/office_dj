@@ -25,6 +25,7 @@ if __name__ == "__main__":
     _db.rooms.drop()
     _db.song_numbers.drop()
     _db.songs.drop()
+    _db.songRequests.drop()
 
     _db.counter.insert_one({'_id': 'COUNT', 'count': 0})
     _db.counter.insert_one({'_id': 'UNIQUE_SONG_NUMBER', 'count': 0})
@@ -129,3 +130,11 @@ if __name__ == "__main__":
     _db.rooms.insert_many(room_list)
     _db.songs.insert_many(song_list)
     _db.users.insert_many(user_list)
+    _db.songRequests.insert_one((Song(
+        _get_song_number(),
+        "Trip to Ganymed",
+        "Free Ganymed",
+        ["KieLoKaz"],
+        "Experimental",
+        "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/KieLoKaz/Free_Ganymed/KieLoKaz_-_02_-_Trip_to_Ganymed_Kielokaz_ID_363.mp3"
+    ).to_dict()))

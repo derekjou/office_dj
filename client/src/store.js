@@ -15,9 +15,9 @@ const initialState = {
   newDpt: "",
   newFuncTeam: "",
   newTitle: "",
-  room: { name: "", owner: "", participants: "", playlists: "", date_created: "" },
+  room: { id: -1, name: "", owner: "", participants: "", playlists: "", date_created: "" },
   myRooms: [],
-  currentRoom: { name: "", owner: "", participants: "", playlist: {}, date_created: "" },
+  currentRoom: { id: -1, name: "", owner: "", participants: "", playlists: "", date_created: "" },
   newRoomName: "",
   newParticipant: "",
   roomName: "",
@@ -25,6 +25,7 @@ const initialState = {
   roomSearchQuery: '',
   roomSearchList: [],
   requestRoom: { name: "", owner: "" },
+  roomJoinRequestList: {},
   title: "",
   artists: [],
   album: "",
@@ -85,6 +86,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { roomSearchList: action.roomSearchList });
     case "handleRoomRequestSuccess":
       return Object.assign({}, state, { requestRoom: action.requestRoom })
+    case "handleRoomJoinRequestList":
+      return Object.assign({}, state, { roomJoinRequestList: action.roomJoinRequestList })
     case "handleTitleInput":
       return Object.assign({}, state, { title: action.title});
     case "handleArtistsInput":
@@ -93,7 +96,15 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { album: action.album});
     case "handleGenreInput":
       return Object.assign({}, state, { genre: action.genre});
-    case "handleURLInput":
+    case "handleNewSongName":
+      return Object.assign({}, state, { title: action.title});
+    case "handleNewGenre":
+      return Object.assign({}, state, { genre: action.genre});
+    case "handleNewArtist":
+      return Object.assign({}, state, { artists: action.artists.split(', ')});
+    case "handleNewAlbum":
+      return Object.assign({}, state, { album: action.album});
+    case "handleNewUrl":
       return Object.assign({}, state, { url: action.url});
     case "setCurrentSong":
       return Object.assign({}, state, { currentSong: action.currentSong })

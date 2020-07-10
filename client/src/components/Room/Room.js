@@ -7,6 +7,7 @@ import '../RoomList/RoomList.scss';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import RoomList from '../RoomList/RoomList.js';
 import Participants from '../Participants/Participants';
 import Player from '../Player/Player';
@@ -15,6 +16,8 @@ import JoinRoom from '../JoinRoom/JoinRoom';
 const Room = (props) => {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
+    const history = useHistory();
+    const [hasRooms, setHasRooms] = useState(false)
 
     const roomService = new RoomService();
 
@@ -23,12 +26,25 @@ const Room = (props) => {
     useEffect(() => {
         async function getRoomList() {
             let myRooms = await roomService.getUserRooms(loggedUsername);
+            console.log(loggedUsername)
+            console.log(JSON.parse(sessionStorage.getItem('loggedUser')));
             sessionStorage.setItem('loggedRoomList', JSON.stringify(myRooms.data))
+            console.log(myRooms.data);
             dispatch({ type: 'handleMyRooms', myRooms: myRooms.data });
-            dispatch({ type: 'handleCurrentRoom', currentRoom: myRooms.data[0] ? myRooms.data[0] : { name: "", owner: "", participants: "", playlist: {}, date_created: "" } })
+            dispatch({ type: 'handleCurrentRoom', currentRoom: myRooms.data[0] ? myRooms.data[0] : { id: -1, name: "", owner: "", participants: "", playlist: {}, date_created: "" } })
+            console.log(state.currentRoom)
         }
         getRoomList();
     }, []);
+
+    const getCurrentRoom = (rooms) => {
+        dispatch({ type: 'handleCurrentRoom', currentRoom: rooms[0] })
+        console.log(state.currentRoom['name'])
+    }
+
+    const isOwner = () => {
+        return state.currentRoom.owner == loggedUsername
+    }
     
     return (
         <Container fluid>
@@ -46,10 +62,27 @@ const Room = (props) => {
                         </Row>
                         <Row>
                             <Col id="playlist-wrapper">
-                                <Player currentRoom={state.currentRoom}/>   
+                                <Player currentRoom={state.currentRoom}/>  
                             </Col>
                             <Col id="participants-wrapper">
                                 <Participants participants={state.currentRoom.participants} />
+                                {console.log(state.currentRoom.owner)}
+                                {isOwner ?
+                                    <Button 
+                                        className='check-requests-button'
+                                        onClick={() => {
+                                            history.push({
+                                                pathname: `/joinrequests/${state.currentRoom._id}`,
+                                                state: { 
+                                                    roomName: state.currentRoom.name,
+                                                    roomOwner: state.currentRoom.owner
+                                                }
+                                            })
+                                        }}
+                                    >
+                                        Check Requests
+                                    </Button>
+                                : null}
                             </Col>
                         </Row>
                     </Col>

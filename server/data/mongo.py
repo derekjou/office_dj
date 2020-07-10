@@ -5,7 +5,9 @@ import os
 
 from datetime import datetime, timedelta
 from pymongo import MongoClient, errors, ReturnDocument
+import json
 from bson import SON
+from bson.json_util import dumps
 
 # Interal imports
 from server.model.rooms import Room
@@ -118,13 +120,21 @@ def find_room_partial_string(query: str):
     '''Takes a string and queries the Room collection for that name with matches to the string, 
        returns 5 room names & owners, sorted alphabetically'''
     _log.info('Attempting to retrive rooms with name matching %s from the database', query)
-    
     room_list = list(_db.rooms.find(
         {'name': {'$regex': query, '$options': 'i'}},
         {'name': 1, 'owner': 1}
     ).sort('name', 1).limit(5))
     #TODO error handling
     return room_list
+
+def get_participant_requests(name: str):
+    '''Takes the name of room and returns the participant request dict.'''
+    _log.info('Attempting to find the participant requests for room %s', name)
+    response = list(_db.rooms.find(
+        {'name': name}, 
+        {'participant_requests': 1, '_id': 0}))
+    _log.debug(response)
+    return response
 
 def find_user(username: str):
     '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''
@@ -182,6 +192,20 @@ def add_song(song_dict: dict):
     _db.songs.insert_one(song_dict)
     _log.debug(song_dict)
     return song_dict
+
+def get_songs():
+    '''a method to see all songs in the list of aproved songs'''
+    _log.info("db get songs called")
+    song_list = _db.songs.find()
+    return song_list
+
+def new_song_request(song_dict):
+    '''a method to input a request for a song to be added to the approved list to the database'''
+    _log.info("db new_song_request called")
+    _log.debug(song_dict)
+    song_dict['_id'] = _get_id()
+    _db.songRequests.insert_one(song_dict)
+    return True
 
 def request_song():
     '''A method that retrieve all the songs'''
