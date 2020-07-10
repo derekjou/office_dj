@@ -27,23 +27,13 @@ const Player = (props) => {
     console.log(state.currentSong);
     if (playlist.playlist.length === 0) {
         console.log('end of playlist')
-        dispatch({ type: "setCurrentSong", song: { _id: "", title: "", album: "", artists: [], genre: "", url: "", album_url: "" } });
+        dispatch({ type: "setCurrentSong", currentSong: { _id: "", title: "", album: "", artists: [], genre: "", url: "", album_url: "" } });
         updateTimestamp(0);
         alert("no more songs!");
         return;
     } else {
-        dispatch({ type: "setCurrentSong", song: playlist.playlist[0] });
-        console.log(playlist.playlist[0]);
-        console.log(state.currentSong);
+        dispatch({ type: "setCurrentSong", currentSong: playlist.playlist[0] });
         let audio = document.getElementById("audio");
-        let source = document.getElementById("source");
-        let songName = document.getElementsByClassName("name")[0];
-        let artists = document.getElementsByClassName("artists")[0];
-        let img = document.querySelector("img");
-        // source.src = playlist.playlist[0].url;
-        // songName.innerText = playlist.playlist[0].title;
-        // artists.innerText = playlist.playlist[0].artists.join(", ");
-        // img.src = playlist.playlist[0].album_url;
         audio.load();
         audio.play();
     }   
@@ -61,7 +51,8 @@ const Player = (props) => {
       let resp = await roomService.getPlaylist(props.currentRoom._id);
       let playlist = await resp.data;
       sessionStorage.setItem("loggedPlaylist", JSON.stringify(playlist));
-      dispatch({ type: "setCurrentSong", song: playlist.playlist[0] });
+      console.log('initializing... current state:', state.currentSong, '\nSetting to...', playlist.playlist[0])
+      dispatch({ type: "setCurrentSong", currentSong: playlist.playlist[0] });
       if (!playlist.playlist.length) return;
       let audio = document.getElementById("audio");
       let source = document.getElementById("source");
@@ -119,7 +110,7 @@ const Player = (props) => {
           <img alt="albumCover" src="" />
           <div className="info">
             <div className="name">
-              {state.currentSong.title ? state.currentSong.name : ""}
+              {state.currentSong.title ? state.currentSong.title : ""}
             </div>
             <div className="artists">
               {state.currentSong.artists.length > 0

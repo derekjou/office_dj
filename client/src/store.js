@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const initialState = {
   user: {},
@@ -95,10 +96,12 @@ function reducer(state = initialState, action) {
     case "handleURLInput":
       return Object.assign({}, state, { url: action.url});
     case "setCurrentSong":
-      return Object.assign({}, state, { currentSong: action.song })
+      let ret = Object.assign({}, state, { currentSong: action.currentSong })
+      console.log('new state:', ret);
+      return ret;
     default:
       return state;
   }
 }
 
-export default createStore(reducer);
+export default createStore(reducer, composeWithDevTools());
