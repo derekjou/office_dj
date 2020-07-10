@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import './AdminApproveNewSong.css'
 import SongService from '../../services/song.service';
 import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table'
 import Form from "react-bootstrap/Form";
+import JoinRequest from '../JoinRoom/JoinRequest';
 
 const AdminApproveNewSong = (props) => {
     const state = useSelector(state => state);
@@ -37,16 +40,36 @@ const AdminApproveNewSong = (props) => {
         window.open(request.url, request.title)
     }
 
+    const renderHeader = () => {
+        let headerElement = ['Title', 'Artists', 'Genre', 'Album', '', '', '']
+
+        return headerElement.map((key, index) => {
+            return <th key={index}>{key.toUpperCase()}</th>
+        })
+    }
+
     return (
         <div>
-            {state.songRequests.map(request => (
-                <p key={request._id}>
-                    Title: {request.title} Artists: {request.artists} Genre: {request.genre} Album: {request.album} 
-                    <Button block type="button" onClick={() => {previewSong(request)}}>Preview Song</Button>
-                    <Button block type="button" onClick={() => {approve(request)}}>Approve</Button>
-                    <Button block type="button" onClick={() => {deny(request)}}>Reject</Button>
-                </p>
-            ))}
+        <Table responsive="lg" hover>
+          <thead>
+            <tr>{renderHeader()}</tr>
+          </thead>
+          <tbody id="data">
+              {Array.isArray(state.songRequests) ? state.songRequests.map(
+                  (request) => {
+                      return <>
+                      <td>{request.title}</td>
+                      <td>{request.artists}</td>
+                      <td>{request.genre}</td>
+                      <td>{request.album}</td>
+                      <td><Button block type="button" onClick={() => {previewSong(request)}}>Preview Song</Button></td>
+                      <td><Button block type="button" onClick={() => {approve(request)}}>Approve</Button></td>
+                      <td><Button block type="button" onClick={() => {deny(request)}}>Reject</Button></td>
+                      </>
+                  }
+              ) : null }
+            </tbody>
+        </Table>
         </div>
     )
 
