@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const initialState = {
   user: {},
@@ -30,7 +31,8 @@ const initialState = {
   album: "",
   genre: "",
   url: "",
-  songRequests: []
+  songRequests: [],
+  currentSong: { _id: "", title: "", album: "", artists: [], genre: "", url: "", album_url: "" }
 };
 
 function reducer(state = initialState, action) {
@@ -106,10 +108,12 @@ function reducer(state = initialState, action) {
     case "handleNewUrl":
       return Object.assign({}, state, { url: action.url});
     case "setSongRequests":
-      return Object.assign({}, state, { songRequests: action.requests })
+      return Object.assign({}, state, { songRequests: action.requests });
+    case "setCurrentSong":
+      return Object.assign({}, state, { currentSong: action.currentSong });
     default:
       return state;
   }
 }
 
-export default createStore(reducer);
+export default createStore(reducer, composeWithDevTools());

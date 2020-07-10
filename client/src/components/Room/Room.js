@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import RoomService from '../../services/room.service';
@@ -10,42 +10,30 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import RoomList from '../RoomList/RoomList.js';
 import Participants from '../Participants/Participants';
-import { connect } from 'react-redux';
+import Player from '../Player/Player';
 import JoinRoom from '../JoinRoom/JoinRoom';
-
-
 
 const Room = (props) => {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
     const history = useHistory();
-    const [hasRooms, setHasRooms] = useState(false)
 
     const roomService = new RoomService();
 
     let loggedUsername = JSON.parse(sessionStorage.getItem('loggedUser')).username
-
+    
     useEffect(() => {
         async function getRoomList() {
             let myRooms = await roomService.getUserRooms(loggedUsername);
-            console.log(loggedUsername)
-            console.log(JSON.parse(sessionStorage.getItem('loggedUser')));
             sessionStorage.setItem('loggedRoomList', JSON.stringify(myRooms.data))
-            console.log(myRooms.data);
             dispatch({ type: 'handleMyRooms', myRooms: myRooms.data });
             dispatch({ type: 'handleCurrentRoom', currentRoom: myRooms.data[0] ? myRooms.data[0] : { id: -1, name: "", owner: "", participants: "", playlist: {}, date_created: "" } })
-            console.log(state.currentRoom)
         }
         getRoomList();
     }, []);
 
-    const getCurrentRoom = (rooms) => {
-        dispatch({ type: 'handleCurrentRoom', currentRoom: rooms[0] })
-        console.log(state.currentRoom['name'])
-    }
-
     const isOwner = () => {
-        return state.currentRoom.owner == loggedUsername
+        return state.currentRoom.owner === loggedUsername
     }
     
     return (
@@ -57,15 +45,14 @@ const Room = (props) => {
                         myRooms={state.myRooms}
                     />
                 </Col>
-                {state.currentRoom.name ? 
+                {state.currentRoom.playlist && state.currentRoom.playlist.playlist.length > 0 ? 
                     <Col id="content-wrapper">
                         <Row id="roomname-wrapper">
                             <h3 id="roomname">{state.currentRoom.name}</h3>
                         </Row>
                         <Row>
                             <Col id="playlist-wrapper">
-                                    {/* TODO: Playlists Component */}
-                                
+                                <Player currentRoom={state.currentRoom}/>  
                             </Col>
                             <Col id="participants-wrapper">
                                 <Participants participants={state.currentRoom.participants} />

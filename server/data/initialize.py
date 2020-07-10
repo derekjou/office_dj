@@ -1,7 +1,8 @@
 '''A development module for defining initial database conditions.'''
 
 # External imports
-import os
+import os, sys
+sys.path.append(os.path.abspath(os.path.join('..')))
 
 from datetime import datetime, timedelta
 from pymongo import MongoClient, errors, ReturnDocument
@@ -92,7 +93,10 @@ if __name__ == "__main__":
         _get_id(),
         'Test Room',
         'discjockey',
-        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
+        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3},
+        {'playlist': [Song(1, "Despacito", "Vida", ["Luis Fonsi", "Daddy Yankee"], "Pop","http://res.cloudinary.com/alick/video/upload/v1502689683/Luis_Fonsi_-_Despacito_ft._Daddy_Yankee_uyvqw9.mp3").to_dict(),
+         Song(2, "La Mujer de Antonio", "SONGO 21 - Studio sessions 2003", ["SONGO 21"], "Salsa", "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/SONGO_21/SONGO_21_-_Studio_sessions_2003/SONGO_21_-_02_-_La_Mujer_de_Antonio.mp3").to_dict()],
+         'currentTime': 10}
     ).to_dict())
     room_list.append(Room(
         _get_id(),
