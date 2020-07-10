@@ -111,6 +111,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { songRequests: action.requests });
     case "setCurrentSong":
       return Object.assign({}, state, { currentSong: action.currentSong });
+      case "handleSongSearchQuery":
+        return Object.assign({}, state, { songSearchQuery: action.songSearchQuery });
     default:
       return state;
   }

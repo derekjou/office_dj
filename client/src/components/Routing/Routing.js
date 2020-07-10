@@ -13,6 +13,7 @@ import Admin from '../Admin/Admin';
 import AddMusic from '../AddMusic/AddMusic';
 import ChangeUserRole from '../ChangeUserRole/ChangeUserRole';
 import RequestNewSong from "../requestNewSong/RequestNewSong";
+import RequestNewSongToPlaylist from "../requestSongToPlaylist/requestSongToPlaylist";
 import AdminApproveNewSong from "../AdminApproveNewSong/AdminApproveNewSong";
 
 const checkLogin = () => {
@@ -79,6 +80,7 @@ class Routing extends Component {
         <Route path="/changeRole" component={ChangeUserRole} />
         <Route path="/requestSong" component={RequestNewSong} />
         <Route path="/approveNewSong" component={AdminApproveNewSong} />
+        <Route path="/requestSongToPlaylist" component={RequestNewSongToPlaylist} />
       </Router>
     );
   }

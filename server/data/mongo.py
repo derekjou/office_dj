@@ -137,6 +137,17 @@ def get_participant_requests(name: str):
     _log.debug(response)
     return response
 
+def find_song_partial_string(query: str):
+    '''Takes a string and queries the Songs collection for that title with matches to the string, 
+       returns 5 song name & artist, sorted alphabetically'''
+    _log.info('Attempting to retrive rooms with name matching %s from the database', query)
+    song_list = list(_db.songs.find(
+        {'title': {'$regex': query, '$options': 'i'}},
+        {'title': 1, 'artists': 1}
+    ).sort('title', 1).limit(5))
+    #TODO error handling
+    return song_list
+
 def find_user(username: str):
     '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''
     _log.info('Attempting to retrive user %s from the database', username)

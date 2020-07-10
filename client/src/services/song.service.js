@@ -52,6 +52,24 @@ class SongService {
             data: {key},
         })
     }
+
+    findSongs(query) {
+        let uri = `${this.URI}/songs/search?query=${query}`;
+        return axios.get(uri, {
+            withCredentials: true, validateStatus: function (status) {
+                return status < 500; // Resolve only if the status code is less than 500
+            }
+        })
+    }
+
+    sendAddRequest(title) {
+        let body = {
+            'title': title
+        }
+        console.log(body)
+        let uri = `${this.URI}/song/add`;
+        return axios.post(uri, body, {withCredentials: true})
+    }
 }
 
 export default SongService
