@@ -17,7 +17,7 @@ def see_aproved_songs():
     if request.method == "GET":
         return jsonify(db.get_songs())
 
-@song_page.route('/songs/requestNew', methods=['POST'])
+@song_page.route('/songs/requestNew', methods=['POST', 'GET'])
 def request_new_song():
     _log.debug("request_new_song called")
     '''a method to request new songs be added to the list of aproved songs'''
@@ -26,7 +26,26 @@ def request_new_song():
             song = Song().from_dict(request.json)
         if db.new_song_request(song.to_dict()):
             return jsonify("request processed"), 201
-        else:
-            return jsonify("request could not be completed"), 400
-        
-        
+    elif request.method == "GET":
+        _log.debug("get request to new song requests")
+        return jsonify(db.get_new_song_requests()), 200
+    return jsonify("request could not be completed"), 400
+
+@song_page.route('/songs/requestNew/<int:requestId>', methods=['PUT', 'DELETE'])
+def process_new_song_request(requestId):
+    if request.method == 'PUT':
+        _log.info("receved a PUT on songs/requestNew/id")
+        if request.json:
+            _log.debug(request.json)
+            data = request.json['key']
+            del data['_id']
+            song = Song().from_dict(data)
+            if db.add_song(song.to_dict()):
+                db.remove_song_request(requestId)
+                return jsonify("song added to library"), 200
+    elif request.method == 'DELETE':
+        _log.info("receved DELETE to songs/requestNew/id")
+        db.remove_song_request(requestId)
+        return jsonify("request removed"), 200
+    else:
+        return jsonify("request could not be understod"), 400

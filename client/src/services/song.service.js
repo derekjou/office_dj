@@ -19,6 +19,39 @@ class SongService {
             withCredentials: true
         })
     }
+
+    getNewSongRequests() {
+        return axios({
+            method: 'GET',
+            url: `${this.URI}/requestNew`,
+            withCredentials: true
+        })
+    }
+
+    removeSongRequest() {
+        return axios({
+            method: 'DELETE',
+            url: `${this.URI}/wantedSongs/`
+        })
+    }
+
+    approveNewSong(key) {
+        console.log(`approving request ${key._id}`)
+        return axios({
+            method: 'PUT',
+            url: `${this.URI}/requestNew/${key._id}`,
+            data: {key},
+        })
+    }
+
+    rejectNewSong(key) {
+        console.log(`rejecting request ${key._id}`)
+        return axios({
+            method: 'DELETE',
+            url: `${this.URI}/requestNew/${key._id}`,
+            data: {key},
+        })
+    }
 }
 
 export default SongService

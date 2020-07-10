@@ -1,0 +1,11 @@
+.requestNewSong {
+    width: 50%;
+    height: auto;
+    margin: auto;
+  }
+  
+  .title {
+    text-align: center;
+    text-shadow: 2px 2px #4d94ff;
+  }
+  
