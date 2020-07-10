@@ -14,9 +14,9 @@ const initialState = {
   newDpt: "",
   newFuncTeam: "",
   newTitle: "",
-  room: { name: "", owner: "", participants: "", playlists: "", date_created: "" },
+  room: { id: -1, name: "", owner: "", participants: "", playlists: "", date_created: "" },
   myRooms: [],
-  currentRoom: { name: "", owner: "", participants: "", playlists: "", date_created: "" },
+  currentRoom: { id: -1, name: "", owner: "", participants: "", playlists: "", date_created: "" },
   newRoomName: "",
   newParticipant: "",
   roomName: "",
@@ -24,6 +24,7 @@ const initialState = {
   roomSearchQuery: '',
   roomSearchList: [],
   requestRoom: { name: "", owner: "" },
+  roomJoinRequestList: {},
   title: "",
   artists: [],
   album: "",
@@ -83,6 +84,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { roomSearchList: action.roomSearchList });
     case "handleRoomRequestSuccess":
       return Object.assign({}, state, { requestRoom: action.requestRoom })
+    case "handleRoomJoinRequestList":
+      return Object.assign({}, state, { roomJoinRequestList: action.roomJoinRequestList })
     case "handleTitleInput":
       return Object.assign({}, state, { title: action.title});
     case "handleArtistsInput":

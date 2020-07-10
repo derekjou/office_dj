@@ -33,7 +33,7 @@ class RoomService {
         })
     }
 
-    sendJoinRequest(name, owner, username){
+    sendJoinRequest(name, owner, username) {
         let body = {
             'name': name,
             'owner': owner,
@@ -42,6 +42,34 @@ class RoomService {
         console.log(body)
         let uri = `${this.URI}/rooms/${name}/join`;
         return axios.post(uri, body, {withCredentials: true})
+    }
+
+    getJoinRequests(name) {
+        let uri = `${this.URI}/rooms/${name}/join`;
+        return axios.get(uri, {withCredentials: true})
+    }
+
+    approveJoinRequest(name, owner, username) {
+        let body = {
+            'name': name,
+            'owner': owner,
+            'username': username
+        }
+        let uri = `${this.URI}/rooms/${name}/join/${username}`;
+        return axios.post(uri, body, { withCredentials: true })
+    }
+
+    rejectJoinRequest(name, owner, username) {
+        let uri = `${this.URI}/rooms/${name}/join/${username}`;
+        axios({
+            method: 'delete',
+            url: uri,
+            data: {
+                'name': name,
+                'owner': owner,
+                'username': username
+            }
+        });
     }
 }
 
