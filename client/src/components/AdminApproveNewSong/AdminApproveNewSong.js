@@ -17,6 +17,7 @@ const AdminApproveNewSong = (props) => {
             let resp = await songService.getNewSongRequests()
             console.log(resp)
             dispatch({ type: 'setSongRequests', requests: resp.data })
+            history.push('/approvenewsong')
         }
         getNewSongRequests();
     }, []);
