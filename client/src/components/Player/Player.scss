@@ -4,7 +4,9 @@
   height: 80px;
   background-color: #0E153A;
   display: flex;
+  margin: 5px 10px;
   padding: 16px;
+  box-shadow: 1px 1px 10px 3px #0E153A;
   img {
     width: 50px;
     height: 50px;
@@ -14,6 +16,21 @@
     flex-flow: column nowrap;
     justify-content: center;
     width: calc(50% - 80px);
+    padding: 0 16px;
+    color: #3D5AF1;
+    .name {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .singer {
+      font-size: 12px;
+    }
+  }
+  .info2 {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    width: 100%;
     padding: 0 16px;
     color: #3D5AF1;
     .name {
@@ -43,8 +60,26 @@
     height: 2px;
     left: 0;
     top: 0;
-    background-color: #22D1EE;
+    // background-color: #22D1EE;
+    box-shadow: 0 0 2px 1px #fff,  /* inner white */
+    0 0 3.5px 2px #f0f, /* middle magenta */
+    0 0 4.5px 3px #0ff;;
   }
+}
+
+
+
+.queue {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    table {
+        width: 90%;
+        tr {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
 }
 
 @font-face {

@@ -96,9 +96,7 @@ function reducer(state = initialState, action) {
     case "handleURLInput":
       return Object.assign({}, state, { url: action.url});
     case "setCurrentSong":
-      let ret = Object.assign({}, state, { currentSong: action.currentSong })
-      console.log('new state:', ret);
-      return ret;
+      return Object.assign({}, state, { currentSong: action.currentSong })
     default:
       return state;
   }

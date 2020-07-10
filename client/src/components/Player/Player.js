@@ -12,31 +12,38 @@ const Player = (props) => {
   const roomService = new RoomService();
 
   const updateTimestamp = async (timestamp) => {
-    let resp = await roomService.updateTimestamp(
-      props.currentRoom._id,
-      timestamp
-    );
-    let playlist = await resp.data;
-    console.log(playlist);
+    await roomService.updateTimestamp(props.currentRoom._id, timestamp);
   };
 
   const nextSong = async () => {
     let resp = await roomService.removePlaylistSong(props.currentRoom._id);
     let playlist = await resp.data;
+    let updatedRoom = props.currentRoom;
+    updatedRoom.playlist = playlist; 
+    dispatch({ type: "handleCurrentRoom", currentRoom: updatedRoom});
     sessionStorage.setItem("loggedPlaylist", JSON.stringify(playlist));
-    console.log(state.currentSong);
     if (playlist.playlist.length === 0) {
-        console.log('end of playlist')
-        dispatch({ type: "setCurrentSong", currentSong: { _id: "", title: "", album: "", artists: [], genre: "", url: "", album_url: "" } });
-        updateTimestamp(0);
-        alert("no more songs!");
-        return;
+      dispatch({
+        type: "setCurrentSong",
+        currentSong: {
+          _id: "",
+          title: "",
+          album: "",
+          artists: [],
+          genre: "",
+          url: "",
+          album_url: "",
+        },
+      });
+      updateTimestamp(0);
+      alert("no more songs!");
+      return;
     } else {
-        dispatch({ type: "setCurrentSong", currentSong: playlist.playlist[0] });
-        let audio = document.getElementById("audio");
-        audio.load();
-        audio.play();
-    }   
+      dispatch({ type: "setCurrentSong", currentSong: playlist.playlist[0] });
+      let audio = document.getElementById("audio");
+      audio.load();
+      audio.play();
+    }
   };
 
   window.addEventListener("beforeunload", () => {
@@ -51,19 +58,12 @@ const Player = (props) => {
       let resp = await roomService.getPlaylist(props.currentRoom._id);
       let playlist = await resp.data;
       sessionStorage.setItem("loggedPlaylist", JSON.stringify(playlist));
-      console.log('initializing... current state:', state.currentSong, '\nSetting to...', playlist.playlist[0])
       dispatch({ type: "setCurrentSong", currentSong: playlist.playlist[0] });
       if (!playlist.playlist.length) return;
       let audio = document.getElementById("audio");
       let source = document.getElementById("source");
-      let songName = document.getElementsByClassName("name")[0];
-      let artists = document.getElementsByClassName("artists")[0];
-      let img = document.querySelector("img");
       source.src = playlist.playlist[0].url;
       audio.currentTime = playlist.currentTime;
-      songName.innerHTML = playlist.playlist[0].title;
-      artists.innerHTML = playlist.playlist[0].artists.join(", ");
-      img.src = playlist.playlist[0].album_url;
       audio.load();
     }
     function setPlayerListeners() {
@@ -104,10 +104,16 @@ const Player = (props) => {
     <div>
       <Row>
         <audio id="audio" onEnded={nextSong}>
-          <source id="source" src={state.currentSong.url ? state.currentSong.url : ""} />
+          <source
+            id="source"
+            src={state.currentSong.url ? state.currentSong.url : ""}
+          />
         </audio>
         <div className="player">
-          <img alt="albumCover" src="" />
+          <img
+            alt="albumCover"
+            src={state.currentSong.album_url ? state.currentSong.album_url : ""}
+          />
           <div className="info">
             <div className="name">
               {state.currentSong.title ? state.currentSong.title : ""}
@@ -123,6 +129,26 @@ const Player = (props) => {
             <div className="iconfont next icon-next"></div>
           </div>
           <div className="progress"></div>
+        </div>
+        <div className="queue">
+          <table>
+            <tr>
+              <th>Up Next: </th>
+            </tr>
+            {state.currentRoom.playlist.playlist.map((song, i) => {
+              return i !== 0 ? (
+                <tr>
+                  <div className="player">
+                    <img alt="albumCover" src={song.album_url} />
+                    <div className="info2">
+                      <div className="name">{song.title}</div>
+                      <div className="artists">{song.artists.join(", ")}</div>
+                    </div>
+                  </div>
+                </tr>
+              ) : null;
+            })}
+          </table>
         </div>
       </Row>
     </div>
