@@ -28,7 +28,8 @@ const initialState = {
   artists: [],
   album: "",
   genre: "",
-  url: ""
+  url: "",
+  songRequests: []
 };
 
 function reducer(state = initialState, action) {
@@ -101,6 +102,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { album: action.album});
     case "handleNewUrl":
       return Object.assign({}, state, { url: action.url});
+    case "setSongRequests":
+      return Object.assign({}, state, { songRequests: action.requests })
     default:
       return state;
   }
