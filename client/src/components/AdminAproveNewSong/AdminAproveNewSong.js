@@ -14,9 +14,10 @@ const AdminAproveNewSong = (props) => {
     const songService = new SongService();
 
     useEffect( () => {
+        console.log("useEffect")
         async function getNewSongRequests() {
             let resp = songService.getNewSongRequests()
-            setRequests(resp.data)
+            setRequests(resp)
          }
          getNewSongRequests();
     }, []);

@@ -50,7 +50,7 @@ class Routing extends Component {
         <Route path="/addMusic" component={AddMusic} />
         <Route path="/changeRole" component={ChangeUserRole} />
         <Route path="/requestSong" component={RequestNewSong} />
-        <Route path="/approveNewSong" Component={AdminAproveNewSong} />
+        <Route path="/aproveNewSong" component={AdminAproveNewSong} />
       </Router>
     );
   }

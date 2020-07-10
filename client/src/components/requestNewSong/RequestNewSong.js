@@ -13,7 +13,6 @@ const RequestNewSong = (props) => {
     const history = useHistory();
 
     const songService = new SongService();
-    const adminService = new AdminService();
 
     const requestNewSong = async () => {
         await songService.requestNewSong(state.title, state.genre, state.artists, state.url, state.album)

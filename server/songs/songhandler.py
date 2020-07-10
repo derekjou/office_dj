@@ -36,4 +36,7 @@ def process_new_song_request(song_dict):
         if request.json:
             song = Song().from_dict(request.json)
             if db.add_song(song.to_dict()):
-                
+                db.remove_song_request(song.to_dict())
+                return jsonify("song added to library"), 200
+    if request.method == 'DELETE':
+        pass
