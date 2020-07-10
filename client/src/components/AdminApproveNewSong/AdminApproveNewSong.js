@@ -4,27 +4,25 @@ import { useHistory } from 'react-router-dom';
 import SongService from '../../services/song.service';
 import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
-const axios = require('axios');
 
-const AdminAproveNewSong = (props) => {
+const AdminApproveNewSong = (props) => {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
     const history = useHistory();
-    const [requests, setRequests] = useState([])
     const songService = new SongService();
 
     useEffect( () => {
         console.log("useEffect")
         async function getNewSongRequests() {
             let resp = songService.getNewSongRequests()
-            setRequests(resp)
-         }
-         getNewSongRequests();
+            dispatch({ type: 'setSongRequests', requests: resp })
+        }
+        getNewSongRequests();
     }, []);
 
     return (
         <div>
-            {requests.map(request => (
+            {state.songRequests.map(request => (
                 <p key={request._id}>{request.title}</p>
             ))}
         </div>
@@ -32,4 +30,4 @@ const AdminAproveNewSong = (props) => {
 
 }
 
-export default AdminAproveNewSong;
+export default AdminApproveNewSong;
