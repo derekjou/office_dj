@@ -43,7 +43,9 @@ def process_new_song_request(requestId):
             if db.add_song(song.to_dict()):
                 db.remove_song_request(requestId)
                 return jsonify("song added to library"), 200
-    if request.method == 'DELETE':
-        pass
+    elif request.method == 'DELETE':
+        _log.info("receved DELETE to songs/requestNew/id")
+        db.remove_song_request(requestId)
+        return jsonify("request removed"), 200
     else:
         return jsonify("request could not be understod"), 400

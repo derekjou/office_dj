@@ -13,17 +13,24 @@ const AdminApproveNewSong = (props) => {
 
     useEffect( () => {
         console.log("useEffect")
-        async function getNewSongRequests() {
-            let resp = await songService.getNewSongRequests()
-            console.log(resp)
-            dispatch({ type: 'setSongRequests', requests: resp.data })
-            history.push('/approvenewsong')
-        }
+
         getNewSongRequests();
     }, []);
 
+    async function getNewSongRequests() {
+        let resp = await songService.getNewSongRequests()
+        console.log(resp)
+        dispatch({ type: 'setSongRequests', requests: resp.data })
+    }
+
     async function approve(request) {
         await songService.approveNewSong(request)
+        getNewSongRequests()
+        }
+
+    async function deny(request) {
+        await songService.rejectNewSong(request)
+        getNewSongRequests()
         }
 
     return (
@@ -32,6 +39,7 @@ const AdminApproveNewSong = (props) => {
                 <p key={request._id}>
                     {request.title}
                     <Button block type="button" onClick={() => {approve(request)}}>Aprove</Button>
+                    <Button block type="button" onClick={() => {deny(request)}}>Reject</Button>
                 </p>
             ))}
         </div>

@@ -43,6 +43,15 @@ class SongService {
             data: {key},
         })
     }
+
+    rejectNewSong(key) {
+        console.log(`rejecting request ${key._id}`)
+        return axios({
+            method: 'DELETE',
+            url: `${this.URI}/requestNew/${key._id}`,
+            data: {key},
+        })
+    }
 }
 
 export default SongService
