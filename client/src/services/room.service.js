@@ -86,6 +86,16 @@ class RoomService {
             }
         });
     }
+
+    sendAddRequest(roomId, songId) {
+        let body = {
+            'room_id': roomId,
+            'song_id': songId
+        }
+        console.log(body)
+        let uri = `${this.URI}/rooms/myrooms/playlist/${roomId}/request/${songId}`;
+        return axios.post(uri, body, { withCredentials: true })
+    }
 }
 
 export default RoomService;

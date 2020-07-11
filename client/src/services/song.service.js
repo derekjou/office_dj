@@ -61,15 +61,6 @@ class SongService {
             }
         })
     }
-
-    sendAddRequest(title) {
-        let body = {
-            'title': title
-        }
-        console.log(body)
-        let uri = `${this.URI}/song/add`;
-        return axios.post(uri, body, {withCredentials: true})
-    }
 }
 
 export default SongService
