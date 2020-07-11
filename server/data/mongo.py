@@ -148,6 +148,11 @@ def find_song_partial_string(query: str):
     #TODO error handling
     return song_list
 
+def add_song_to_playlist_request(room_id,song_id):
+    '''takes a room id and a song id and adds a song id to the playlist_requests array in a room'''
+    _db.rooms.update({'_id': room_id}, {"$push": {"playlist.requests" : song_id}})
+    return True
+
 def find_user(username: str):
     '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''
     _log.info('Attempting to retrive user %s from the database', username)
