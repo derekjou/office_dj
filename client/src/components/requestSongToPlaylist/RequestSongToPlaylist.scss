@@ -1,0 +1,74 @@
+$player-purple: #0d1632;
+$player-purple-hover: #051642;
+$player-blue: #4562e0;
+$player-blue-focus: #3032b3;
+
+$player-blue-light: #6a83f3;
+
+$player-box-shadow: 0 0 10px 0 $player-purple;
+
+.search-songs {
+  background-color: rgba($player-blue, 0.1);
+  color: rgba($player-purple, 0.8);
+
+  & .input-group {
+    & input, & .btn {
+      border: 1px solid $player-blue;
+      box-shadow: 0 0 10px 0 $player-box-shadow;
+      border-radius: 0;
+    }
+  }
+
+  & input {
+    background: rgba($player-blue, 0.1);
+    border: 1px solid $player-blue;
+    box-shadow: 0 0 10px 0 $player-blue;
+    color: $player-purple;
+
+    &:focus {
+      background-color: rgba($player-blue, 0.05);
+    }
+
+    &::placeholder {
+      color: rgba($player-blue, 0.5)
+    }
+  }
+
+  & .btn {
+    background: $player-blue;
+
+    &:focus { background: $player-blue-focus !important; }
+  }
+
+  .search-res-wrapper {
+    border-radius: 0 0 2px 2px;
+    z-index: 0;
+    background-color: $player-purple !important;
+    color: $player-blue-light;
+    box-shadow: $player-box-shadow;
+
+    &:hover { background: $player-purple-hover !important;}
+  }
+}
+
+div.search-res-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+
+  .search-res {
+    display: block;
+  }
+  .song-title {
+    font-weight: 600;
+  }
+  .song-artist {
+    margin: 0 1rem;
+    align-self: right !important;
+    justify-self: right;
+    &::before {
+      content: 'by ';
+    }
+  }
+}
+
+
