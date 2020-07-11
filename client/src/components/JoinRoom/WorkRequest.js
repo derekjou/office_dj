@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
-import Form from "react-bootstrap/Form";
-import UserService from '../../services/user.service'
 import Table from 'react-bootstrap/Table'
 import RoomService from '../../services/room.service';
 import JoinRequest from './JoinRequest';
-const axios = require('axios');
 
-const userService = new UserService();
 const roomService = new RoomService();
 
 const WorkRequest = (props) => {
@@ -19,7 +14,7 @@ const WorkRequest = (props) => {
 
   useEffect(() => {
     console.log(props.location.state.roomName)
-    console.log(props.location.state.roomOwner)
+    // console.log(props.location.state.roomOwner)
     async function getJoinRequests() {
       let joinRequests = await roomService.getJoinRequests(props.location.state.roomName);
       let joinData = joinRequests.data[0].participant_requests
@@ -39,10 +34,6 @@ const WorkRequest = (props) => {
     })
   }
 
-  const renderBody = () => {
-    
-  }
-
   return (
     <>
       <div>
@@ -51,7 +42,6 @@ const WorkRequest = (props) => {
             <tr>{renderHeader()}</tr>
           </thead>
           <tbody id="data">
-            {/* {console.log(state.roomJoinRequestList.isArray())} */}
             {Array.isArray(state.roomJoinRequestList) ? state.roomJoinRequestList.map(
               (request) => {
                 console.log(request);

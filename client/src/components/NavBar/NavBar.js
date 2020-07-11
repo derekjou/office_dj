@@ -3,32 +3,62 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const NavBar = (props) => {
-  const state = useSelector((state) => state);
+  const state = useSelector(state => state);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  let loggedUser = sessionStorage.getItem('loggedUser');
-  // let isDJ = false;
+  let loggedUser = sessionStorage.getItem("loggedUser");
 
   useEffect(() => {
-    if(loggedUser){
-      dispatch({ type: 'login', user: JSON.parse(loggedUser) })
+    if (loggedUser) {
+      dispatch({ type: "login", user: JSON.parse(loggedUser) });
     }
-
-    // if (loggedUser && loggedUser.role === 'DJ') {
-    //   isDJ = true;
-    // }
   }, []);
 
   const logout = (e) => {
     e.preventDefault();
-    sessionStorage.clear()
-    dispatch({ type: "logout" })
-    history.push('/');
+    sessionStorage.clear();
+    dispatch({ type: "logout" });
+    history.push("/");
+  };
+
+  const renderUserOptions = () => {
+    return (
+      <>
+        <NavDropdown title="User Actions">
+          <NavDropdown.Item href="/userRooms">Rooms</NavDropdown.Item>
+          <NavDropdown.Item href="/requestSong">
+            Request a Song
+          </NavDropdown.Item>
+          <NavDropdown.Item href="/updateUser">Update Account</NavDropdown.Item>
+        </NavDropdown>
+      </>
+    );
+  };
+
+  const renderDJOptions = () => {
+    return (
+      <>
+        <NavDropdown title="DJ Actions">
+          <NavDropdown.Item href="/djRooms">My Rooms</NavDropdown.Item>
+          <NavDropdown.Item href="/createRoom">Create a Room</NavDropdown.Item>
+        </NavDropdown>
+      </>
+    );
+  };
+
+  const renderBaseOptions = () => {
+    return (
+      <>
+        <Nav.Link href="/login">Login</Nav.Link>
+        <Nav.Link href="/registerUser">Register</Nav.Link>
+      </>
+    );
   };
 
   return (
@@ -38,29 +68,22 @@ const NavBar = (props) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
-          {/* {state.isDJ ? (
-            <>
-              <Nav.Link href="/myroom/">My Rooms</Nav.Link>
-              <Nav.Link href="/createroom">Create a Room</Nav.Link>
-            </>
-          ) : null} */}
           {loggedUser ? (
-            <>
-              <Nav.Link href="/myroom">My Rooms</Nav.Link>
-              <Nav.Link href="/createroom">Create a Room</Nav.Link>
-              <Nav.Link href="/updateUser">Update User</Nav.Link>
-              <Nav.Link href="/requestSong">Request New Song</Nav.Link>
-            </>
-          ) : (
-            <>
-              <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/registerUser">Register</Nav.Link>
-            </>
-          )}
+            JSON.parse(loggedUser).role === "user" ? (
+              <>{renderUserOptions()}</>
+            ) : JSON.parse(loggedUser).role === "DJ" ? (
+              <>
+                {renderUserOptions()}
+                {renderDJOptions()}
+              </>
+            ) : <Nav.Link href="/admin">Dashboard</Nav.Link>
+            ) : (
+              <>{renderBaseOptions()}</>
+            )}
         </Nav>
         {loggedUser ? (
           <Form inline>
-            <Button variant="danger" type="submit" onClick={e => logout(e)}>
+            <Button variant="danger" type="submit" onClick={(e) => logout(e)}>
               Logout
             </Button>
           </Form>

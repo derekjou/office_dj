@@ -49,3 +49,14 @@ def process_new_song_request(requestId):
         return jsonify("request removed"), 200
     else:
         return jsonify("request could not be understod"), 400
+
+@song_page.route('/songs/search', methods=['GET'])
+def find_songs():
+    _log.debug("find_songs")
+    if request.method == 'GET':
+        _log.info("receved a GET on songs/search")
+        _log.debug(request.args.get('query'))
+        responce = db.find_song_partial_string(request.args.get('query'))
+        return jsonify(responce), 200
+    return jsonify('the server couldn\'t understand your request'), 400
+

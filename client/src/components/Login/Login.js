@@ -19,8 +19,7 @@ const Login = (props) => {
         }
     }
 
-    const login = async (e) => {
-        e.preventDefault();
+    const login = async () => {
         let loggedUser = await userService.login(state.username, state.password)
         sessionStorage.setItem('loggedUser', JSON.stringify(loggedUser.data));
         dispatch({ type: 'login', user: loggedUser.data })
@@ -47,7 +46,9 @@ const Login = (props) => {
                         onChange={e => dispatch({ type: 'handlePassword', password: e.target.value })}
                         onKeyDown={(e) => handleKeyDown(e)} />
                 </Form.Group>
-                <Button block type="submit" onClick={login}>
+                <Button block type="submit" onClick={e => {
+                    e.preventDefault()
+                    login()}}>
                     Log In
             </Button>
             </Form>

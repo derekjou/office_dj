@@ -82,13 +82,28 @@ def request_join_rooms_user(name, username):
     db.update_room(room)
     return '', 204
 
-
 @room_page.route('/rooms/myrooms/<string:username>', methods=['GET'])
 def my_rooms_collection(username):
     '''A GET to /rooms/myrooms/<username> returns all rooms belonging to that username.'''
     _log.debug(username)
     _log.info('Request for rooms belonging to %s', username)
     room_list = db.get_rooms_by_user(username)
+    _log.debug(room_list)
+    return jsonify(room_list), 200
+
+@room_page.route('/rooms/userRooms/<string:username>', methods=['GET'])
+def get_user_rooms(username):
+    '''A GET to /rooms/userRooms/<string:username> returns rooms a user has joined'''
+    _log.info('Request for rooms %s has joined', username)
+    room_list = db.get_user_rooms(username)
+    _log.debug(room_list)
+    return jsonify(room_list), 200
+
+@room_page.route('/rooms/djRooms/<string:username>', methods=['GET'])
+def get_dj_rooms(username):
+    '''A GET to /rooms/djRooms/<string:username> returns rooms a DJ owns'''
+    _log.info('Request for rooms %s has created', username)
+    room_list = db.get_dj_rooms(username)
     _log.debug(room_list)
     return jsonify(room_list), 200
 
@@ -125,3 +140,12 @@ def room_playlist(room_id):
         _log.debug('Updating playlist of room %s', room_id)
         playlist = db.remove_playlist_song(room_id)
         return jsonify(playlist), 200
+
+@room_page.route('/rooms/myrooms/playlist/<int:room_id>/request/<int:song_id>', methods=["POST"])
+def request_add_song(room_id, song_id):
+    '''a POST sends a request to add a song to the current room\'s playlist '''
+    if request.method == 'POST':
+        _log.info("POST to request_add_song")
+        if db.add_song_to_playlist_request(room_id, song_id):
+            return jsonify('song added to requests'), 200
+    return jsonify('request could not be undersood and/or processed'), 400

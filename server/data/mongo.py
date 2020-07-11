@@ -100,6 +100,25 @@ def get_rooms_by_user(username: str):
     _log.info('Successfully found %d rooms belonging to %s', len(room_list), username)
     return room_list
 
+def get_user_rooms(username: str):
+    '''Gets rooms that a user belongs to'''
+    query = f'participants.{username}' 
+    res = _db.rooms.find({ query : {'$exists': 'true'}})
+    room_list = []
+    for room in res:
+        room_list.append(room)
+    _log.info('Successfully found %d rooms %s is a part of', len(room_list), username)
+    return room_list
+
+def get_dj_rooms(username: str):
+    '''Gets rooms that a DJ owns'''
+    res = _db.rooms.find({'owner': username})
+    room_list = []
+    for room in res:
+        room_list.append(room)
+    _log.info('Successfully found %d rooms belonging to %s', len(room_list), username)
+    return room_list
+
 def get_room_by_name(name: str, owner: str):
     '''Takes a name of a room object and queries the Rooms collection for that object.'''
     _log.info('Attempting to retrive room %s from the database', name)
@@ -137,6 +156,22 @@ def get_participant_requests(name: str):
     _log.debug(response)
     return response
 
+def find_song_partial_string(query: str):
+    '''Takes a string and queries the Songs collection for that title with matches to the string, 
+       returns 5 song name & artist, sorted alphabetically'''
+    _log.info('Attempting to retrive rooms with name matching %s from the database', query)
+    song_list = list(_db.songs.find(
+        {'title': {'$regex': query, '$options': 'i'}},
+        {'_id':1, 'title': 1, 'artists': 1}
+    ).sort('title', 1).limit(5))
+    #TODO error handling
+    return song_list
+
+def add_song_to_playlist_request(room_id,song_id):
+    '''takes a room id and a song id and adds a song id to the playlist_requests array in a room'''
+    _db.rooms.update({'_id': room_id}, {"$push": {"playlist.requests" : song_id}})
+    return True
+
 def find_user(username: str):
     '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''
     _log.info('Attempting to retrive user %s from the database', username)
@@ -172,14 +207,12 @@ def update_user_role(username: str):
     try: 
         user_dict = _db.users.find_one(query)
         _log.debug(user_dict)
-        for key in user_dict:
-            _log.info('Key:')
-            _log.info(key)
-            if key=='role':
-                if user_dict[key]=='user':
-                    role = 'DJ'
-                else:
-                    role = 'user'
+        if user_dict['role'] == 'user':
+            role = 'DJ'
+        elif user_dict['role'] == 'DJ':
+            role = 'user'
+        else:
+            role = 'admin'
         newvalue = { "$set": { "role": role } }
         _db.users.update_one(query, newvalue)
     except:
