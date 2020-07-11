@@ -12,6 +12,7 @@ import RoomList from '../RoomList/RoomList.js';
 import Participants from '../Participants/Participants';
 import Player from '../Player/Player';
 import JoinRoom from '../JoinRoom/JoinRoom';
+import RequestSongToPlaylist from '../RequestSongToPlaylist/RequestSongToPlaylist';
 
 const Room = (props) => {
     const state = useSelector(state => state);
@@ -24,7 +25,8 @@ const Room = (props) => {
     
     useEffect(() => {
         async function getRoomList() {
-            let myRooms = await roomService.getUserRooms(loggedUsername);
+            let myRooms = await roomService.getUsersRooms(loggedUsername);
+            console.log('here', loggedUsername)
             sessionStorage.setItem('loggedRoomList', JSON.stringify(myRooms.data))
             dispatch({ type: 'handleMyRooms', myRooms: myRooms.data });
             dispatch({ type: 'handleCurrentRoom', currentRoom: myRooms.data[0] ? myRooms.data[0] : { id: -1, name: "", owner: "", participants: "", playlist: {}, date_created: "" } })
@@ -45,7 +47,7 @@ const Room = (props) => {
                         myRooms={state.myRooms}
                     />
                 </Col>
-                {state.currentRoom.playlist && state.currentRoom.playlist.playlist.length > 0 ? 
+                {state.currentRoom.playlist ? 
                     <Col id="content-wrapper">
                         <Row id="roomname-wrapper">
                             <h3 id="roomname">{state.currentRoom.name}</h3>

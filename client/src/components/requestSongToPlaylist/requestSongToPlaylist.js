@@ -9,7 +9,6 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
-const axios = require('axios');
 
 const RequestSongToPlaylist = (props) => {
     const state = useSelector(state => state);
@@ -96,4 +95,4 @@ const RequestSongToPlaylist = (props) => {
     )
 }
 
-export default RequestSongToPlaylist
+export default RequestSongToPlaylist;
