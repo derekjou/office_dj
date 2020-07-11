@@ -131,6 +131,6 @@ def request_add_song(room_id, song_id):
     '''a POST sends a request to add a song to the current room\'s playlist '''
     if request.method == 'GET':
         _log.info("POST to request_add_song")
-        if db.add_song_to_playlist_request(room_id, song_id)
-        return jsonify('song added to requests'), 200
+        if db.add_song_to_playlist_request(room_id, song_id):
+            return jsonify('song added to requests'), 200
     return jsonify('request could not be undersood and/or processed'), 400

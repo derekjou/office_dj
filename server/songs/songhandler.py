@@ -50,13 +50,11 @@ def process_new_song_request(requestId):
     else:
         return jsonify("request could not be understod"), 400
 
-@song_page.route('/songs/search?query=<str:query>', methods=['GET'])
+@song_page.route('/songs/search?query=<string:query>', methods=['GET'])
 def find_songs(query):
     if request.method == 'GET':
         _log.info("receved a GET on songs/search")
-        if request.json[]:
-            title = request.json['title']
-        responce = db.find_song_partial_string(title)
+        responce = db.find_song_partial_string(query)
         return responce, 200
     return jsonify('the server couldn\'t understand your request'), 400
 
