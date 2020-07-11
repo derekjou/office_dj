@@ -134,3 +134,15 @@ def request_add_song(room_id, song_id):
         if db.add_song_to_playlist_request(room_id, song_id):
             return jsonify('song added to requests'), 200
     return jsonify('request could not be undersood and/or processed'), 400
+
+@room_page.route('/rooms/myroom/playlist/requests', methods=["GET"])
+def get_playlist_requests(room_id):
+    '''a GET retreves requests to the playlist from the database'''
+    if request.method == "GET":
+        _log.debug("GET request to playlist requests")
+        request_ids = db.playlist_request(request.args.get('query'))['playlist']['requests']
+        _log.debug(request_ids)
+        song_requests = {}
+        for id in request_ids:
+            song_requests[id] = db.get_song_by_id(id)
+        return jsonify(song_requests)

@@ -272,4 +272,16 @@ def update_timestamp(room_id: int, timestamp: int):
     playlist = room['playlist']
     _log.debug(playlist)
     return playlist
-                                        
+
+def playlist_request(room_id):
+    '''takes a room id and returns the requests to a playlist'''
+    _log.debug("retreving the playlist requests")
+    return _db.rooms.find_one({"_id": room_id}, {'playlist.requests': 1})
+
+def get_song_by_id(id):
+    '''takes an id and returns the corisponding song'''
+    return _db.songs.find_one({'_id': id})
+
+def add_song_to_playlist(room_id, song_id):
+    '''takes a room id and a song id and adds the song to the playlist'''
+    _db.rooms.update_one({'_id': room_id}, {'$push': {'playlist.playlist': get_song_by_id(song_id)}})
