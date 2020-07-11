@@ -15,6 +15,7 @@ import Admin from '../Admin/Admin';
 import AddMusic from '../AddMusic/AddMusic';
 import ChangeUserRole from '../ChangeUserRole/ChangeUserRole';
 import RequestNewSong from "../RequestNewSong/RequestNewSong";
+import RequestNewSongToPlaylist from "../requestSongToPlaylist/requestSongToPlaylist";
 import AdminApproveNewSong from "../AdminApproveNewSong/AdminApproveNewSong";
 
 const checkLogin = () => {
@@ -102,11 +103,12 @@ class Routing extends Component {
 
         <PrivateRoute path="/room/:id" component={Room} />
         <DJRoute path="/djRooms" component={DJRooms} />
-        
 
         <PrivateRoute path="/rooms" component={Room} />
         <DJRoute path="/myRooms" component={Room} /> 
         <DJRoute path="/joinrequests/:roomid" component={WorkRequest} /> 
+        <Route path="/requestSongToPlaylist" component={RequestNewSongToPlaylist} />
+
       </Router>
     );
   }

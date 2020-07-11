@@ -33,6 +33,7 @@ const initialState = {
   album: "",
   genre: "",
   url: "",
+  songSearchList: "",
   songRequests: [],
   currentSong: { _id: "", title: "", album: "", artists: [], genre: "", url: "", album_url: "" }
 };
@@ -109,6 +110,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { album: action.album});
     case "handleNewUrl":
       return Object.assign({}, state, { url: action.url});
+    case "handleSongSearch": 
+      return Object.assign({}, state, { songSearchList: action.songSearchList });
     case "setSongRequests":
       return Object.assign({}, state, { songRequests: action.requests });
     case "setCurrentSong":
@@ -117,6 +120,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { userRooms: action.rooms });
     case "setDJRooms":
       return Object.assign({}, state, { djRooms: action.rooms });
+    case "handleSongSearchQuery":
+      return Object.assign({}, state, { songSearchQuery: action.songSearchQuery });
     default:
       return state;
   }

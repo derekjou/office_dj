@@ -21,8 +21,8 @@ class RoomService {
   }
 
   getDJRooms(username) {
-      let uri = `${this.URI}/rooms/djRooms/${username}`;
-      return axios.get(uri, { withCredentials: true });
+    let uri = `${this.URI}/rooms/djRooms/${username}`;
+    return axios.get(uri, { withCredentials: true });
   }
 
   getPlaylist(id) {
@@ -85,10 +85,10 @@ class RoomService {
     let uri = `${this.URI}/rooms/${name}/join/${username}`;
     return axios.post(uri, body, { withCredentials: true });
   }
-
+  
   rejectJoinRequest(name, owner, username) {
     let uri = `${this.URI}/rooms/${name}/join/${username}`;
-    return axios({
+    axios({
       method: "delete",
       url: uri,
       data: {
@@ -97,6 +97,16 @@ class RoomService {
         username: username,
       },
     });
+  }
+
+  sendAddRequest(roomId, songId) {
+    let body = {
+      room_id: roomId,
+      song_id: songId,
+    };
+    console.log(body);
+    let uri = `${this.URI}/rooms/myrooms/playlist/${roomId}/request/${songId}`;
+    return axios.post(uri, body, { withCredentials: true });
   }
 }
 
