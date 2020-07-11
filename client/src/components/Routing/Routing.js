@@ -18,7 +18,8 @@ import RequestNewSong from "../RequestNewSong/RequestNewSong";
 import AdminApproveNewSong from "../AdminApproveNewSong/AdminApproveNewSong";
 
 const checkLogin = () => {
-  return sessionStorage.getItem('loggedUser') ? true : false;
+  let role = JSON.parse(sessionStorage.getItem('loggedUser')).role
+  return role === 'DJ' || role === 'user';
 }
 
 const checkDJ = () => {
@@ -92,6 +93,7 @@ class Routing extends Component {
         <Route path="/register" component={RegisterUser} />
         <PrivateRoute path='/updateUser' component={UpdateUser} />
         <PrivateRoute path="/requestSong" component={RequestNewSong} />
+        <PrivateRoute path="/userRooms" component={UserRooms} />
         <DJRoute path="/createRoom" component={CreateRoom} />
         <AdminRoute path="/admin" component={Admin} />
         <AdminRoute path="/addMusic" component={AddMusic} />
@@ -99,7 +101,6 @@ class Routing extends Component {
         <AdminRoute path="/approveNewSong" component={AdminApproveNewSong} />
 
         <PrivateRoute path="/room/:id" component={Room} />
-        <PrivateRoute path="/userRooms" component={UserRooms} />
         <DJRoute path="/djRooms" component={DJRooms} />
         
 

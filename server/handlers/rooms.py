@@ -99,6 +99,13 @@ def get_user_rooms(username):
     _log.debug(room_list)
     return jsonify(room_list), 200
 
+@room_page.route('/rooms/djRooms/<string:username>', methods=['GET'])
+def get_dj_rooms(username):
+    '''A GET to /rooms/djRooms/<string:username> returns rooms a DJ owns'''
+    _log.info('Request for rooms %s has created', username)
+    room_list = db.get_dj_rooms(username)
+    _log.debug(room_list)
+    return jsonify(room_list), 200
 
 @room_page.route('/rooms/search', methods=['GET'])
 def search_rooms_collection():

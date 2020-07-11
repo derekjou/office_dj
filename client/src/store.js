@@ -18,6 +18,7 @@ const initialState = {
   room: { id: -1, name: "", owner: "", participants: "", playlists: "", date_created: "" },
   myRooms: [],
   userRooms: [],
+  djRooms: [],
   currentRoom: { id: -1, name: "", owner: "", participants: "", playlists: "", date_created: "" },
   newRoomName: "",
   newParticipant: "",
@@ -114,6 +115,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { currentSong: action.currentSong });
     case "setUserRooms":
       return Object.assign({}, state, { userRooms: action.rooms });
+    case "setDJRooms":
+      return Object.assign({}, state, { djRooms: action.rooms });
     default:
       return state;
   }
