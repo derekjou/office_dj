@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './requestSongToPlaylist.css';
 import SongService from '../../services/song.service';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
 const axios = require('axios');
@@ -16,30 +19,24 @@ const RequestSongToPlaylist = (props) => {
 
     const [searchResults, setSearchResults] = useState(false)
     const [songRequestSent, setSongRequestSent] = useState(false)
-  
-    let loggedUsername = JSON.parse(sessionStorage.getItem('loggedUser')).username
 
-    const requestAdd = async (name, owner) => {
-        console.log(`${name} ${owner} ${loggedUsername}`)
-        let response = await roomService.sendAddRequest(title);
+    const requestAdd = async (song) => {
+        let response = await songService.sendAddRequest(props.currentRoom._id, song._id);
         if (response.status === 204) {
-          dispatch({ type: 'handleRoomRequestSuccess', requestRoom: {'name': name} });
-          setSongRequestSent(true)
-          setTimeout(() => {
-            setSongRequestSent(false)
-          }, 10000)
+            dispatch({ type: 'handleSongRequestSuccess', requestSong: {'requestSongTitle': song.title} });
+            setSongRequestSent(true)
         }
-      }
+    }
 
     const searchSongs = async () => {
         console.log(state.songSearchQuery);
         let query = state.songSearchQuery;
         let songSearchList = await songService.findSongs(query)
         if (songSearchList.status === 200) {
-          dispatch({ type: 'handleSongSearch', songSearchList: songSearchList.data });
-          setSearchResults(true)
+            dispatch({ type: 'handleSongSearch', songSearchList: songSearchList.data });
+            setSearchResults(true)
         }
-      }
+    }
 
     return (
         <>
@@ -56,7 +53,6 @@ const RequestSongToPlaylist = (props) => {
                                     dispatch({ type: 'handleSongSearchQuery', songSearchQuery: e.target.value });
                                     searchSongs();
                                 }}
-                                onKeyDown={(e) => handleKeyDown(e)}
                             />
                             <InputGroup.Append>
                                 <Button
@@ -66,27 +62,32 @@ const RequestSongToPlaylist = (props) => {
                         </InputGroup>
                         {searchResults ?
                             <ListGroup className="search-res-autocomplete">
-                                {state.roomSearchList.map(room => {
-                                    return (<>
-                                        <ListGroup.Item
-                                            key={room.name}
-                                            onClick={() => { requestAdd(room.name, room.owner) }}
-                                            className="search-res-wrapper"
-                                        >
-                                            <span className="search-res name">{room.name}</span>
-                                            <span className="search-res owner text-muted">{room.owner}</span>
-                                        </ListGroup.Item>
-                                    </>)
-                                })
-                                }
+                                {state.songSearchList.map(song => {
+                                    return (
+                                        <>
+                                            <ListGroup.Item
+                                                key={song._id}
+                                                onClick={() => { requestAdd(song) }}
+                                                className="search-res-wrapper"
+                                            >
+                                                <span className="search-res title">
+                                                    {song.title}
+                                                </span>
+                                                <span className="search-res artist text-muted">
+                                                    {song.artist}
+                                                </span>
+                                            </ListGroup.Item>
+                                        </>
+                                    )
+                                })}
                             </ListGroup>
-                            : null}
+                        : null}
                     </Form.Group>
                 </Card.Body>
             </Card>
             {songRequestSent ?
                 window.alert("Request sent to the owner of the room")
-                : null}
+            : null}
         </>
     )
 }
