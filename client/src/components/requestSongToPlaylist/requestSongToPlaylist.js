@@ -16,12 +16,13 @@ const RequestSongToPlaylist = (props) => {
     const history = useHistory();
 
     const songService = new SongService();
+    const roomService = new RoomService();
 
     const [searchResults, setSearchResults] = useState(false)
     const [songRequestSent, setSongRequestSent] = useState(false)
 
     const requestAdd = async (song) => {
-        let response = await songService.sendAddRequest(props.currentRoom._id, song._id);
+        let response = await roomService.sendAddRequest(props.currentRoom._id, song._id);
         if (response.status === 204) {
             dispatch({ type: 'handleSongRequestSuccess', requestSong: {'requestSongTitle': song.title} });
             setSongRequestSent(true)
