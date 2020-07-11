@@ -285,3 +285,8 @@ def get_song_by_id(id):
 def add_song_to_playlist(room_id, song_id):
     '''takes a room id and a song id and adds the song to the playlist'''
     _db.rooms.update_one({'_id': room_id}, {'$push': {'playlist.playlist': get_song_by_id(song_id)}})
+
+def remove_song_from(room_id, song_id):
+    '''takes a room id and a song id and adds the song to the playlist'''
+    request_list = playlist_request(room_id)
+    _db.rooms.update_one({'_id': room_id}, {'$set': {'playlist.requests': }})

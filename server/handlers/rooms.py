@@ -126,17 +126,26 @@ def room_playlist(room_id):
         playlist = db.remove_playlist_song(room_id)
         return jsonify(playlist), 200
 
-@room_page.route('/rooms/myrooms/playlist/<int:room_id>/request/<int:song_id>', methods=["POST"])
+@room_page.route('/rooms/myrooms/playlist/<int:room_id>/request/<int:song_id>', methods=["POST", "PUT", "DELETE"])
 def request_add_song(room_id, song_id):
-    '''a POST sends a request to add a song to the current room\'s playlist '''
+    '''a POST sends a request to add a song to the current room\'s playlist
+        a PUT adds the song to the playlist and removes it from the request list
+        a DELETE removes a request'''
     if request.method == 'POST':
         _log.info("POST to request_add_song")
         if db.add_song_to_playlist_request(room_id, song_id):
             return jsonify('song added to requests'), 200
+    if request.method == 'PUT':
+        _log.info("PUT to request_add_song receved")
+        db.add_song_to_playlist(room_id, song_id)
+        return jsonify("song added to playlist"), 200
+    if request.method == 'DELETE':
+        
     return jsonify('request could not be undersood and/or processed'), 400
 
-@room_page.route('/rooms/myroom/playlist/requests', methods=["GET"])
-def get_playlist_requests(room_id):
+
+@room_page.route('/rooms/myroom/playlist/requests', methods=['GET'])
+def process_playlist_requests():
     '''a GET retreves requests to the playlist from the database'''
     if request.method == "GET":
         _log.debug("GET request to playlist requests")
@@ -145,4 +154,6 @@ def get_playlist_requests(room_id):
         song_requests = {}
         for id in request_ids:
             song_requests[id] = db.get_song_by_id(id)
-        return jsonify(song_requests)
+        return jsonify(song_requests), 200
+    if request.method == "POST":
+        _log.info("")
