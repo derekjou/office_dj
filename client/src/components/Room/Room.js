@@ -45,7 +45,7 @@ const Room = (props) => {
                         myRooms={state.myRooms}
                     />
                 </Col>
-                {state.currentRoom.playlist && state.currentRoom.playlist.playlist.length > 0 ? 
+                {state.currentRoom.playlist && state.currentRoom.playlist.playlist.length != null ? 
                     <Col id="content-wrapper">
                         <Row id="roomname-wrapper">
                             <h3 id="roomname">{state.currentRoom.name}</h3>
