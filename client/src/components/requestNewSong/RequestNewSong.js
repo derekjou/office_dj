@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import './RequestNewSong.css';
-import SongService from '../../services/song.service';
-import AdminService from '../../services/admin.service';
 import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
-const axios = require('axios');
+import './RequestNewSong.css';
+import SongService from '../../services/song.service';
+
 
 const RequestNewSong = (props) => {
     const state = useSelector(state => state);

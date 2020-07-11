@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, BrowserRouter as Router, Link, Redirect } from "react-router-dom";
+import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
 
 import Home from '../Home/Home';
 import UpdateUser from '../UpdateUser/UpdateUser';
@@ -7,25 +7,26 @@ import NavBar from '../NavBar/NavBar';
 import Login from '../Login/Login';
 import CreateRoom from '../CreateRoom/CreateRoom';
 import Room from '../Room/Room';
+import UserRooms from '../Rooms/UserRooms';
+import DJRooms from '../Rooms/DJRooms';
 import WorkRequest from '../JoinRoom/WorkRequest';
 import RegisterUser from '../RegisterUser/RegisterUser';
 import Admin from '../Admin/Admin';
 import AddMusic from '../AddMusic/AddMusic';
 import ChangeUserRole from '../ChangeUserRole/ChangeUserRole';
-import RequestNewSong from "../requestNewSong/RequestNewSong";
+import RequestNewSong from "../RequestNewSong/RequestNewSong";
 import AdminApproveNewSong from "../AdminApproveNewSong/AdminApproveNewSong";
 
 const checkLogin = () => {
   return sessionStorage.getItem('loggedUser') ? true : false;
 }
 
-const getLoggedRole = () => {
-  return sessionStorage.getItem('loggedUser').role
+const checkDJ = () => {
+  return JSON.parse(sessionStorage.getItem('loggedUser')).role === 'DJ';
 }
 
-const checkDJ = () => {
-  const loggedRole = sessionStorage.getItem('loggedUser').role
-  return loggedRole && loggedRole == 'DJ';
+const checkAdmin = () => {
+  return JSON.parse(sessionStorage.getItem('loggedUser')).role === 'admin';
 }
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -62,26 +63,53 @@ const DJRoute = ({ component: Component, ...rest }) => (
   />
 );
 
+const AdminRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      checkAdmin() ? (
+        <Component {...props} />
+      ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+            }}
+          />
+        )
+    }
+  />
+);
+
 class Routing extends Component {
   render() {
     return (
       <Router>
-        <NavBar></NavBar>
-        <Route exact path="/" component={Home} />
+        <NavBar />
+        <Route exact path="/">
+          <Home user={JSON.parse(sessionStorage.getItem('loggedUser'))}/>
+        </Route>
         <Route path="/login" component={Login} />
-        <Route path="/registerUser" component={RegisterUser} />
+        <Route path="/register" component={RegisterUser} />
         <PrivateRoute path='/updateUser' component={UpdateUser} />
-        <Route exact path="/createroom" component={CreateRoom} />
-        <Route exact path="/myroom" component={Room} />
-        <Route path="/joinrequests/:roomid" component={WorkRequest} />
-        <Route path="/admin" component={Admin} />
-        <Route path="/addMusic" component={AddMusic} />
-        <Route path="/changeRole" component={ChangeUserRole} />
-        <Route path="/requestSong" component={RequestNewSong} />
-        <Route path="/approveNewSong" component={AdminApproveNewSong} />
+        <PrivateRoute path="/requestSong" component={RequestNewSong} />
+        <DJRoute path="/createRoom" component={CreateRoom} />
+        <AdminRoute path="/admin" component={Admin} />
+        <AdminRoute path="/addMusic" component={AddMusic} />
+        <AdminRoute path="/changeRole" component={ChangeUserRole} />
+        <AdminRoute path="/approveNewSong" component={AdminApproveNewSong} />
+
+        <PrivateRoute path="/room/:id" component={Room} />
+        <PrivateRoute path="/userRooms" component={UserRooms} />
+        <DJRoute path="/djRooms" component={DJRooms} />
+        
+
+        <PrivateRoute path="/rooms" component={Room} />
+        <DJRoute path="/myRooms" component={Room} /> 
+        <DJRoute path="/joinrequests/:roomid" component={WorkRequest} /> 
       </Router>
     );
   }
 }
+
 
 export default Routing;

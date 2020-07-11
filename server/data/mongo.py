@@ -100,6 +100,25 @@ def get_rooms_by_user(username: str):
     _log.info('Successfully found %d rooms belonging to %s', len(room_list), username)
     return room_list
 
+def get_user_rooms(username: str):
+    '''Gets rooms that a user belongs to'''
+    query = f'participants.{username}' 
+    res = _db.rooms.find({ query : {'$exists': 'true'}})
+    room_list = []
+    for room in res:
+        room_list.append(room)
+    _log.info('Successfully found %d rooms %s is a part of', len(room_list), username)
+    return room_list
+
+def get_dj_rooms(username: str):
+    '''Gets rooms that a DJ owns'''
+    res = _db.rooms.find({'owner': username})
+    room_list = []
+    for room in res:
+        room_list.append(room)
+    _log.info('Successfully found %d rooms belonging to %s', len(room_list), username)
+    return room_list
+
 def get_room_by_name(name: str, owner: str):
     '''Takes a name of a room object and queries the Rooms collection for that object.'''
     _log.info('Attempting to retrive room %s from the database', name)
@@ -172,14 +191,12 @@ def update_user_role(username: str):
     try: 
         user_dict = _db.users.find_one(query)
         _log.debug(user_dict)
-        for key in user_dict:
-            _log.info('Key:')
-            _log.info(key)
-            if key=='role':
-                if user_dict[key]=='user':
-                    role = 'DJ'
-                else:
-                    role = 'user'
+        if user_dict['role'] == 'user':
+            role = 'DJ'
+        elif user_dict['role'] == 'DJ':
+            role = 'user'
+        else:
+            role = 'admin'
         newvalue = { "$set": { "role": role } }
         _db.users.update_one(query, newvalue)
     except:

@@ -82,7 +82,6 @@ def request_join_rooms_user(name, username):
     db.update_room(room)
     return '', 204
 
-
 @room_page.route('/rooms/myrooms/<string:username>', methods=['GET'])
 def my_rooms_collection(username):
     '''A GET to /rooms/myrooms/<username> returns all rooms belonging to that username.'''
@@ -91,6 +90,15 @@ def my_rooms_collection(username):
     room_list = db.get_rooms_by_user(username)
     _log.debug(room_list)
     return jsonify(room_list), 200
+
+@room_page.route('/rooms/userRooms/<string:username>', methods=['GET'])
+def get_user_rooms(username):
+    '''A GET to /rooms/userRooms/<string:username> returns rooms a user has joined'''
+    _log.info('Request for rooms %s has joined', username)
+    room_list = db.get_user_rooms(username)
+    _log.debug(room_list)
+    return jsonify(room_list), 200
+
 
 @room_page.route('/rooms/search', methods=['GET'])
 def search_rooms_collection():
