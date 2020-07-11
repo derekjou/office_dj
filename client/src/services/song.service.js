@@ -54,7 +54,8 @@ class SongService {
     }
 
     findSongs(query) {
-        let uri = `${this.URI}/songs/search?query=${query}`;
+        let uri = `${this.URI}/search?query=${query}`;
+        console.log(query)
         return axios.get(uri, {
             withCredentials: true, validateStatus: function (status) {
                 return status < 500; // Resolve only if the status code is less than 500

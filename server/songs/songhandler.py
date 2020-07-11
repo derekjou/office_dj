@@ -54,6 +54,7 @@ def process_new_song_request(requestId):
 def find_songs(query):
     if request.method == 'GET':
         _log.info("receved a GET on songs/search")
+        _log.debug(query)
         responce = db.find_song_partial_string(query)
         return responce, 200
     return jsonify('the server couldn\'t understand your request'), 400
