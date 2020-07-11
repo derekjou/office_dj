@@ -129,7 +129,7 @@ def room_playlist(room_id):
 @room_page.route('/rooms/myrooms/playlist/<int:room_id>/request/<int:song_id>', methods=["POST"])
 def request_add_song(room_id, song_id):
     '''a POST sends a request to add a song to the current room\'s playlist '''
-    if request.method == 'GET':
+    if request.method == 'POST':
         _log.info("POST to request_add_song")
         if db.add_song_to_playlist_request(room_id, song_id):
             return jsonify('song added to requests'), 200

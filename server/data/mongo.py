@@ -143,7 +143,7 @@ def find_song_partial_string(query: str):
     _log.info('Attempting to retrive rooms with name matching %s from the database', query)
     song_list = list(_db.songs.find(
         {'title': {'$regex': query, '$options': 'i'}},
-        {'title': 1, 'artists': 1}
+        {'_id':1, 'title': 1, 'artists': 1}
     ).sort('title', 1).limit(5))
     #TODO error handling
     return song_list
