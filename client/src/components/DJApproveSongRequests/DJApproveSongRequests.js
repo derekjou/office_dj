@@ -27,7 +27,6 @@ const DJApproveSongRequest = (props) => {
     <>
       <div>
         <ListGroup responsive="lg">
-          <ListGroup.Item><h1>SOME DUMMY TEXT</h1></ListGroup.Item> 
           {typeof(state.roomSongRequestList) === 'object' ? Object.values(state.roomSongRequestList).map(
             (song) => {
               console.log(song);
