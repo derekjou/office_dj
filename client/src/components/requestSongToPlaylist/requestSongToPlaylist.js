@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from './node_modules/react';
-import { useSelector, useDispatch } from './node_modules/react-redux';
-import { useHistory } from './node_modules/react-router-dom';
-import './requestSongToPlaylist.scss';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import './RequestSongToPlaylist.scss';
 import SongService from '../../services/song.service';
 import RoomService from '../../services/room.service';
-import InputGroup from './node_modules/react-bootstrap/InputGroup';
-import Card from './node_modules/react-bootstrap/Card';
-import ListGroup from './node_modules/react-bootstrap/ListGroup';
-import Button from './node_modules/react-bootstrap/Button';
-import Form from "./node_modules/react-bootstrap/Form";
-const axios = require('./node_modules/axios');
+import InputGroup from 'react-bootstrap/InputGroup';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
+import Form from "react-bootstrap/Form";
 
 const RequestSongToPlaylist = (props) => {
     const state = useSelector(state => state);
@@ -96,4 +95,4 @@ const RequestSongToPlaylist = (props) => {
     )
 }
 
-export default RequestSongToPlaylist
+export default RequestSongToPlaylist;
