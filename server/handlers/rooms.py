@@ -153,9 +153,10 @@ def process_playlist_requests():
     if request.method == "GET":
         _log.debug("GET request to playlist requests")
         _log.debug(request.args.get('query'))
-        request_ids = db.playlist_request(request.args.get('query'))['playlist']['requests']
+        room_id = int(request.args.get('query'))
+        request_ids = db.playlist_request(room_id)['playlist']['requests']
         _log.debug(request_ids)
         song_requests = {}
-        # for id in request_ids:
-        #     song_requests[id] = db.get_song_by_id(id)
+        for id in request_ids:
+            song_requests[id] = db.get_song_by_id(id)
         return jsonify(song_requests), 200
