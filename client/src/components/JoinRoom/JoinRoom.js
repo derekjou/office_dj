@@ -18,7 +18,6 @@ const JoinRoom = (props) => {
 
   const roomService = new RoomService();
 
-  const [searchResults, setSearchResults] = useState(false)
   const [roomRequestSent, setRoomRequestSent] = useState(false)
 
 
@@ -30,13 +29,14 @@ const JoinRoom = (props) => {
     }
   }
 
-  const searchRooms = async () => {
-    console.log(state.roomSearchQuery);
-    let query = state.roomSearchQuery;
-    let roomSearchList = await roomService.findRooms(query)
-    if (roomSearchList.status === 200) {
-      dispatch({ type: 'handleRoomSearch', roomSearchList: roomSearchList.data });
-      setSearchResults(true)
+  const searchRooms = async (query) => {
+    if(query.trim().length < 1) {
+      dispatch({ type: 'handleRoomSearch', roomSearchList: [] });
+    } else {
+      let roomSearchList = await roomService.findRooms(query)
+      if (roomSearchList.status === 200) {
+        dispatch({ type: 'handleRoomSearch', roomSearchList: roomSearchList.data });
+      }
     }
   }
 
@@ -68,7 +68,7 @@ const JoinRoom = (props) => {
                 placeholder="Search by room name"
                 onChange={e => {
                   dispatch({ type: 'handleRoomSearchQuery', roomSearchQuery: e.target.value });
-                  searchRooms();
+                  searchRooms(e.target.value);
                 }}
                 onKeyDown={(e) => handleKeyDown(e)} 
               />
@@ -78,7 +78,7 @@ const JoinRoom = (props) => {
                 >Search</Button>
               </InputGroup.Append>
             </InputGroup>
-            {searchResults ?
+            {state.roomSearchList ?
               <ListGroup className="search-res-autocomplete">
                 {state.roomSearchList.map(room => {
                   return (<>

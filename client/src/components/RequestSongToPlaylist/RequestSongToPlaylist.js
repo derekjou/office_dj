@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import './requestSongToPlaylist.css';
+import './RequestSongToPlaylist.css';
 import SongService from '../../services/song.service';
 import RoomService from '../../services/room.service';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -18,7 +18,6 @@ const RequestSongToPlaylist = (props) => {
     const songService = new SongService();
     const roomService = new RoomService();
 
-    const [searchResults, setSearchResults] = useState(false)
     const [songRequestSent, setSongRequestSent] = useState(false)
 
     const requestAdd = async (song) => {
@@ -31,13 +30,14 @@ const RequestSongToPlaylist = (props) => {
         }
     }
 
-    const searchSongs = async () => {
-        console.log(state.songSearchQuery);
-        let query = state.songSearchQuery;
-        let songSearchList = await songService.findSongs(query)
-        if (songSearchList.status === 200) {
-            dispatch({ type: 'handleSongSearch', songSearchList: songSearchList.data });
-            setSearchResults(true)
+    const searchSongs = async (query) => {
+        if(query.trim().length < 1) {
+            dispatch({ type: 'handleSongSearch', songSearchList: [] });
+        } else {
+            let songSearchList = await songService.findSongs(query)
+            if (songSearchList.status === 200) {
+                dispatch({ type: 'handleSongSearch', songSearchList: songSearchList.data });
+            }
         }
     }
 
@@ -54,7 +54,7 @@ const RequestSongToPlaylist = (props) => {
                                 placeholder="Search by song title"
                                 onChange={e => {
                                     dispatch({ type: 'handleSongSearchQuery', songSearchQuery: e.target.value });
-                                    searchSongs();
+                                    searchSongs(e.target.value);
                                 }}
                             />
                             <InputGroup.Append>
@@ -63,7 +63,7 @@ const RequestSongToPlaylist = (props) => {
                                 >Search</Button>
                             </InputGroup.Append>
                         </InputGroup>
-                        {searchResults ?
+                        {state.songSearchList ?
                             <ListGroup className="search-res-autocomplete">
                                 {state.songSearchList.map(song => {
                                     return (

@@ -15,7 +15,7 @@ import Admin from '../Admin/Admin';
 import AddMusic from '../AddMusic/AddMusic';
 import ChangeUserRole from '../ChangeUserRole/ChangeUserRole';
 import RequestNewSong from "../RequestNewSong/RequestNewSong";
-import RequestNewSongToPlaylist from "../requestSongToPlaylist/requestSongToPlaylist";
+import RequestNewSongToPlaylist from "../RequestSongToPlaylist/RequestSongToPlaylist";
 import AdminApproveNewSong from "../AdminApproveNewSong/AdminApproveNewSong";
 
 const checkLogin = () => {
