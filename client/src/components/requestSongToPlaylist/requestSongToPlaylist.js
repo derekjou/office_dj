@@ -24,7 +24,7 @@ const RequestSongToPlaylist = (props) => {
     const requestAdd = async (song) => {
         console.log(song)
         console.log(props.currentRoom)
-        let response = await roomService.sendAddRequest(4, song); // test
+        let response = await roomService.sendAddRequest(4, song._id); // test
         // let response = await roomService.sendAddRequest(state.currentRoom._id, song._id);
         if (response.status === 204) {
             dispatch({ type: 'handleSongRequestSuccess', requestSong: {'requestSongTitle': song.title} });

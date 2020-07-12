@@ -15,15 +15,11 @@ const DJApproveSongRequest = (props) => {
 
   useEffect(() => {
     async function pullSongRequests() {
-      let songRequests = await roomService.getSongRequests(4);
-      console.log(songRequests.data)
+      let songRequests = await roomService.getSongRequests(4); //test
       dispatch({ type: 'handleRoomSongRequestList', roomSongRequestList: songRequests.data })
+      console.log(state.roomSongRequestList);
+      console.log(typeof state.roomSongRequestList === 'object')
     }
-    dispatch({
-      type: 'handleRoomSongRequestList',
-      roomSongRequestList: [{ _id: 88, title: 'Bohemian Rhapsody', artists: ['Queen'] }, { _id: 88, title: 'Killer Queen', artists: ['Queen'] }]
-    })
-    console.log(state.roomSongRequestList);
     pullSongRequests();
   }, []);
 
@@ -31,8 +27,8 @@ const DJApproveSongRequest = (props) => {
     <>
       <div>
         <ListGroup responsive="lg">
-          <ListGroup.Item><h1>SOME DUMMY TEXT</h1></ListGroup.Item>
-          {Array.isArray(state.roomSongRequestList) ? state.roomSongRequestList.map(
+          <ListGroup.Item><h1>SOME DUMMY TEXT</h1></ListGroup.Item> 
+          {typeof(state.roomSongRequestList) === 'object' ? Object.values(state.roomSongRequestList).map(
             (song) => {
               console.log(song);
               return <DJSongRequest
