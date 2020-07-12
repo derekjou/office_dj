@@ -1,19 +1,4 @@
-
-/* Abstracts */
-
-$titlebarheight: 3rem;
-$pageheight: calc(100vh - 3.5rem);
-
-$ui-border: 1px solid #f0f0f0;
-
-@mixin ui-heading ($size: 'm') {
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05rem;
-
-    @if $size == 'm' { font-size: 1rem; }
-    @if $size == 'ms' { font-size: .875rem; }
-}
+@import '../../styles/_abstracts.scss';
 
 /* Reset */
 .container, .container-fluid {
@@ -25,8 +10,6 @@ div.row, div.col {
     margin: 0;
     padding: 0;
 }
-
-
 
 /* UI */
 
@@ -54,8 +37,10 @@ div.row, div.col {
     height: $titlebarheight;
     margin: 0; padding: 0 1rem;
 
-    background: #fbfbfb;
+    background: $panel-background;
     border-bottom: $ui-border;
+
+    color: $player-purple;
 }
 
 #roomname {
@@ -72,6 +57,22 @@ div.row, div.col {
     flex: 0 0 auto;
     width: 12rem;
     height: $pageheight;
-    background-color: #fbfbfb;
+    background: $panel-background;
     border-left: $ui-border;
+}
+
+.check-requests-wrapper {
+    background: none;
+    border: none;
+}
+.check-requests-button {
+    border-radius: 0;
+    background-color: $btn-primary;
+    border: $ui-border;
+
+    &:hover { 
+        background: $btn-primary-hover;
+        box-shadow: $shallow;
+        transition: $transition-quick;
+    }
 }

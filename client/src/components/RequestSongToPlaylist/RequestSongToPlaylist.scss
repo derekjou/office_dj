@@ -1,0 +1,77 @@
+@import '../../styles/_abstracts.scss';
+
+.search-songs-wrapper {
+  width: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.search-songs {
+  background-color: $main-background;
+  color: rgba($player-purple, 0.8);
+
+  & .input-group {
+    & input, & .btn {
+      border: 1px solid $player-blue;
+      border-radius: 0;
+    }
+  }
+
+  h5 {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  & input {
+    background: rgba($player-blue, 0.1);
+    border: 1px solid $player-blue;
+    // box-shadow: $z-shallow;
+    color: $player-purple;
+
+    &:focus {
+      background-color: rgba($player-blue, 0.05);
+      box-shadow: $deep;
+    }
+
+    &::placeholder {
+      color: rgba($player-blue, 0.5)
+    }
+  }
+
+  & .btn {
+    background: $player-blue;
+
+    &:focus { background: $player-blue-focus !important; }
+  }
+
+  .search-res-autocomplete {
+    // position: absolute;
+    // left: 1.25rem; top: calc(100% - 2.25rem);
+    border-radius: 0 0 2px 2px;
+    z-index: 10;
+    background-color: $player-purple !important;
+    color: $player-blue-light;
+    box-shadow: $deep;
+
+    .search-res-wrapper {
+      display: flex;
+      flex-flow: row nowrap;
+      background: transparent;
+      color: $player-blue;
+      &:hover { background: $player-purple-hover !important;}
+    }
+    .song-title {
+      font-weight: 600;
+    }
+    .song-artist {
+      margin: 0 1rem;
+      align-self: right !important;
+      justify-self: right;
+      &::before {
+        content: 'by ';
+      }
+    }
+  }
+}
+
+

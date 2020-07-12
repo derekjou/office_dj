@@ -1,11 +1,10 @@
-
-
 /* Abstracts */
+
+@import '../../styles/abstracts';
+
 $pageheight: calc(100vh - 3.5rem);
 
-
 /* UI */
-
 
 #roomsList {
     display: flexbox;
@@ -16,7 +15,7 @@ $pageheight: calc(100vh - 3.5rem);
 
     padding: 1rem;
     
-    background-color: #e0e0e0; //TODO: pick some nice colors
+    background-color: $panel-contrast;
 
     @media only screen and (max-width: 480px) {
         width: 100vw; 
@@ -46,6 +45,8 @@ $pageheight: calc(100vh - 3.5rem);
     border: 0;
     outline: none;
 
+    background: $btn-primary;
+
     font-size: x-large;
     text-transform: capitalize;
     line-height: 2.5rem;
@@ -55,14 +56,50 @@ $pageheight: calc(100vh - 3.5rem);
         padding: 0; margin: 0;
     }
 
-    &.new-room-icon {
-        padding: 0;
-        display: flexbox;
-        align-items: center;
-        justify-content: center;
-        background-color: rgba(0,0,0,.05);
-        border: 0;
-        &:hover { background-color: rgba(0,0,0,.2); }
+    &:hover, &:active {
+        background: $btn-primary-hover;
+        box-shadow: $shallow;
     }
 }
 
+.room-icon.new-room-icon {
+    padding: 0;
+    display: flexbox;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,.05);
+    border: 0;
+    color: $player-blue-light;
+
+    &:hover { 
+        background: rgba($player-blue, 0.3);
+    }
+    &:focus, &:active, &.show {
+        background: rgba($player-blue, 0.5) !important;
+        box-shadow: $deep !important;
+    }
+
+    &::after { content: none; }
+}
+
+.show .room-icon.new-room-icon {
+    background: rgba($player-blue, 0.5) !important;
+    box-shadow: $deep !important;
+}
+
+.new-room-dropout {
+    left: 0 !important;
+    box-shadow: $deep;
+    color: $player-purple;
+    & .dropdown-item:hover {
+        background: rgba($player-blue, 0.1);
+    }
+
+    .action-icon {
+        position: relative;
+        top: 2px;
+        height: .875rem;
+        margin-right: .5rem;
+        vertical-align: baseline;
+    }
+}

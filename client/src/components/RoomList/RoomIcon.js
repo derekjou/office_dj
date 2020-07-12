@@ -19,6 +19,7 @@ const RoomIcon = (props) => {
         <>
             <ListGroup.Item className="room-icon-wrapper">
                 <Button 
+                    href={`/room/${props.room._id}`}
                     className="room-icon"
                 >
                     <span>{props.room.name.charAt(0)}</span>

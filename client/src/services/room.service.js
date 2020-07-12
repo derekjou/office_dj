@@ -108,6 +108,27 @@ class RoomService {
     let uri = `${this.URI}/rooms/myrooms/playlist/${roomId}/request/${songId}`;
     return axios.post(uri, body, { withCredentials: true });
   }
+
+  getSongRequests(roomId) {
+      let uri = `${this.URI}/rooms/myroom/playlist/requests?query=${roomId}`;
+      return axios.get(uri, { withCredentials: true });
+  }
+
+  approveSongRequest(roomId, songId) {
+    let uri = `${this.URI}/rooms/myrooms/playlist/${roomId}/request/${songId}`;
+    return axios.put(uri, { withCredentials: true });
+  }
+  rejectSongRequest(roomId, songId) {
+    let uri = `${this.URI}/rooms/myrooms/playlist/${roomId}/request/${songId}`;
+    return axios({
+      method: "delete",
+      url: uri,
+      data: {
+        room_id: roomId,
+        song_id: songId,
+      },
+    });
+  }
 }
 
 export default RoomService;

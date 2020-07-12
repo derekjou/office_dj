@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import './RequestSongToPlaylist.css';
+import './RequestSongToPlaylist.scss';
 import SongService from '../../services/song.service';
 import RoomService from '../../services/room.service';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -23,7 +23,8 @@ const RequestSongToPlaylist = (props) => {
     const requestAdd = async (song) => {
         console.log(song)
         console.log(props.currentRoom)
-        let response = await roomService.sendAddRequest(4, song._id);
+        let response = await roomService.sendAddRequest(4, song._id); // test
+        // let response = await roomService.sendAddRequest(state.currentRoom._id, song._id);
         if (response.status === 204) {
             dispatch({ type: 'handleSongRequestSuccess', requestSong: {'requestSongTitle': song.title} });
             setSongRequestSent(true)
@@ -43,10 +44,10 @@ const RequestSongToPlaylist = (props) => {
 
     return (
         <>
-            <Card>
-                <Card.Body>
+            <Card className="search-songs-wrapper">
+                <Card.Body className="search-songs">
                     <Form.Group>
-                        <Form.Label>Find a song</Form.Label>
+                        <Form.Label><h5>Request a Song</h5></Form.Label>
                         <InputGroup size="lg">
                             <Form.Control
                                 type="text"
@@ -73,11 +74,11 @@ const RequestSongToPlaylist = (props) => {
                                                 onClick={() => { requestAdd(song) }}
                                                 className="search-res-wrapper"
                                             >
-                                                <span className="search-res title">
+                                                <span className="search-res song-title">
                                                     {song.title}
                                                 </span>
-                                                <span className="search-res artist text-muted">
-                                                    {song.artist}
+                                                <span className="search-res song-artist">
+                                                    {song.artists ? song.artists.join(', ') : null}
                                                 </span>
                                             </ListGroup.Item>
                                         </>
