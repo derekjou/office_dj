@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import RoomService from '../../services/room.service';
 import './Room.scss';
 import '../RoomList/RoomList.scss';
@@ -18,6 +18,7 @@ const Room = (props) => {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
     const history = useHistory();
+    const { id } = useParams();
 
     const roomService = new RoomService();
 
@@ -26,10 +27,11 @@ const Room = (props) => {
     useEffect(() => {
         async function getRoomList() {
             let myRooms = await roomService.getUsersRooms(loggedUsername);
+            let currRoom = await roomService.getRoom(id);
             console.log('here', loggedUsername)
             sessionStorage.setItem('loggedRoomList', JSON.stringify(myRooms.data))
             dispatch({ type: 'handleMyRooms', myRooms: myRooms.data });
-            dispatch({ type: 'handleCurrentRoom', currentRoom: myRooms.data[0] ? myRooms.data[0] : { id: -1, name: "", owner: "", participants: "", playlist: {}, date_created: "" } })
+            dispatch({ type: 'handleCurrentRoom', currentRoom: currRoom.data ? currRoom.data : { id: -1, name: "", owner: "", participants: "", playlist: {}, date_created: "" } })
         }
         getRoomList();
     }, []);
