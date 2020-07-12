@@ -13,6 +13,7 @@ import Participants from '../Participants/Participants';
 import Player from '../Player/Player';
 import JoinRoom from '../JoinRoom/JoinRoom';
 import RequestSongToPlaylist from '../RequestSongToPlaylist/RequestSongToPlaylist';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 const Room = (props) => {
     const state = useSelector(state => state);
@@ -61,21 +62,23 @@ const Room = (props) => {
                             <Col id="participants-wrapper">
                                 <Participants participants={state.currentRoom.participants} />
                                 {console.log(state.currentRoom.owner)}
-                                {isOwner ?
-                                    <Button 
-                                        className='check-requests-button'
-                                        onClick={() => {
-                                            history.push({
-                                                pathname: `/joinrequests/${state.currentRoom._id}`,
-                                                state: { 
-                                                    roomName: state.currentRoom.name,
-                                                    roomOwner: state.currentRoom.owner
-                                                }
-                                            })
-                                        }}
-                                    >
-                                        Check Requests
-                                    </Button>
+                                {isOwner() ?
+                                    <ListGroup.Item className="check-requests-wrapper">
+                                        <Button 
+                                            className='check-requests-button'
+                                            onClick={() => {
+                                                history.push({
+                                                    pathname: `/joinrequests/${state.currentRoom._id}`,
+                                                    state: { 
+                                                        roomName: state.currentRoom.name,
+                                                        roomOwner: state.currentRoom.owner
+                                                    }
+                                                })
+                                            }}
+                                        >
+                                            Check Requests
+                                        </Button>
+                                    </ListGroup.Item>
                                 : null}
                             </Col>
                         </Row>

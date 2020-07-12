@@ -122,6 +122,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { djRooms: action.rooms });
     case "handleSongSearchQuery":
       return Object.assign({}, state, { songSearchQuery: action.songSearchQuery });
+    case "handleRoomSongRequestList":
+      return Object.assign({}, state, { roomSongRequestList: action.roomSongRequestList });
     default:
       return state;
   }
