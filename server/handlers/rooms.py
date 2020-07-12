@@ -41,11 +41,6 @@ def rooms_collection(name):
         room = Room.from_dict(input_dict)
         db.add_room(room)
         return room.to_dict(), 200
-    else:
-        _log.info('Request for room %s', name)
-        room_id = request.args.get('id')
-        # NOTE: all requests should send id as a query string
-        return jsonify(db.get_room_by_id(name, room_id))
 
 @room_page.route('/rooms/<string:name>/join', methods=['GET', 'POST'])
 def request_join_rooms_collection(name):
@@ -176,3 +171,11 @@ def process_playlist_requests():
         for id in request_ids:
             song_requests[id] = db.get_song_by_id(id)
         return jsonify(song_requests), 200
+
+@room_page.route('/rooms/room/<int:room_id>', methods=["GET"])
+def get_room(room_id):
+    '''A GET returns room of id'''
+    if request.method == 'GET':
+        _log.info('GET to get room')
+        room = db.get_room_by_id(room_id)
+        return jsonify(room), 200

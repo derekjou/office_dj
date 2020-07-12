@@ -5,8 +5,8 @@ class RoomService {
     this.URI = "http://localhost:5000";
   }
 
-  getRoom(room) {
-    let uri = `${this.URI}/rooms/${room.name}?${room.id}`;
+  getRoom(id) {
+    let uri = `${this.URI}/rooms/room/${id}`;
     return axios.get(uri, { withCredentials: true });
   }
 
