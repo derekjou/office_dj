@@ -149,6 +149,7 @@ def request_add_song(room_id, song_id):
     if request.method == 'POST':
         _log.info("POST to request_add_song")
         if db.add_song_to_playlist_request(room_id, song_id):
+            db.increment_song_request_history(room_id, song_id)
             return jsonify('song added to requests'), 200
     if request.method == 'PUT':
         _log.info("PUT to request_add_song receved")
