@@ -203,7 +203,7 @@ def increment_song_play_history(room_id, song_id):
             {'$set': {f'playlist.history.{song_id}.plays': counter}}
         )
 
-def get_song_request_history(room_id, song_id):
+def get_song_play_history(room_id, song_id):
     '''Finds the request history for a song in a room.'''
     _log.info('Attempting to find the song play history for song %d in room %d',
               song_id, room_id)
