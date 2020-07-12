@@ -138,9 +138,12 @@ def request_add_song(room_id, song_id):
     if request.method == 'PUT':
         _log.info("PUT to request_add_song receved")
         db.add_song_to_playlist(room_id, song_id)
+        db.remove_song_from_playlist_request(room_id, song_id)
         return jsonify("song added to playlist"), 200
     if request.method == 'DELETE':
-        
+        _log.info("DELETE to request_add_song")
+        db.remove_song_from_playlist_request(room_id, song_id)
+        return jsonify("song removed from requests"), 200
     return jsonify('request could not be undersood and/or processed'), 400
 
 
@@ -149,11 +152,10 @@ def process_playlist_requests():
     '''a GET retreves requests to the playlist from the database'''
     if request.method == "GET":
         _log.debug("GET request to playlist requests")
+        _log.debug(request.args.get('query'))
         request_ids = db.playlist_request(request.args.get('query'))['playlist']['requests']
         _log.debug(request_ids)
         song_requests = {}
-        for id in request_ids:
-            song_requests[id] = db.get_song_by_id(id)
+        # for id in request_ids:
+        #     song_requests[id] = db.get_song_by_id(id)
         return jsonify(song_requests), 200
-    if request.method == "POST":
-        _log.info("")

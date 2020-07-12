@@ -148,10 +148,15 @@ def find_song_partial_string(query: str):
     #TODO error handling
     return song_list
 
-def add_song_to_playlist_request(room_id,song_id):
+def add_song_to_playlist_request(room_id, song_id):
     '''takes a room id and a song id and adds a song id to the playlist_requests array in a room'''
-    _db.rooms.update({'_id': room_id}, {"$push": {"playlist.requests" : song_id}})
-    return True
+    room = _db.rooms.find_one({'_id': room_id}, {'playlist.requests': 1})
+    try: 
+        room.playlist.requests.find(song_id)
+    except:
+        _db.rooms.find_one_and_update({'_id': room_id}, {"$push": {"playlist.requests" : song_id}})
+        return True
+    return False
 
 def find_user(username: str):
     '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''
@@ -273,7 +278,7 @@ def update_timestamp(room_id: int, timestamp: int):
     _log.debug(playlist)
     return playlist
 
-def playlist_request(room_id):
+def playlist_request(room_id: int):
     '''takes a room id and returns the requests to a playlist'''
     _log.debug("retreving the playlist requests")
     return _db.rooms.find_one({"_id": room_id}, {'playlist.requests': 1})
@@ -286,7 +291,6 @@ def add_song_to_playlist(room_id, song_id):
     '''takes a room id and a song id and adds the song to the playlist'''
     _db.rooms.update_one({'_id': room_id}, {'$push': {'playlist.playlist': get_song_by_id(song_id)}})
 
-def remove_song_from(room_id, song_id):
+def remove_song_from_playlist_request(room_id, song_id):
     '''takes a room id and a song id and adds the song to the playlist'''
-    request_list = playlist_request(room_id)
-    _db.rooms.update_one({'_id': room_id}, {'$set': {'playlist.requests': }})
+    _db.rooms.update_one({'_id': room_id}, {'$unset': {'playlist.requests': song_id}})
