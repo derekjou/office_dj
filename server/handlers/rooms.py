@@ -141,11 +141,37 @@ def room_playlist(room_id):
         playlist = db.remove_playlist_song(room_id)
         return jsonify(playlist), 200
 
-@room_page.route('/rooms/myrooms/playlist/<int:room_id>/request/<int:song_id>', methods=["POST"])
+@room_page.route('/rooms/myrooms/playlist/<int:room_id>/request/<int:song_id>', methods=["POST", "PUT", "DELETE"])
 def request_add_song(room_id, song_id):
-    '''a POST sends a request to add a song to the current room\'s playlist '''
+    '''a POST sends a request to add a song to the current room\'s playlist
+        a PUT adds the song to the playlist and removes it from the request list
+        a DELETE removes a request'''
     if request.method == 'POST':
         _log.info("POST to request_add_song")
         if db.add_song_to_playlist_request(room_id, song_id):
             return jsonify('song added to requests'), 200
+    if request.method == 'PUT':
+        _log.info("PUT to request_add_song receved")
+        db.add_song_to_playlist(room_id, song_id)
+        db.remove_song_from_playlist_request(room_id, song_id)
+        return jsonify("song added to playlist"), 200
+    if request.method == 'DELETE':
+        _log.info("DELETE to request_add_song")
+        db.remove_song_from_playlist_request(room_id, song_id)
+        return jsonify("song removed from requests"), 200
     return jsonify('request could not be undersood and/or processed'), 400
+
+
+@room_page.route('/rooms/myroom/playlist/requests', methods=['GET'])
+def process_playlist_requests():
+    '''a GET retreves requests to the playlist from the database'''
+    if request.method == "GET":
+        _log.debug("GET request to playlist requests")
+        _log.debug(request.args.get('query'))
+        room_id = int(request.args.get('query'))
+        request_ids = db.playlist_request(room_id)['playlist']['requests']
+        _log.debug(request_ids)
+        song_requests = {}
+        for id in request_ids:
+            song_requests[id] = db.get_song_by_id(id)
+        return jsonify(song_requests), 200
