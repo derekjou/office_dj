@@ -17,7 +17,7 @@ const DJApproveSongRequest = (props) => {
     async function pullSongRequests() {
       let songRequests = await roomService.getSongRequests(4);
       console.log(songRequests.data)
-      // dispatch({ type: 'handleRoomSongRequestList', roomSongRequestList: songRequests.data })
+      dispatch({ type: 'handleRoomSongRequestList', roomSongRequestList: songRequests.data })
     }
     dispatch({
       type: 'handleRoomSongRequestList',

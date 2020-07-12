@@ -165,6 +165,7 @@ def request_add_song(room_id, song_id):
 @room_page.route('/rooms/myroom/playlist/requests', methods=['GET'])
 def process_playlist_requests():
     '''a GET retreves requests to the playlist from the database'''
+    _log.debug("GET request to playlist requests")
     if request.method == "GET":
         _log.debug("GET request to playlist requests")
         _log.debug(request.args.get('query'))

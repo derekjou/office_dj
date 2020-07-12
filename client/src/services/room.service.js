@@ -110,16 +110,16 @@ class RoomService {
   }
 
   getSongRequests(roomId) {
-      let uri = `${this.URI}/rooms/myrooms/playlist/request?query=${roomId}`;
-      return axios.post(uri, { withCredentials: true });
+      let uri = `${this.URI}/rooms/myrooms/playlist/requests?query=${roomId}`;
+      return axios.get(uri, { withCredentials: true });
   }
-  approveSongRequests(roomId, songId) {
+  approveSongRequests(roomId, song) {
     let body = {
       room_id: roomId,
-      song_id: songId,
+      song: song //entire song dict?
     };
-    let uri = `${this.URI}/rooms/myrooms/playlist/${roomId}/request/${songId}`;
-    return axios.post(uri, body, { withCredentials: true });
+    let uri = `${this.URI}/rooms/myrooms/playlist/${roomId}/request/${song._id}`;
+    return axios.put(uri, body, { withCredentials: true });
   }
   rejectSongRequests(roomId, songId) {
     let uri = `${this.URI}/rooms/myrooms/playlist/${roomId}/request/${songId}`;
