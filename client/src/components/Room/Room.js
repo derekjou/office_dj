@@ -60,7 +60,7 @@ const Room = (props) => {
                             <Col id="participants-wrapper">
                                 <Participants participants={state.currentRoom.participants} />
                                 {console.log(state.currentRoom.owner)}
-                                {state.user.role === 'DJ' ?
+                                {isOwner() ?
                                     <ListGroup.Item className="check-requests-wrapper">
                                         <Button 
                                             className='check-requests-button'
