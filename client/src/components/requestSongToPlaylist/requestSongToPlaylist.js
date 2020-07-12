@@ -44,10 +44,10 @@ const RequestSongToPlaylist = (props) => {
 
     return (
         <>
-            <Card>
+            <Card className="search-songs-wrapper">
                 <Card.Body className="search-songs">
                     <Form.Group>
-                        <Form.Label>Find a song</Form.Label>
+                        <Form.Label><h5>Request a Song</h5></Form.Label>
                         <InputGroup size="lg">
                             <Form.Control
                                 type="text"

@@ -1,0 +1,49 @@
+
+/* Abstracts */
+
+// Abstract Colors
+$player-purple: #1a1e52;
+$player-purple-hover: #051642;
+$player-blue: #4562e0;
+$player-blue-focus: #3032b3;
+$player-blue-hover: #506ffd;
+
+$player-blue-light: #6a83f3;
+
+
+// UI Colors
+$main-background: rgba($player-blue, 0);
+$panel-background: rgba($player-blue, 0.025);
+$panel-contrast: rgba($player-purple, 0.9);
+
+$btn-primary: $player-blue;
+$btn-primary-focus: $player-blue-focus;
+$btn-primary-hover: $player-blue-hover;
+
+// Borders
+$ui-border: 1px solid rgba($player-blue, 0.1);
+
+// Z Height
+$shallow: 0 0 .875rem 0 rgba($player-blue, 0.5);
+$deep: 0.5rem 0.5rem 2rem 0 rgba($player-blue, 0.5);
+
+// Spacing
+$titlebarheight: 3rem;
+$pageheight: calc(100vh - 3.5rem);
+
+// Animations/Transition
+$transition-quick: .2s ease-in-out;
+
+
+/* Mixins */
+
+// Typography 
+@mixin ui-heading ($size: 'm') {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    color: $player-purple;
+
+    @if $size == 'm' { font-size: 1rem; }
+    @if $size == 'sm' { font-size: .875rem; }
+}
