@@ -22,6 +22,8 @@ const Controls = (props) => {
     dispatch({ type: "handleCurrentRoom", currentRoom: updatedRoom });
     sessionStorage.setItem("loggedPlaylist", JSON.stringify(playlist));
     if (playlist.playlist.length === 0) {
+      let audio = document.getElementById("audio");
+      audio.src = "";
       dispatch({
         type: "setCurrentSong",
         currentSong: {
@@ -127,7 +129,9 @@ const Controls = (props) => {
           <div className="iconfont play-pause icon-play"></div>
           <div className="iconfont next icon-next"></div>
         </div>
-        <SongHistory song={state.currentSong} />
+        { state.currentSong ?
+          <SongHistory song={state.currentSong} />
+        : null }
         <div className="progress"></div>
       </div>
     </>

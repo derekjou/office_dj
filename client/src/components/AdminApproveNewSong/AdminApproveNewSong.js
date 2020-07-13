@@ -57,7 +57,7 @@ const AdminApproveNewSong = (props) => {
           <tbody id="data">
               {Array.isArray(state.songRequests) ? state.songRequests.map(
                   (request) => {
-                      return <>
+                      return
                       <tr>
                         <td>{request.title}</td>
                         <td>{request.artists}</td>
@@ -67,7 +67,6 @@ const AdminApproveNewSong = (props) => {
                         <td><Button block type="button" onClick={() => {approve(request)}}>Approve</Button></td>
                         <td><Button block type="button" onClick={() => {deny(request)}}>Reject</Button></td>
                       </tr>
-                      </>
                   }
               ) : null }
             </tbody>
