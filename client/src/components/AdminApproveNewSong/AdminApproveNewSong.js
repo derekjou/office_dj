@@ -41,7 +41,7 @@ const AdminApproveNewSong = (props) => {
     }
 
     const renderHeader = () => {
-        let headerElement = ['Title', 'Artists', 'Genre', 'Album', '', '', '']
+        let headerElement = ['Title', 'Artists', 'Genre', 'Album', 'Preview Song', 'Approve', 'Reject']
 
         return headerElement.map((key, index) => {
             return <th key={index}>{key.toUpperCase()}</th>
@@ -57,7 +57,8 @@ const AdminApproveNewSong = (props) => {
           <tbody id="data">
               {Array.isArray(state.songRequests) ? state.songRequests.map(
                   (request) => {
-                      return <tr>
+                      return
+                      <tr>
                         <td>{request.title}</td>
                         <td>{request.artists}</td>
                         <td>{request.genre}</td>
