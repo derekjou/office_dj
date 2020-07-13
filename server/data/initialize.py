@@ -1,20 +1,17 @@
 '''A development module for defining initial database conditions.'''
 
 # External imports
+import os
+from bson.son import SON
+from pymongo import MongoClient, errors, ReturnDocument
+from datetime import datetime, timedelta
+
+# Interal imports
 from server.data.logger import get_logger
 from server.model.rooms import Room
 from server.songs.model import Song
 from server.model.users import User, DJ, Admin
 from server.data.mongo import _db, _get_id, _get_song_number
-from bson.son import SON
-from pymongo import MongoClient, errors, ReturnDocument
-from datetime import datetime, timedelta
-import os
-import sys
-sys.path.append(os.path.abspath(os.path.join('..')))
-
-
-# Interal imports
 
 _log = get_logger(__name__)
 
