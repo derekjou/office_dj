@@ -196,22 +196,12 @@ def increment_song_play_history(room_id, song_id):
         )
     except (TypeError, KeyError):
         _log.exception(
-            'No previous request history for room %d song %d.', room_id, song_id)
+            'No previous play history for room %d song %d.', room_id, song_id)
         counter = 1
         _db.rooms.find_one_and_update(
             {'_id': room_id},
             {'$set': {f'playlist.history.{song_id}.plays': counter}}
         )
-
-def get_song_play_history(room_id, song_id):
-    '''Finds the request history for a song in a room.'''
-    _log.info('Attempting to find the song play history for song %d in room %d',
-              song_id, room_id)
-    request_history = _db.rooms.find_one(
-        {'_id': room_id},
-        {f'playlist.history.{song_id}.plays': 1, '_id': 0}
-    )['playlist']['history'][f'{song_id}']['plays']
-    return request_history
 
 def increment_song_request_history(room_id, song_id):
     '''Finds the request history for a song in a room and increments the requests
@@ -238,7 +228,7 @@ def increment_song_request_history(room_id, song_id):
             {'$set': {f'playlist.history.{song_id}.requests': counter}}
         )
 
-def get_song_request_history(room_id, song_id):
+def get_playlist_history(room_id, song_id):
     '''Finds the request history for a song in a room.'''
     _log.info('Attempting to find the song history for song %d in room %d',
               song_id, room_id)
@@ -345,9 +335,17 @@ def get_room_playlist(room_id: int):
     _log.debug(playlist)
     return playlist
 
+def get_last_played_id(room_id: int):
+    last_song_id = _db.rooms.find_one(
+        {'_id': room_id}, 
+        {'playlist.playlist': 1}
+    )['playlist']['playlist'][-1]['_id']
+    _log.debug(last_song_id)
+    return last_song_id
+
 def remove_playlist_song(room_id: int):
     '''Updates playlist to remove top song'''
-    _log.info("Updating playlist for room %s", room_id)
+    _log.info("Updating playlist for room %d", room_id)
     room = _db.rooms.find_one_and_update({'_id': room_id}, 
                                          { '$pop': { 'playlist.playlist': -1 }, 
                                            '$set': { 'currentTime': 0 }},
@@ -358,7 +356,7 @@ def remove_playlist_song(room_id: int):
 
 def update_timestamp(room_id: int, timestamp: int):
     '''Updates last left off timestamp'''
-    _log.info("Updating playlist for room %s", room_id)
+    _log.info("Updating playlist for room %d", room_id)
     room = _db.rooms.find_one_and_update({'_id': room_id}, 
                                          { '$set': { 'playlist.currentTime': timestamp }}, 
                                          return_document=ReturnDocument.AFTER)

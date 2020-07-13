@@ -126,18 +126,23 @@ def room_playlist(room_id):
        A DELETE returns the updated playlist'''
     if request.method == 'GET':
         _log.debug(room_id)
-        _log.debug('Request for playlist of room %s', room_id)
+        _log.info('Request for playlist of room %s', room_id)
         playlist = db.get_room_playlist(room_id)
         return jsonify(playlist), 200
     elif request.method == 'PUT':
         _log.debug(room_id)
         body = request.json
-        _log.debug('Updating playlist of room %s', room_id)
+        _log.info('Updating playlist of room %s', room_id)
         playlist = db.update_timestamp(room_id, int(body['timeStamp']))
         return jsonify(playlist), 200
     elif request.method == 'DELETE':
         _log.debug(room_id)
-        _log.debug('Updating playlist of room %s', room_id)
+        # updating the song play history
+        last_song_id = db.get_last_played_id(room_id)
+        _log.info('Updating the play history of %d', last_song_id)
+        db.increment_song_play_history(room_id, last_song_id)
+        # removing the last played song from playlist
+        _log.info('Updating playlist of room %s', room_id)
         playlist = db.remove_playlist_song(room_id)
         return jsonify(playlist), 200
 
