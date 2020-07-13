@@ -14,7 +14,7 @@ const AddMusic = (props) => {
 
     const adminService = new AdminService();
     const newSong = async () => {
-        await adminService.newSong(state.title, state.artists, state.album, state.genre, state.url, state.albumUrl);
+        await adminService.newSong(state.title, state.artists, state.album, state.genre, state.url, state.albumUrl ? state.albumUrl : "");
         history.push('/admin')
     }
 
