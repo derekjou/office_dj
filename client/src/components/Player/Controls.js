@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import RoomService from "../../services/room.service";
-import Queue from "./Queue";
 import SongHistory from "../SongHistory/SongHistory.js"
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
 import "./Player.scss";
 
 const Controls = (props) => {
@@ -107,20 +104,21 @@ const Controls = (props) => {
       <audio id="audio" onEnded={nextSong}>
         <source
           id="source"
-          src={state.currentSong.url ? state.currentSong.url : ""}
+          src={state.currentSong ? state.currentSong.url : ""}
         />
       </audio>
       <div className="player">
         <img
-          alt="albumCover"
-          src={state.currentSong.album_url ? state.currentSong.album_url : ""}
+          alt="album cover"
+          style={{ 'color': '#3D5AF1' }}
+          src={state.currentSong ? state.currentSong.album_url : ""}
         />
         <div className="info">
           <div className="name">
-            {state.currentSong.title ? state.currentSong.title : ""}
+            {state.currentSong ? state.currentSong.title : ""}
           </div>
           <div className="artists">
-            {state.currentSong.artists.length > 0
+            {state.currentSong && state.currentSong.artists.length > 0
               ? state.currentSong.artists.join(", ")
               : ""}
           </div>

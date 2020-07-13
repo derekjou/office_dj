@@ -128,11 +128,11 @@ def get_room_by_name(name: str, owner: str):
     _log.info('Room %s successfully found', name)
     return room
 
-def get_room_by_id(username: str, r_id: int):
+def get_room_by_id(r_id: int):
     '''Takes an id of a room object and queries the Rooms collection for that object.'''
     _log.info('Attempting to retrive room %d from the database', r_id)
     #TODO: Try/Except for empty find
-    room = _db.rooms.find_one({'username': username, '_id': r_id})
+    room = _db.rooms.find_one({'_id': r_id})
     _log.info('Room %d successfully found', r_id)
     return room
 
