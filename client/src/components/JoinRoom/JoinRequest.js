@@ -11,6 +11,7 @@ const JoinRequest = (props) => {
     let resp = await roomService.approveJoinRequest(props.roomName, props.roomOwner, props.request.username);
     if (resp.status === 204) {
       window.alert(`User ${props.request.username} added to room!`)
+      document.location.reload();
     }
 
   }

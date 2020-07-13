@@ -37,19 +37,35 @@ if __name__ == "__main__":
     user_list = []
     user_list.append(DJ(
         _get_id(),
-        'discjockey',
+        'Derek',
         'pass',
         'Software Delivery',
         'UI/UX',
-        'Delevoper'
+        'Project Manager'
+    ).to_dict())
+    user_list.append(DJ(
+        _get_id(),
+        'Victoria',
+        'pass',
+        'Software Delivery',
+        'UI/UX',
+        'Front End Developer'
     ).to_dict())
     user_list.append(User(
-        _get_id(),
-        'user',
-        'pass',
+        _get_id(), 
+        'Tim', 
+        'pass', 
         'Engineering',
-        'UI',
-        'Junior Developer'
+        'UI', 
+        'Developer'
+    ).to_dict())
+    user_list.append(User(
+        _get_id(), 
+        'Felix', 
+        'pass', 
+        'Engineering',
+        'UI', 
+        'Developer'
     ).to_dict())
     user_list.append(Admin(
         _get_id(),
@@ -138,36 +154,21 @@ if __name__ == "__main__":
     room_list = []
     room_list.append(Room(
         _get_id(),
-        'Test Room',
-        'discjockey',
-        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3},
-        {'playlist': [Song(1, "Despacito", "Vida", ["Luis Fonsi", "Daddy Yankee"], "Pop", "http://res.cloudinary.com/alick/video/upload/v1502689683/Luis_Fonsi_-_Despacito_ft._Daddy_Yankee_uyvqw9.mp3").to_dict(),
-                      Song(2, "La Mujer de Antonio", "SONGO 21 - Studio sessions 2003", ["SONGO 21"], "Salsa", "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/SONGO_21/SONGO_21_-_Studio_sessions_2003/SONGO_21_-_02_-_La_Mujer_de_Antonio.mp3").to_dict()],
+        'Derek\'s Room',
+        'Derek',
+        {'Derek': user_list[0], 'Tim': 'Tim', 'Felix': 'Felix', 'Victoria': 3},
+        {'playlist': [Song(1, "Despacito", "Vida", ["Luis Fonsi", "Daddy Yankee"], "Pop","http://res.cloudinary.com/alick/video/upload/v1502689683/Luis_Fonsi_-_Despacito_ft._Daddy_Yankee_uyvqw9.mp3").to_dict(),
+         Song(2, "La Mujer de Antonio", "SONGO 21 - Studio sessions 2003", ["SONGO 21"], "Salsa", "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/SONGO_21/SONGO_21_-_Studio_sessions_2003/SONGO_21_-_02_-_La_Mujer_de_Antonio.mp3").to_dict()],
          'currentTime': 10}
     ).to_dict())
     room_list.append(Room(
         _get_id(),
-        'AaaaaBBb',
-        'discjockey',
-        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
-    ).to_dict())
-    room_list.append(Room(
-        _get_id(),
-        'Alacazam',
-        'discjockey',
-        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
-    ).to_dict())
-    room_list.append(Room(
-        _get_id(),
-        'Zampowbop',
-        'discjockey',
-        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
-    ).to_dict())
-    room_list.append(Room(
-        _get_id(),
-        'razzamatazz',
-        'discjockey',
-        {'discjockey': user_list[0], 'test1': 1, 'test2': 2, 'test3': 3}
+        'Victoria\'s Room',
+        'Victoria',
+        {'Victoria': user_list[0], 'Felix': 1, 'Tim': 2, 'Derek': 3},
+        {'playlist': [Song(1, "Despacito", "Vida", ["Luis Fonsi", "Daddy Yankee"], "Pop","http://res.cloudinary.com/alick/video/upload/v1502689683/Luis_Fonsi_-_Despacito_ft._Daddy_Yankee_uyvqw9.mp3").to_dict(),
+         Song(2, "La Mujer de Antonio", "SONGO 21 - Studio sessions 2003", ["SONGO 21"], "Salsa", "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/SONGO_21/SONGO_21_-_Studio_sessions_2003/SONGO_21_-_02_-_La_Mujer_de_Antonio.mp3").to_dict()],
+         'currentTime': 10}
     ).to_dict())
 
     _log.debug(user_list)
@@ -184,4 +185,20 @@ if __name__ == "__main__":
         ["KieLoKaz"],
         "Experimental",
         "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/KieLoKaz/Free_Ganymed/KieLoKaz_-_02_-_Trip_to_Ganymed_Kielokaz_ID_363.mp3"
+    ).to_dict()))
+    _db.songRequests.insert_one((Song(
+        _get_song_number(),
+        "Picture Perfect",
+        "August 2019",
+        ["Yung Kartz"],
+        "Hip-Hop",
+        "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Yung_Kartz/August_2019/Yung_Kartz_-_05_-_Picture_Perfect.mp3"
+    ).to_dict()))
+    _db.songRequests.insert_one((Song(
+        _get_song_number(),
+        "Shipping Lanes",
+        "Arps",
+        ["Chad Crouch"],
+        "Electronic",
+        "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3"
     ).to_dict()))

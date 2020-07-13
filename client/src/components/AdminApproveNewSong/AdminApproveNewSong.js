@@ -41,7 +41,7 @@ const AdminApproveNewSong = (props) => {
     }
 
     const renderHeader = () => {
-        let headerElement = ['Title', 'Artists', 'Genre', 'Album', '', '', '']
+        let headerElement = ['Title', 'Artists', 'Genre', 'Album', 'Preview Song', 'Approve', 'Reject']
 
         return headerElement.map((key, index) => {
             return <th key={index}>{key.toUpperCase()}</th>
@@ -57,15 +57,16 @@ const AdminApproveNewSong = (props) => {
           <tbody id="data">
               {Array.isArray(state.songRequests) ? state.songRequests.map(
                   (request) => {
-                      return <>
-                      <td>{request.title}</td>
-                      <td>{request.artists}</td>
-                      <td>{request.genre}</td>
-                      <td>{request.album}</td>
-                      <td><Button block type="button" onClick={() => {previewSong(request)}}>Preview Song</Button></td>
-                      <td><Button block type="button" onClick={() => {approve(request)}}>Approve</Button></td>
-                      <td><Button block type="button" onClick={() => {deny(request)}}>Reject</Button></td>
-                      </>
+                      return
+                      <tr>
+                        <td>{request.title}</td>
+                        <td>{request.artists}</td>
+                        <td>{request.genre}</td>
+                        <td>{request.album}</td>
+                        <td><Button block type="button" onClick={() => {previewSong(request)}}>Preview Song</Button></td>
+                        <td><Button block type="button" onClick={() => {approve(request)}}>Approve</Button></td>
+                        <td><Button block type="button" onClick={() => {deny(request)}}>Reject</Button></td>
+                      </tr>
                   }
               ) : null }
             </tbody>
