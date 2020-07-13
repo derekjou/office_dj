@@ -127,7 +127,9 @@ const Controls = (props) => {
           <div className="iconfont play-pause icon-play"></div>
           <div className="iconfont next icon-next"></div>
         </div>
-        <SongHistory song={state.currentSong} />
+        { state.currentSong ?
+          <SongHistory song={state.currentSong} />
+        : null }
         <div className="progress"></div>
       </div>
     </>
