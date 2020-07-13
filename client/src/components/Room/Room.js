@@ -101,7 +101,7 @@ const Room = (props) => {
           </Col>
         ) : (
           <Col>
-            <JoinRoom />
+            <JoinRoom hasRooms={false}/>
           </Col>
         )}
       </Row>

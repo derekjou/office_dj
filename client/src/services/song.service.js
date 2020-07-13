@@ -5,7 +5,7 @@ class SongService {
         this.URI = 'http://localhost:5000/songs';
     }
 
-    requestNewSong(title, genre, artists, url, album) {
+    requestNewSong(title, genre, artists, url, album, album_url) {
         return axios({
             method: 'POST',
             url: `${this.URI}/requestNew`,
@@ -14,7 +14,8 @@ class SongService {
                 genre,
                 artists,
                 url,
-                album
+                album, 
+                album_url
             },
             withCredentials: true
         })

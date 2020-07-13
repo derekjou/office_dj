@@ -62,7 +62,7 @@ const UserRooms = (props) => {
               </CardColumns>
             </Col>
             <Col sm={5}>
-              <JoinRoom />
+              <JoinRoom hasRooms={state.userRooms.length > 0 ? true : false}/>
             </Col>
           </Row>
         </Container>
