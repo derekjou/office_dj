@@ -96,18 +96,15 @@ class Routing extends Component {
         <PrivateRoute path='/updateUser' component={UpdateUser} />
         <PrivateRoute path="/requestSong" component={RequestNewSong} />
         <PrivateRoute path="/userRooms" component={UserRooms} />
+        <PrivateRoute path="/room/:id" component={Room} />
+        <DJRoute path="/djRooms" component={DJRooms} />
         <DJRoute path="/createRoom" component={CreateRoom} />
+        <DJRoute path="/joinrequests/:roomid" component={WorkRequest} /> 
         <AdminRoute path="/admin" component={Admin} />
         <AdminRoute path="/addMusic" component={AddMusic} />
         <AdminRoute path="/changeRole" component={ChangeUserRole} />
         <AdminRoute path="/approveNewSong" component={AdminApproveNewSong} />
 
-        <PrivateRoute path="/room/:id" component={Room} />
-        <DJRoute path="/djRooms" component={DJRooms} />
-
-        <PrivateRoute path="/rooms" component={Room} />
-        <DJRoute path="/myRooms" component={Room} /> 
-        <DJRoute path="/joinrequests/:roomid" component={WorkRequest} /> 
         <Route path="/requestSongToPlaylist" component={RequestNewSongToPlaylist} />
         <Route path="/songRequests" component={DJApproveSongRequests} />
         <div style={{ textAlign: 'center', color: '#BBB', fontSize:"0.8rem", margin: "40px 0 10px"}}>Created by Timothy, Victoria, Felix, and Derek</div>
