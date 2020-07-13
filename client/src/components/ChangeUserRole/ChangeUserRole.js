@@ -18,7 +18,6 @@ const ChangeUserRole = (props) => {
         console.log(state.updateUsername)
         let updatedUser = await adminService.changeRole(state.updateUsername)
         console.log(updatedUser)
-        dispatch({ type: 'updateUser', user: updatedUser.data })
         history.push('/')
     }
 
