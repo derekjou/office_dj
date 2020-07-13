@@ -288,6 +288,8 @@ def update_user_role(username: str):
 def add_song(song_dict: dict):
     '''a method to add a new song to the database'''
     _log.info("adding song to the database")
+    if not song_dict['album_url']:
+        song_dict['album_url'] = "https://lastfm.freetls.fastly.net/i/u/300x300/c6f59c1e5e7240a4c0d427abd71f3dbb.webp"
     song_dict['_id'] = _get_song_number()
     _db.songs.insert_one(song_dict)
     _log.debug(song_dict)
