@@ -31,6 +31,7 @@ const initialState = {
   title: "",
   artists: [],
   album: "",
+  albumrUrl: "",
   genre: "",
   url: "",
   songSearchList: "",
@@ -98,6 +99,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { artists: action.artists.split(", ")});
     case "handleAlbumInput":
       return Object.assign({}, state, { album: action.album});
+    case "handleAlbumUrlInput":
+      return Object.assign({}, state, { albumUrl: action.albumUrl});
     case "handleGenreInput":
       return Object.assign({}, state, { genre: action.genre});
     case "handleURLInput":

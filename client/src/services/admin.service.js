@@ -28,7 +28,7 @@ class AdminService {
         })
     }
 
-    newSong(title, artists, album, genre, url) {
+    newSong(title, artists, album, genre, url, album_url) {
         return axios({
             method: 'POST',
             url: `${this.URI}/addSong`,
@@ -37,7 +37,8 @@ class AdminService {
                 artists: artists,
                 album: album,
                 genre: genre,
-                url: url
+                url: url,
+                album_url
             },
             withCredentials: true
         })

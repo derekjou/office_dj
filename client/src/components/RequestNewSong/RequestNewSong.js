@@ -15,7 +15,7 @@ const RequestNewSong = (props) => {
     const songService = new SongService();
 
     const requestNewSong = async () => {
-        await songService.requestNewSong(state.title, state.genre, state.artists, state.url, state.album)
+        await songService.requestNewSong(state.title, state.genre, state.artists, state.url, state.album, state.albumUrl)
         history.push('/')
     }
 
@@ -48,6 +48,12 @@ const RequestNewSong = (props) => {
                         <Form.Control type="text" name="album" placeholder="Enter Album"
                             value={state.songName}
                             onChange={e => dispatch({ type: "handleNewAlbum", album: e.target.value })} />
+                    </Form.Group>
+                    <Form.Group controlId='albumUrl'>
+                        <Form.Label>Album Cover Url:</Form.Label>
+                        <Form.Control type="text" name="album" placeholder="Enter Album Cover Url"
+                            value={state.albumUrl}
+                            onChange={e => dispatch({type: "handleAlbumUrlInput", albumUrl: e.target.value})} />
                     </Form.Group>
                     <Form.Group controlId='url'>
                         <Form.Label>Song URL</Form.Label>
