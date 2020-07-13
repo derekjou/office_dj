@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
 import Table from 'react-bootstrap/Table'
 import RoomService from '../../services/room.service';
 import JoinRequest from './JoinRequest';
@@ -10,11 +9,9 @@ const roomService = new RoomService();
 const WorkRequest = (props) => {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect(() => {
     console.log(props.location.state.roomName)
-    // console.log(props.location.state.roomOwner)
     async function getJoinRequests() {
       let joinRequests = await roomService.getJoinRequests(props.location.state.roomName);
       let joinData = joinRequests.data[0].participant_requests

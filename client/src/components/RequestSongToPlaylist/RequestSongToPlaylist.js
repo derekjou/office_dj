@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import './RequestSongToPlaylist.scss';
 import SongService from '../../services/song.service';
 import RoomService from '../../services/room.service';
@@ -13,7 +12,6 @@ import Form from "react-bootstrap/Form";
 const RequestSongToPlaylist = (props) => {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const songService = new SongService();
     const roomService = new RoomService();

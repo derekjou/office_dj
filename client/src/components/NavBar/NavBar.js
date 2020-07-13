@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import "./NavBar.css";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import logo from "../../images/logo.png";
 
 const NavBar = (props) => {
-  const state = useSelector(state => state);
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -56,14 +58,21 @@ const NavBar = (props) => {
     return (
       <>
         <Nav.Link href="/login">Login</Nav.Link>
-        <Nav.Link href="/registerUser">Register</Nav.Link>
+        <Nav.Link href="/register">Register</Nav.Link>
       </>
     );
   };
 
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="/">OFFICE DJ</Navbar.Brand>
+      <Navbar.Brand href="/">
+        <img
+          alt="logo"
+          src={logo}
+          className="d-inline-block align-top logo"
+        />
+        &nbsp;&nbsp;OFFICE DJ
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -76,10 +85,12 @@ const NavBar = (props) => {
                 {renderUserOptions()}
                 {renderDJOptions()}
               </>
-            ) : <Nav.Link href="/admin">Dashboard</Nav.Link>
             ) : (
-              <>{renderBaseOptions()}</>
-            )}
+              <Nav.Link href="/admin">Dashboard</Nav.Link>
+            )
+          ) : (
+            <>{renderBaseOptions()}</>
+          )}
         </Nav>
         {loggedUser ? (
           <Form inline>

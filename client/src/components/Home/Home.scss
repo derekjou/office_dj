@@ -1,0 +1,37 @@
+.pop {
+  background-color: #4D94FF;
+  font-weight: 700;
+  transform: skewX(-15deg);
+  display: inline-block;
+  padding: 0.2rem;
+  border-radius: 10px;
+}
+
+.small {
+  width: 70%;
+  height: auto;
+}
+
+p {
+  a {
+    text-decoration: none;
+    color: black;
+    background-color: #4D94FF;
+    font-weight: 700;
+    transform: skewX(-15deg);
+    display: inline-block;
+    padding: 0.2rem;
+    border-radius: 10px;
+  }
+  a:hover {
+    color: black;
+  }
+}
+
+p {
+  font-size: 1.5rem;
+}
+
+img {
+  width: 100%;
+}
