@@ -31,7 +31,7 @@ const CreateRoom = (props) => {
             dispatch({ type: 'createRoom', room: newRoom.data });
             sessionStorage.setItem('loggedRoom', JSON.stringify(newRoom.data));
             console.log(newRoom);
-            history.push("/myroom"); 
+            history.push("/"); 
         } 
     }
 
