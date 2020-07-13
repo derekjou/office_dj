@@ -379,4 +379,4 @@ def add_song_to_playlist(room_id, song_id):
 
 def remove_song_from_playlist_request(room_id, song_id):
     '''takes a room id and a song id and adds the song to the playlist'''
-    _db.rooms.update_one({'_id': room_id}, {'$unset': {'playlist.requests': song_id}})
+    _db.rooms.update_one({'_id': room_id}, {'$pull': {'playlist.requests': song_id}})

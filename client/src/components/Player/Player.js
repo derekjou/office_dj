@@ -13,7 +13,7 @@ const Player = (props) => {
   const dispatch = useDispatch();
 
   const roomService = new RoomService();
-  let role = JSON.parse(sessionStorage.getItem('loggedUser')).role;
+  let username = JSON.parse(sessionStorage.getItem('loggedUser')).username;
 
   useEffect(() => {
     async function getPlaylist() {
@@ -29,7 +29,7 @@ const Player = (props) => {
   return (
     <div>
       <Row>
-        {role === 'DJ' ? <Controls currentRoom={props.currentRoom}/> : <RequestSongToPlaylist />}
+        {state.currentRoom.owner === username ? <Controls currentRoom={props.currentRoom}/> : <RequestSongToPlaylist />}
         
         <Queue />
       </Row>

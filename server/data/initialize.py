@@ -1,9 +1,9 @@
 '''A development module for defining initial database conditions.'''
 
 # External imports
-import os, sys
-sys.path.append(os.path.abspath(os.path.join('..')))
-
+import os
+from bson.son import SON
+from pymongo import MongoClient, errors, ReturnDocument
 from datetime import datetime, timedelta
 from pymongo import MongoClient, errors, ReturnDocument
 from bson.son import SON
