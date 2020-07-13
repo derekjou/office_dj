@@ -23,21 +23,7 @@ def rooms_collection(name):
     '''A GET to /rooms/<name> returns that room, a POST to /rooms/<name> creates a new room of that name.'''
     if request.method == 'POST':
         _log.info('Request for new room')
-        #create new room
-        #TODO: decode JWT tokens once we know what is in them.
         input_dict = request.json
-        check_participants = input_dict['participants']
-        _log.debug(check_participants)
-        participants_dict = {}
-        for participant in check_participants:
-            _log.debug(participant)
-            user = db.find_user(participant)
-            if user != 'user not found':
-                participants_dict.update({participant: user})
-                _log.debug(participants_dict)
-            if user == 'user not found':
-                return bytes('Could not find user ' + participant, 'utf-8'), 404
-        input_dict['particpants'] = participants_dict
         room = Room.from_dict(input_dict)
         db.add_room(room)
         return input_dict, 200
