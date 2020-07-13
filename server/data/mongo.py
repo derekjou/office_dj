@@ -288,6 +288,8 @@ def update_user_role(username: str):
 def add_song(song_dict: dict):
     '''a method to add a new song to the database'''
     _log.info("adding song to the database")
+    if not song_dict['album_url']:
+        song_dict['album_url'] = "https://lastfm.freetls.fastly.net/i/u/300x300/c6f59c1e5e7240a4c0d427abd71f3dbb.webp"
     song_dict['_id'] = _get_song_number()
     _db.songs.insert_one(song_dict)
     _log.debug(song_dict)
@@ -379,4 +381,4 @@ def add_song_to_playlist(room_id, song_id):
 
 def remove_song_from_playlist_request(room_id, song_id):
     '''takes a room id and a song id and adds the song to the playlist'''
-    _db.rooms.update_one({'_id': room_id}, {'$unset': {'playlist.requests': song_id}})
+    _db.rooms.update_one({'_id': room_id}, {'$pull': {'playlist.requests': song_id}})

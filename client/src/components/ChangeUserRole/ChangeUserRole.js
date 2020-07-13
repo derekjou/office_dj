@@ -13,12 +13,18 @@ const ChangeUserRole = (props) => {
 
     const adminService = new AdminService();
 
-    const updateUser = async (e) => {
-        e.preventDefault();
+    const updateUser = async () => {
         console.log(state.updateUsername)
         let updatedUser = await adminService.changeRole(state.updateUsername)
         console.log(updatedUser)
         history.push('/')
+    }
+
+    const handleEnter = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            updateUser();
+          }
     }
 
     return (
@@ -31,7 +37,8 @@ const ChangeUserRole = (props) => {
                         <Form.Label>Username:</Form.Label>
                         <Form.Control type="text" placeholder="Enter username"
                             value={state.updateUsername}
-                            onChange={e => dispatch({ type: 'handleUpdateUsername', updateUsername: e.target.value })} />
+                            onChange={e => dispatch({ type: 'handleUpdateUsername', updateUsername: e.target.value })} 
+                            onKeyDown={e => handleEnter(e)}/>
                     </Form.Group>
                     <Button onClick={updateUser}>Change Role</Button>
                 </Form>

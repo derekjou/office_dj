@@ -26,7 +26,7 @@ def rooms_collection(name):
         input_dict = request.json
         room = Room.from_dict(input_dict)
         db.add_room(room)
-        return room.to_dict(), 200
+        return input_dict, 200
 
 @room_page.route('/rooms/<string:name>/join', methods=['GET', 'POST'])
 def request_join_rooms_collection(name):
