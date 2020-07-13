@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import "./Player.scss";
+import SongHistory from "../SongHistory/SongHistory.js"
 
 const Queue = (props) => {
   const state = useSelector((state) => state);
@@ -19,6 +20,7 @@ const Queue = (props) => {
                 <div className="info2">
                   <div className="name">{song.title}</div>
                   <div className="artists">{song.artists.join(", ")}</div>
+                  <SongHistory song={song} />
                 </div>
               </div>
             </tr>

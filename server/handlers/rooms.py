@@ -121,18 +121,23 @@ def room_playlist(room_id):
        A DELETE returns the updated playlist'''
     if request.method == 'GET':
         _log.debug(room_id)
-        _log.debug('Request for playlist of room %s', room_id)
+        _log.info('Request for playlist of room %s', room_id)
         playlist = db.get_room_playlist(room_id)
         return jsonify(playlist), 200
     elif request.method == 'PUT':
         _log.debug(room_id)
         body = request.json
-        _log.debug('Updating playlist of room %s', room_id)
+        _log.info('Updating playlist of room %s', room_id)
         playlist = db.update_timestamp(room_id, int(body['timeStamp']))
         return jsonify(playlist), 200
     elif request.method == 'DELETE':
         _log.debug(room_id)
-        _log.debug('Updating playlist of room %s', room_id)
+        # updating the song play history
+        last_song_id = db.get_last_played_id(room_id)
+        _log.info('Updating the play history of %d', last_song_id)
+        db.increment_song_play_history(room_id, last_song_id)
+        # removing the last played song from playlist
+        _log.info('Updating playlist of room %s', room_id)
         playlist = db.remove_playlist_song(room_id)
         return jsonify(playlist), 200
 
@@ -144,6 +149,7 @@ def request_add_song(room_id, song_id):
     if request.method == 'POST':
         _log.info("POST to request_add_song")
         if db.add_song_to_playlist_request(room_id, song_id):
+            db.increment_song_request_history(room_id, song_id)
             return jsonify('song added to requests'), 200
     if request.method == 'PUT':
         _log.info("PUT to request_add_song receved")
@@ -171,6 +177,12 @@ def process_playlist_requests():
         for id in request_ids:
             song_requests[id] = db.get_song_by_id(id)
         return jsonify(song_requests), 200
+
+@room_page.route('/rooms/myrooms/playlist/<int:room_id>/history/<int:song_id>', methods=['GET'])
+def process_song_histor(room_id, song_id):
+    song_history = db.get_song_history(room_id, song_id)
+    _log.debug(song_history)
+    return jsonify(song_history)
 
 @room_page.route('/rooms/room/<int:room_id>', methods=["GET"])
 def get_room(room_id):

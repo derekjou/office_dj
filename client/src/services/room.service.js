@@ -118,6 +118,7 @@ class RoomService {
     let uri = `${this.URI}/rooms/myrooms/playlist/${roomId}/request/${songId}`;
     return axios.put(uri, { withCredentials: true });
   }
+
   rejectSongRequest(roomId, songId) {
     let uri = `${this.URI}/rooms/myrooms/playlist/${roomId}/request/${songId}`;
     return axios({
@@ -128,6 +129,11 @@ class RoomService {
         song_id: songId,
       },
     });
+  }
+
+  getSongHistory(roomId, songId) {
+    let uri = `${this.URI}/rooms/myrooms/playlist/${roomId}/history/${songId}`;
+    return axios.get(uri, { withCredentials: true });
   }
 }
 

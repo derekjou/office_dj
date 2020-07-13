@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import RoomService from "../../services/room.service";
+import SongHistory from "../SongHistory/SongHistory.js"
 import "./Player.scss";
 
 const Controls = (props) => {
@@ -126,6 +127,7 @@ const Controls = (props) => {
           <div className="iconfont play-pause icon-play"></div>
           <div className="iconfont next icon-next"></div>
         </div>
+        <SongHistory song={state.currentSong} />
         <div className="progress"></div>
       </div>
     </>
