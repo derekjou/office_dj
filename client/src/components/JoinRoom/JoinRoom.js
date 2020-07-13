@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import RoomService from '../../services/room.service';
 import RoomRequestSuccess from './RoomRequestSuccess.js';
 
@@ -14,7 +13,6 @@ import Button from 'react-bootstrap/Button';
 const JoinRoom = (props) => {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const roomService = new RoomService();
 

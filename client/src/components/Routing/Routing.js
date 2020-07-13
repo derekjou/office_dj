@@ -110,7 +110,7 @@ class Routing extends Component {
         <DJRoute path="/joinrequests/:roomid" component={WorkRequest} /> 
         <Route path="/requestSongToPlaylist" component={RequestNewSongToPlaylist} />
         <Route path="/songRequests" component={DJApproveSongRequests} />
-
+        <div style={{ textAlign: 'center', color: '#BBB', fontSize:"0.8rem", margin: "40px 0 10px"}}>Created by Timothy, Victoria, Felix, and Derek</div>
       </Router>
     );
   }
