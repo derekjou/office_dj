@@ -20,3 +20,18 @@
     content: none;
   }
 }
+
+.song-history-stats-wrapper {
+  border: $ui-border;
+  box-shadow: $deep;
+}
+
+.song-history-stats {
+  &:hover {
+    background-color: rgba($player-blue, 0.2);
+  }
+  span:last-of-type {
+    font-weight: 700;
+    margin-left: 1rem;
+  }
+}

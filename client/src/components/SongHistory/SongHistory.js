@@ -29,7 +29,7 @@ const SongHistory = (props) => {
         </Button>
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu className='song-history-stats-wrapper'>
         <Dropdown.Item className={'song-history-stats song-history-request'}>
           <span>Requests for {props.song.title}:</span> 
           <span>{state.songHistory ? 
