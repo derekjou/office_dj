@@ -228,15 +228,15 @@ def increment_song_request_history(room_id, song_id):
             {'$set': {f'playlist.history.{song_id}.requests': counter}}
         )
 
-def get_playlist_history(room_id, song_id):
+def get_song_history(room_id, song_id):
     '''Finds the request history for a song in a room.'''
     _log.info('Attempting to find the song history for song %d in room %d',
               song_id, room_id)
-    request_history = _db.rooms.find_one(
+    history = _db.rooms.find_one(
         {'_id': room_id},
-        {f'playlist.history.{song_id}.requests': 1, '_id': 0}
-    )['playlist']['history'][f'{song_id}']['requests']
-    return request_history
+        {f'playlist.history.{song_id}': 1, '_id': 0}
+    )['playlist']['history'][f'{song_id}']
+    return history
 
 def find_user(username: str):
     '''Takes a username and queries the Users collection for that user, returns non-sensitive user info.'''

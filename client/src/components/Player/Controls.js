@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import RoomService from "../../services/room.service";
 import Queue from "./Queue";
+import SongHistory from "../SongHistory/SongHistory.js"
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import "./Player.scss";
@@ -128,6 +129,7 @@ const Controls = (props) => {
           <div className="iconfont play-pause icon-play"></div>
           <div className="iconfont next icon-next"></div>
         </div>
+        <SongHistory song={state.currentSong} />
         <div className="progress"></div>
       </div>
     </>

@@ -182,3 +182,10 @@ def process_playlist_requests():
         for id in request_ids:
             song_requests[id] = db.get_song_by_id(id)
         return jsonify(song_requests), 200
+
+
+@room_page.route('/rooms/myrooms/playlist/<int:room_id>/history/<int:song_id>', methods=['GET'])
+def process_song_histor(room_id, song_id):
+    song_history = db.get_song_history(room_id, song_id)
+    _log.debug(song_history)
+    return jsonify(song_history)

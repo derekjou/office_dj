@@ -1,0 +1,22 @@
+@import '../../styles/abstracts';
+
+.song-history-container {
+  position: absolute;
+  right: 0;
+  top: 1rem;
+}
+
+.song-history-wrapper {
+  &, &>button {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  &>button>svg {
+    fill: $player-blue;
+  }
+
+  &::after {
+    content: none;
+  }
+}
