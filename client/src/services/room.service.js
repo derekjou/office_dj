@@ -88,7 +88,7 @@ class RoomService {
   
   rejectJoinRequest(name, owner, username) {
     let uri = `${this.URI}/rooms/${name}/join/${username}`;
-    axios({
+    return axios({
       method: "delete",
       url: uri,
       data: {

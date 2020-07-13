@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import { Check, Trash } from 'react-bootstrap-icons';
 import RoomService from '../../services/room.service';
@@ -10,11 +10,12 @@ const DJSongRequest = (props) => {
   const state = useSelector(state => state);
   const history = useHistory();
   const location = useLocation();
+  const { id } = useParams();
 
   const roomService = new RoomService()
 
   const acceptSongRequest = async () => {
-    let resp = await roomService.approveSongRequest(4, props.song._id); //test data
+    let resp = await roomService.approveSongRequest(parseInt(id), props.song._id); //test data
     // state.currentRoom not testable yet
     if (resp.status === 200) {
       alert('Success!')
@@ -22,7 +23,7 @@ const DJSongRequest = (props) => {
   }
 
   const rejectSongRequest = async () => {
-    let resp = await roomService.rejectSongRequest(4, props.song._id); //test data
+    let resp = await roomService.rejectSongRequest(parseInt(id), props.song._id); //test data
     // state.currentRoom not testable yet
     if (resp.status === 200) {
       alert('If you say so!')
@@ -33,8 +34,8 @@ const DJSongRequest = (props) => {
   return (
     <ListGroup.Item>
       {console.log(props.song)}
-      <span className=''>{props.song.title}</span>
-      <span className=''>{props.song.artists.join(', ')}</span>
+      <span className=''>{props.song.title} | &nbsp;{props.song.artists.join(', ')}</span>
+      {/* <span className=''>{props.song.artists.join(', ')}</span> */}
       <span className='actions'>
         <Button onClick={acceptSongRequest}>
           <Check />
